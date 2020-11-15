@@ -1,0 +1,38 @@
+/*Default backgr0und color for logged in sections*/
+.content{
+    --background:white;
+}
+
+
+/*CSS for the walks list page*/
+#header{
+    padding: 20px 0;
+} 
+.item {
+    --background: white;
+    --color: black;
+    margin: 30px 0px;
+    padding: 20px 0px;
+    
+}
+.list{
+    background-color: white;
+    margin:0px 10px;
+    padding: 0;
+}
+
+.note{
+    --color: black;
+}
+
+/*CSS for Detail file*/
+.division{
+    color:black;
+    text-align:center;
+}
+.card{
+    --background: white;
+}
+.dark{
+    color:black;
+}

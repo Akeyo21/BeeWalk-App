@@ -1,0 +1,36 @@
+#move{
+    position: absolute;
+    top: 35%;
+    left: 13%;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+}
+
+#center{
+    position: absolute;
+    top: 21%;
+    left: 9%;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+}
+.input{
+    border: 1px solid black;
+    border-radius: 50px;
+    margin-bottom:20px;
+    background-color:rgba(255, 255, 255, 0.8);
+}
+
+#submit{
+    background-color:#ffca22;
+    padding: 20px 80px;
+    border-radius: 50px;
+    border: none;
+}
+
+.visibility{
+    background-color:rgba(255, 255, 255, 0.8);
+}

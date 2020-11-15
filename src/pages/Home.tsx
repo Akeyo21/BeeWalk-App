@@ -1,25 +1,27 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
 
+import './Home.css';
+import HomePage from '../components/HomePage';
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import {Route} from 'react-router-dom';
 const Home: React.FC = () => {
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
+    <><><IonRouterOutlet>
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={Register} />
+    </IonRouterOutlet></>
+      <IonPage>
+        <IonHeader>
         </IonHeader>
-        <ExploreContainer />
-      </IonContent>
-    </IonPage>
+        <IonContent fullscreen>
+          <IonHeader collapse="condense">
+            
+          </IonHeader>
+          <HomePage />
+        </IonContent>
+      </IonPage></>
   );
 };
 
