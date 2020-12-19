@@ -9,13 +9,16 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import TabsExample from "../components/TabsExample";
 import {Route} from 'react-router-dom';
-import Bottomenu from '../components/Bottomenu';
+import CommonBees from '../pages/CommonBees';
+import PreWalk from '../pages/PreWalk';
 /**/
 const Postlogin: React.FC = () => {
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/commonbees" component={CommonBees} />
+      <Route path="/start/prewalk" component={PreWalk} />
     </IonRouterOutlet></>
       <IonPage>
         <IonHeader>
@@ -28,12 +31,12 @@ const Postlogin: React.FC = () => {
           <div className="container">
               <div className="wholepage" >
                 <div id="move">
-                    <IonButton routerLink=""
+                    <IonButton routerLink="/start/prewalk"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Start Walk
                     </IonButton>
 
-                    <IonButton routerLink=""
+                    <IonButton routerLink="/commonbees"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Bees in my area
                     </IonButton>
