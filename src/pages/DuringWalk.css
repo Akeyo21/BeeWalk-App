@@ -1,0 +1,6 @@
+.whitebackground{
+    background-color: white;
+}
+IonContent{
+    --color:white;
+ }
