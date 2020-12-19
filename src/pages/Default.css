@@ -36,3 +36,34 @@
 .dark{
     color:black;
 }
+
+/*Specific to CommonBees page
+*/
+.nopadding{
+  padding:0;
+}
+/* Specific to DuringWalk page
+*/
+.whitebackground{
+    --background: white;
+    --color:black;
+}
+
+
+.center{
+    /*Add records button at the end*/
+    margin-left:34%;
+}
+
+/*.switch{
+    position:fixed;
+    top:0;
+    left:0;
+}*/
+
+.switch {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+  }
