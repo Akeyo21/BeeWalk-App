@@ -10,6 +10,10 @@ import Acknowledgment from "./pages/Acknowledgment";
 import Postlogin from './pages/Postlogin';
 import Walks from './pages/Walks';
 import Walkdetail from './pages/Detail';
+import CommonBees from './pages/CommonBees';
+import PreWalk from './pages/PreWalk';
+import DuringWalk from './pages/DuringWalk';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -44,6 +48,11 @@ const App: React.FC = () => (
         <Route path="/frontpage" component={Postlogin} />
         <Route path="/walks" component={Walks} />
         <Route path="/walkdetail" component={Walkdetail} />
+        <Route path="/commonbees" component={CommonBees} />
+        <Route path="/start/prewalk" component={PreWalk} />
+        <Route path="/start/duringwalk" component={DuringWalk} />
+     
+     
       </IonRouterOutlet>
 
       
