@@ -43,17 +43,20 @@
 .nopadding{
   padding:0;
 }
+
 /* Specific to DuringWalk page
 */
 .whitebackground{
     --background: white;
     --color:black;
 }
-
-
-.center{
-    /*Add records button at the end*/
-    margin-left:34%;
+.modal{
+    position: absolute;
+    height:50%;
+    width:70%;
+    --background:white;
+    color:black;
+    margin: 39% 0 0 14%;
 }
 
 /*.switch{
@@ -82,4 +85,12 @@
     overflow:scroll;
     margin-top:30% ;
     margin-bottom: 10%;
+}
+
+.grid{
+    margin:10px;
+}
+
+.nomargin{
+    margin:0;
 }
