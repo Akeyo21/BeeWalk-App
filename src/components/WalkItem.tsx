@@ -9,8 +9,7 @@ interface ContainerProps {
 }
 
 const WalkItem: React.FC<ContainerProps> = (props) => {
-  return (
-    
+  return (  
 
     <IonItem className="item" href={props.link} >                
     <IonLabel slot="start" >

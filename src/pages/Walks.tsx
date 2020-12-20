@@ -22,7 +22,7 @@ const Walks: React.FC = () => {
           </IonHeader>
           <div className="page">
           <IonList lines="full" className="list">
-              <IonListHeader lines="full" color="dark" id="header">My Walks</IonListHeader>
+              <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
                 <IonItem className="item" href="/walkdetail" >  
                 <IonLabel slot="start">
                     Transect Name

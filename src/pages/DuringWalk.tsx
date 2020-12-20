@@ -5,37 +5,36 @@ import { IonButton,  IonCard,  IonCardContent,  IonCol,  IonContent, IonFooter, 
 import './PreWalk.css';*/
 import './Default.css';
 import DuringWalkHeader from '../components/DuringWalkHeader'
-import Login from "./Login";
-import Register from "./Register";
+
+import ManualData from "./ManualData";
 import {Route} from 'react-router-dom';
 import BeeSpecies from '../components/BeeSpecies'
+
 /*
     DuringWalk - page that collects data during walk
 */
 interface ContainerProps { 
 }
 
-const DuringWalk: React.FC<ContainerProps> = (props) => {
+const DuringWalk: React.FC<ContainerProps> = () => {
   return (
     <><><IonRouterOutlet>
-      <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
+      <Route path="/start/duringwalk/manual" component={ManualData} />
     </IonRouterOutlet></>
       <IonPage>
         <IonHeader>
         </IonHeader>
         <IonContent fullscreen className="whitebackground ">
-            <IonHeader collapse="condense" className="switch">
+            <IonHeader collapse="condense" className= "switch">
                <DuringWalkHeader/>                               
             </IonHeader>
-            <div className="datacontent">
-              
-              <BeeSpecies/> 
-              <BeeSpecies/> 
-              <BeeSpecies/> 
-              <BeeSpecies/> 
-              <BeeSpecies/> 
-              <BeeSpecies/> 
+            <div className="datacontent" id="main">              
+              <BeeSpecies content="Bee Species Name" /> 
+              <BeeSpecies content="Bee Species Name"/> 
+              <BeeSpecies content="Bee Species Name"/> 
+              <BeeSpecies content="Bee Species Name"/> 
+              <BeeSpecies content="Bee Species Name"/> 
+              <BeeSpecies  content="Bee Species Name"/> 
 
             </div>
             

@@ -12,7 +12,8 @@ import {Route} from 'react-router-dom';
 
 interface ContainerProps { 
 }
-
+/* CommonBees - page that shows the common bees in the are
+*/
 const CommonBees: React.FC<ContainerProps> = (props) => {
   return (
     <><><IonRouterOutlet>
@@ -27,12 +28,12 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
           </IonHeader>
           <div className="container">
         <div className="wholepage"> 
-        <BeesInArea />
-        <BeesInArea />
-        <BeesInArea />
-        <BeesInArea />
-         <BeesInArea />
           <BeesInArea />
+          <BeesInArea />
+          <BeesInArea />
+          <BeesInArea />
+          <BeesInArea />
+            <BeesInArea />
         </div>
         </div>
           
