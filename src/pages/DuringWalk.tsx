@@ -25,24 +25,20 @@ const DuringWalk: React.FC<ContainerProps> = (props) => {
         <IonHeader>
         </IonHeader>
         <IonContent fullscreen className="whitebackground ">
-            <IonHeader collapse="condense" className="">
-               
-                <DuringWalkHeader/>                               
+            <IonHeader collapse="condense" className="switch">
+               <DuringWalkHeader/>                               
             </IonHeader>
-            <IonToolbar className="whitebackground" >
-                <IonSegment value="all">
-                    <IonSegmentButton value="all">Enter Records</IonSegmentButton>
-                    <IonSegmentButton value="favorites">Check Records</IonSegmentButton>
-                </IonSegment>
-            </IonToolbar> 
-            
-            <BeeSpecies/> 
-            <BeeSpecies/> 
-            <BeeSpecies/> 
-            <BeeSpecies/> 
-            <BeeSpecies/> 
-            <BeeSpecies/> 
+            <div className="datacontent">
+              
+              <BeeSpecies/> 
+              <BeeSpecies/> 
+              <BeeSpecies/> 
+              <BeeSpecies/> 
+              <BeeSpecies/> 
+              <BeeSpecies/> 
 
+            </div>
+            
 
         </IonContent>
       </IonPage></>
