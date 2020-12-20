@@ -13,7 +13,7 @@ import Walkdetail from './pages/Detail';
 import CommonBees from './pages/CommonBees';
 import PreWalk from './pages/PreWalk';
 import DuringWalk from './pages/DuringWalk';
-
+import ManualData from './pages/ManualData';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -51,7 +51,7 @@ const App: React.FC = () => (
         <Route path="/commonbees" component={CommonBees} />
         <Route path="/start/prewalk" component={PreWalk} />
         <Route path="/start/duringwalk" component={DuringWalk} />
-     
+        <Route path="/start/duringwalk/manual" component={ManualData} />
      
       </IonRouterOutlet>
 
