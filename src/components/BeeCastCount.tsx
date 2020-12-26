@@ -25,9 +25,7 @@ const BeeCastCount: React.FC<ContainerProps> = (props) => {
                             <IonFabButton>
                                 <IonIcon icon={add} />
                             </IonFabButton>                           
-                        </IonFab>
-                        
-                        
+                        </IonFab>     
                     </IonCol>
 
                     <IonCol size="3">
