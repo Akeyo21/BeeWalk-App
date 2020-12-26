@@ -94,3 +94,23 @@
 .nomargin{
     margin:0;
 }
+/*Manual data page*/
+#manualform{
+    position: absolute;
+    top: 21%;
+    left: 9%;
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+}
+
+#customPopoverSelect{
+    --placeholder-opacity: 1;    
+}
+
+.item{
+    margin:0;
+    padding:0;
+    text-align:center;
+}
