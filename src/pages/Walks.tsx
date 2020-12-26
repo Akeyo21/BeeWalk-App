@@ -8,7 +8,6 @@ import Walkdetail from "./Detail";
 import {Route} from 'react-router-dom';
 import { chevronForward } from 'ionicons/icons';
 const Walks: React.FC = () => {
-    console.log("walks File is opened");
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
