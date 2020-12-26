@@ -1,5 +1,5 @@
 
-/*Default backgr0und color for logged in sections*/
+/*Default background color for logged in sections*/
 .content{
     --background:white;
 }
@@ -59,11 +59,6 @@
     margin: 39% 0 0 14%;
 }
 
-/*.switch{
-    position:fixed;
-    top:0;
-    left:0;
-}*/
 .toolbar{
     --background:white !important;
     --color: black;
@@ -113,4 +108,15 @@
     margin:0;
     padding:0;
     text-align:center;
+}
+/*MySites*/
+.sites{
+text-align:center;
+}
+.top-margin{
+    margin-top:20px;
+}
+
+.morecontent{
+    margin-top: 20px;;
 }
