@@ -14,6 +14,9 @@ import CommonBees from './pages/CommonBees';
 import PreWalk from './pages/PreWalk';
 import DuringWalk from './pages/DuringWalk';
 import ManualData from './pages/ManualData';
+import MySites from './pages/MySites';
+import AddSites from './pages/AddSites';
+import More from './pages/More';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -49,9 +52,12 @@ const App: React.FC = () => (
         <Route path="/walks" component={Walks} />
         <Route path="/walkdetail" component={Walkdetail} />
         <Route path="/commonbees" component={CommonBees} />
+        <Route path="/mysites" component={MySites} />
+        <Route path="/mysites/add" component={AddSites} />
         <Route path="/start/prewalk" component={PreWalk} />
         <Route path="/start/duringwalk" component={DuringWalk} />
         <Route path="/start/duringwalk/manual" component={ManualData} />
+        <Route path="/more" component={More} />
      
       </IonRouterOutlet>
 
@@ -67,7 +73,7 @@ const App: React.FC = () => (
           <IonLabel>My walks</IonLabel>
         </IonTabButton>
         
-        <IonTabButton tab="register" href="/register">
+        <IonTabButton tab="sites" href="/mysites">
           <IonIcon icon={leaf} />
           <IonLabel>My Sites</IonLabel>
         </IonTabButton>
@@ -77,7 +83,7 @@ const App: React.FC = () => (
           <IonLabel>Explore</IonLabel>
         </IonTabButton>
         
-        <IonTabButton tab="terms" href="/terms">
+        <IonTabButton tab="more" href="/more">
           <IonIcon icon={ellipsisHorizontal} />
           <IonLabel>More</IonLabel>
         </IonTabButton>
