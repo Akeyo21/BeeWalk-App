@@ -40,7 +40,7 @@ import { walk, ellipsisHorizontal, leaf, navigate, home } from 'ionicons/icons';
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
-    <IonTabs>
+    
       <IonRouterOutlet>
         <Route path="/home" component={Home} exact={true} />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
@@ -60,35 +60,6 @@ const App: React.FC = () => (
         <Route path="/more" component={More} />
      
       </IonRouterOutlet>
-
-      
-      <IonTabBar slot="bottom" color="warning">
-      <IonTabButton tab="home" href="/frontpage">
-          <IonIcon icon={home} />
-          <IonLabel>Home</IonLabel>
-        </IonTabButton>
-
-        <IonTabButton tab="walks" href="/walks">
-          <IonIcon icon={walk} />
-          <IonLabel>My walks</IonLabel>
-        </IonTabButton>
-        
-        <IonTabButton tab="sites" href="/mysites">
-          <IonIcon icon={leaf} />
-          <IonLabel>My Sites</IonLabel>
-        </IonTabButton>
-        
-        <IonTabButton tab="terms" href="/terms">
-          <IonIcon icon={navigate} />
-          <IonLabel>Explore</IonLabel>
-        </IonTabButton>
-        
-        <IonTabButton tab="more" href="/more">
-          <IonIcon icon={ellipsisHorizontal} />
-          <IonLabel>More</IonLabel>
-        </IonTabButton>
-      </IonTabBar>
-      </IonTabs>
     </IonReactRouter>
   </IonApp>
 );

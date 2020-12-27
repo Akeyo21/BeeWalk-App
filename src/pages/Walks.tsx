@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar } from '@ionic/react';
 import React from 'react';
 
 import './Default.css';
@@ -6,7 +6,7 @@ import WalkItem from '../components/WalkItem';
 import Login from "../pages/Login";
 import Walkdetail from "./Detail";
 import {Route} from 'react-router-dom';
-import { chevronForward } from 'ionicons/icons';
+import { chevronForward, ellipsisHorizontal, home, leaf, navigate, walk } from 'ionicons/icons';
 const Walks: React.FC = () => {
   return (
     <><><IonRouterOutlet>
@@ -20,6 +20,32 @@ const Walks: React.FC = () => {
           <IonHeader collapse="condense">            
           </IonHeader>
           <div className="page">
+          <IonTabBar slot="bottom" color="warning" className="tabs">
+            <IonTabButton tab="home" href="/frontpage">
+                <IonIcon icon={home} />
+                <IonLabel>Home</IonLabel>
+              </IonTabButton>
+      
+              <IonTabButton tab="walks" href="/walks">
+                <IonIcon icon={walk} />
+                <IonLabel>My walks</IonLabel>
+              </IonTabButton>
+              
+              <IonTabButton tab="sites" href="/mysites">
+                <IonIcon icon={leaf} />
+                <IonLabel>My Sites</IonLabel>
+              </IonTabButton>
+              
+              <IonTabButton tab="terms" href="/terms">
+                <IonIcon icon={navigate} />
+                <IonLabel>Explore</IonLabel>
+              </IonTabButton>
+              
+              <IonTabButton tab="more" href="/more">
+                <IonIcon icon={ellipsisHorizontal} />
+                <IonLabel>More</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
           <IonList lines="full" className="list">
               <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
                 <IonItem className="item" href="/walkdetail" >  

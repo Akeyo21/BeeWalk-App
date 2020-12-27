@@ -38,6 +38,8 @@ const DuringWalk: React.FC<ContainerProps> = () => {
     )
   };
   const showRecords=(truth: boolean)=>{
+    console.log("Entered loop")
+    console.log(truth + "truth value")
       var body = document.getElementById("main")
       if (truth){
         ReactDOM.render(

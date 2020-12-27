@@ -1,6 +1,6 @@
 import React from 'react';
 import '../components/ExploreContainer.css';
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRouterOutlet, IonRow } from '@ionic/react';
+import { IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
 
 import './Default.css';
 import HomePage from '../components/HomePage';
@@ -23,8 +23,7 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
         <IonHeader>
         </IonHeader>
         <IonContent fullscreen>
-          <IonHeader collapse="condense">
-            
+          <IonHeader >
           </IonHeader>
           <div className="container">
         <div className="wholepage"> 
