@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet, IonList, IonItem, IonItemDivider, IonIcon, IonLabel, IonNote, IonListHeader, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonImg, IonSlide, IonSlides } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet, IonList, IonItem, IonItemDivider, IonIcon, IonLabel, IonNote, IonListHeader, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonImg, IonSlide, IonSlides, IonBackButton } from '@ionic/react';
 import React from 'react';
 
 import './Default.css';
@@ -19,9 +19,11 @@ const Detail: React.FC = () => {
         <IonHeader>
         </IonHeader>
         <IonContent fullscreen className="content">
-          <IonHeader collapse="condense">            
+          <IonHeader>         
           </IonHeader>
           <div className="division">
+          <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+   
           <h2>
               Transect
           </h2>

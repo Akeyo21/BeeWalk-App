@@ -83,9 +83,6 @@ const DuringWalk: React.FC<ContainerProps> = () => {
                 buttons={[
                   {
                     text: 'OK',
-                    handler: () => {
-                      done();
-                    }
                   },
 
                   {

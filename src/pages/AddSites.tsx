@@ -1,7 +1,7 @@
 import React from 'react';
 import '../components/ExploreContainer.css';
 import '../pages/Default.css';
-import {IonContent, IonInput} from '@ionic/react';
+import {IonBackButton, IonContent, IonInput} from '@ionic/react';
 
 interface ContainerProps { 
   
@@ -14,6 +14,8 @@ const AddSites: React.FC<ContainerProps> = () => {
     return (   
         
         <IonContent fullscreen className="content">
+            <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+   
              <form id="manualform" action="/mysites">
                 <IonInput placeholder="Transect Name" type="text" required className="input"></IonInput>
                 

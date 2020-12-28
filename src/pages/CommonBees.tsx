@@ -3,7 +3,6 @@ import '../components/ExploreContainer.css';
 import { IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
 
 import './Default.css';
-import HomePage from '../components/HomePage';
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import BeesInArea from '../components/BeesInArea';
@@ -26,7 +25,9 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
           <IonHeader >
           </IonHeader>
           <div className="container">
-        <div className="wholepage"> 
+            
+        <div className="wholepage "> 
+        <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
           <BeesInArea />
           <BeesInArea />
           <BeesInArea />

@@ -1,9 +1,8 @@
 import React from 'react';
 import '../components/ExploreContainer.css';
-import { IonButton,  IonCol,  IonContent, IonGrid, IonHeader, IonInput, IonPage, IonRouterOutlet, IonRow } from '@ionic/react';
+import { IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonGrid, IonHeader, IonInput, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
 /*import '../components/LoginPage.css';*/
 import './PreWalk.css';
-/*import './Default.css';*/
 import {Route} from 'react-router-dom';
 import DuringWalk from './DuringWalk';
 
@@ -23,11 +22,14 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
         <IonHeader>
         </IonHeader>
         <IonContent fullscreen>
-            <IonHeader collapse="condense">
-                
-            </IonHeader>
-            <div className="container">
-                <div className="wholepage"> 
+            
+        <IonHeader >
+        </IonHeader>
+
+        <div className="container">
+            <div className="wholepage">
+            <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+    
                 <form id="prewalkform">
                     <IonGrid>
                         <IonRow>
