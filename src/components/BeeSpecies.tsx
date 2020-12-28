@@ -16,17 +16,10 @@ interface ContainerProps {
 
 const BeeSpecies: React.FC<ContainerProps> = (props) => {
     const [showModal, setShowModal] = useState(false);
-  /*<input type="submit" value="Log In" id="submit"></input>*/
-    /*console.log(props.records)
-    if(props.records){
-        return(
-            console.log("Here")
-        );
-    }else{*/
   return (   
       
     <>
-        <IonModal isOpen={showModal} cssClass='modal' showBackdrop>
+        <IonModal isOpen={showModal} cssClass='modal' showBackdrop backdrop-dismiss={false}>
             
             <h1>Bee Species Name</h1>
             
@@ -35,7 +28,19 @@ const BeeSpecies: React.FC<ContainerProps> = (props) => {
                 <BeeCastCount cast="Worker"/>
                 <BeeCastCount cast="Unknown"/>
             </IonGrid>
-            <IonButton onClick={() => setShowModal(false)}>Close Modal</IonButton>
+
+            <IonGrid>
+                <IonRow>
+                    <IonCol size="6">
+                        <IonButton onClick={() => setShowModal(false)} color="dark">Add Record</IonButton>
+                    </IonCol>
+
+                    <IonCol size="4">
+                        <IonButton onClick={() => setShowModal(false)} color="dark" className="left-margin">Cancel</IonButton>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
+            
             
         </IonModal>
         <IonItemSliding>
