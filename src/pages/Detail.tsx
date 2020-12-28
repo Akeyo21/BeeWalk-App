@@ -22,7 +22,7 @@ const Detail: React.FC = () => {
           <IonHeader>         
           </IonHeader>
           <div className="division">
-          <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+          <IonBackButton defaultHref="/walks" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
    
           <h2>
               Transect

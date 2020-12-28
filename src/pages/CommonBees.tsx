@@ -3,8 +3,6 @@ import '../components/ExploreContainer.css';
 import { IonBackButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
 
 import './Default.css';
-import Login from "../pages/Login";
-import Register from "../pages/Register";
 import BeesInArea from '../components/BeesInArea';
 import PreWalk from "../pages/PreWalk";
 import {Route} from 'react-router-dom';

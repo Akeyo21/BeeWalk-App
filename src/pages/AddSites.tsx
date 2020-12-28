@@ -14,7 +14,7 @@ const AddSites: React.FC<ContainerProps> = () => {
     return (   
         
         <IonContent fullscreen className="content">
-            <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+            <IonBackButton defaultHref="/mysites" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
    
              <form id="manualform" action="/mysites">
                 <IonInput placeholder="Transect Name" type="text" required className="input"></IonInput>
