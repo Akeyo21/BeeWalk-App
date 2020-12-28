@@ -50,15 +50,10 @@ const DuringWalk: React.FC<ContainerProps> = () => {
       }     
   }
   const [showAlert1, setShowAlert1] = useState(false);
-
-  const done= () =>{
-    return(
-    <><><IonRouterOutlet>
-        <Route path="/frontpage" component={Postlogin} />
-
-      </IonRouterOutlet></>
-        <Redirect to="/frontpage"></Redirect></>
-    )
+  const [redirectHome, setRedirectHome] = useState(false)
+  /*Change between pages when ok is clicked in alert*/
+  if (redirectHome==true){
+    return <Redirect to='/frontpage' />
   }
   return (
     <><></><><IonRouterOutlet>
@@ -67,7 +62,7 @@ const DuringWalk: React.FC<ContainerProps> = () => {
       <IonPage>
           <IonContent fullscreen className="whitebackground ">
             <IonHeader className="switch">
-              <IonButton color="light" href="/start/duringwalk/manual">
+              <IonButton color="light" href="/start/duringwalk/manual" >
                 Add Manually
               </IonButton>
 
@@ -83,6 +78,9 @@ const DuringWalk: React.FC<ContainerProps> = () => {
                 buttons={[
                   {
                     text: 'OK',
+                    handler:()=>{
+                      setRedirectHome(true)
+                    }
                   },
 
                   {
