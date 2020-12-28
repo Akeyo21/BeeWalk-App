@@ -49,12 +49,12 @@ const More: React.FC = () => {
               </IonTabButton>
             </IonTabBar>
                 <IonList lines="full" className="list">
-                    <IonItem className="item" href="https://www.bumblebeeconservation.org/wp-content/uploads/2017/11/ID-sheet-big-8.pdf">  
+                    <IonItem className="item" onClick={() => window.open('https://www.bumblebeeconservation.org/wp-content/uploads/2017/11/ID-sheet-big-8.pdf', '_system')} >  
                         <IonLabel >Bee ID Guide</IonLabel>             
                     </IonItem>
 
-                    <IonItem className="item" href="https://www.bumblebeeconservation.org/beewalk/">  
-                        <IonLabel> More Info about BeeWak </IonLabel>            
+                    <IonItem className="item"onClick={() => window.open('https://www.bumblebeeconservation.org/beewalk/', '_system')}>
+                        <IonLabel> More Info about BeeWak </IonLabel>       
                     </IonItem>
 
                     <IonItem className="item" href="/">  
