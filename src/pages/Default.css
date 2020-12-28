@@ -3,6 +3,7 @@
 .content{
     --background:white;
 }
+/*BeeCastCount page*/
 
 
 /*CSS for the walks list page*/
@@ -52,7 +53,7 @@
 }
 .modal{
     position: absolute;
-    height:50%;
+    height:40%;
     width:70%;
     --background:white;
     color:black;
@@ -86,7 +87,7 @@
     margin:10px;
 }
 
-.nomargin{
+.nomargin, #specialh1, .number{
     margin:0;
 }
 /*Manual data page*/
@@ -126,4 +127,8 @@ text-align:center;
     bottom:0;
     left:0;
     width:100%;
+}
+
+.left-margin{
+    margin-left:10px;
 }
