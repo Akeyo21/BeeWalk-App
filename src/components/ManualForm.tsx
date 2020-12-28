@@ -20,7 +20,9 @@ const ManualForm: React.FC<ContainerProps> = () => {
             <form id="manualform" action="/start/duringwalk">
                 <IonInput placeholder="Bee Species" type="text" required className="input"></IonInput>
                 <div id="cast">                    
-                <SelectCast/>
+                    <SelectCast/>
+                    <SelectCast/>
+                    <SelectCast/>
                 </div>
                 <input type="submit" value="Add Bee Record" id="submit" ></input>
             </form>
