@@ -10,8 +10,11 @@ import '../theme/variables.css';
 import ManualData from "./ManualData";
 import {Redirect, Route} from 'react-router-dom';
 import BeeSpecies from '../components/BeeSpecies'
+import BeeRecords from '../components/BeeRecords'
+
 import ReactDOM from 'react-dom';
 import Postlogin from './Postlogin';
+import { ReactComponent } from '*.svg';
 
 /*
     DuringWalk - page that collects data during walk
@@ -19,22 +22,32 @@ import Postlogin from './Postlogin';
 interface ContainerProps { 
 }
 
-const DuringWalk: React.FC<ContainerProps> = () => {
+/*export default class SayHello extends React.Component<SayHelloProps,SayHelloState> {
+  constructor(props: SayHelloProps) {
+    super(props);
+    this.state = {
+      count: 0
+    };
+  }*/
+//const DuringWalk: React.FC<ContainerProps> = () => {
+export default class DuringWalk extends React.Component{
+  render(){
   const RepeatSpecies: React.FC<ContainerProps> = () => {
     return(
-      <><BeeSpecies content="Bee Species Name"/>
-        <BeeSpecies content="Bee Species Name" />
-        <BeeSpecies content="Bee Species Name"/>
-        <BeeSpecies content="Bee Species Name"/></> 
+      <><BeeSpecies content="Bee Species Name 1"/>
+        <BeeSpecies content="Bee Species Name 2" />
+        <BeeSpecies content="Bee Species Name 3"/>
+        <BeeSpecies content="Bee Species Name 4"/></> 
     )
   };
 
   const RepeatRecords: React.FC<ContainerProps> = () => {
     return(
-      <><BeeSpecies content="Bee Records"/>
-        <BeeSpecies content="Bee Records" />
-        <BeeSpecies content="Bee Records"/>
-        <BeeSpecies content="Bee Records"/></> 
+      <><BeeRecords content="Bee Records"/>
+        <BeeRecords content="Bee Records"/>
+        <BeeRecords content="Bee Records"/>
+        <BeeRecords content="Bee Records"/>
+        <BeeRecords content="Bee Records"/></>
     )
   };
   const showRecords=(truth: boolean)=>{
@@ -61,6 +74,7 @@ const DuringWalk: React.FC<ContainerProps> = () => {
     </IonRouterOutlet></>
       <IonPage>
           <IonContent fullscreen className="whitebackground ">
+          
             <IonHeader className="switch">
               <IonButton color="light" href="/start/duringwalk/manual" >
                 Add Manually
@@ -98,12 +112,12 @@ const DuringWalk: React.FC<ContainerProps> = () => {
 
             </IonHeader>
             <div className="datacontent" id="main">
-              <BeeSpecies content="Bee Species Name" />
-              <BeeSpecies content="Bee Species Name" />
-              <BeeSpecies content="Bee Species Name" />
-              <BeeSpecies content="Bee Species Name" />
-              <BeeSpecies content="Bee Species Name" />
-              <BeeSpecies content="Bee Species Name" />
+              <BeeSpecies content="Bee Species Name 1" />
+              <BeeSpecies content="Bee Species Name 2" />
+              <BeeSpecies content="Bee Species Name 3" />
+              <BeeSpecies content="Bee Species Name 4" />
+              <BeeSpecies content="Bee Species Name 5" />
+              <BeeSpecies content="Bee Species Name 6" />
 
             </div>
 
@@ -113,5 +127,6 @@ const DuringWalk: React.FC<ContainerProps> = () => {
     
   );
 };
-
-export default DuringWalk;
+}
+export const MContext = React.createContext("");  
+//export default DuringWalk;
