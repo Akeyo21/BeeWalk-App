@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <script>
+
+
+        class BeeSpecies{
+            constructor(name, queen, worker, unknown){
+                this.name = name;
+                this.queen = queen;
+                this.worker = worker;
+                this.unknown = unknown;
+            }
+        }
+          const removeDuplicates=(list)=>{
+            var arrayreturned =[...list]
+            for(var index=0;index<list.length;index++){
+              for (var second=index+1;second<list.length;second++){
+                if (list[index].name == list[second].name){
+                  
+                  var queen = list[index].queen + list[second].queen
+                  var worker = list[index].worker+ list[second].worker
+                  var unknown = list[index].unknown +list[second].unknown
+                  var beecombined = new BeeSpecies(list[index].name, queen, worker, unknown )
+                  list.splice(index)
+                  list.splice(second)
+                  list.push(beecombined)
+                } 
+              }
+            }
+            return list
+          };
+          var bee = new BeeSpecies("name", 1, 1, 1)
+          console.log(removeDuplicates([bee,bee, bee]))
+        </script>
+        
+</html>
+
