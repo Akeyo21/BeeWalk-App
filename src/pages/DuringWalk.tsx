@@ -57,24 +57,44 @@ const DuringWalk: React.FC<ContainerProps> = () => {
         this.unknown = unknown;
     }
 }
-  const removeDuplicates=(list: BeeSpecies[])=>{
-    var arrayreturned =[...list]
-    for(var index=0;index<list.length;index++){
-      for (var second=index+1;second<list.length;second++){
-        if (list[index].name == list[second].name){
-          arrayreturned.splice(index)
-          arrayreturned.splice(second)
-          var queen = list[index].queen + list[second].queen
-          var worker = list[index].worker+ list[second].worker
-          var unknown = list[index].unknown +list[second].unknown
+
+const listremove=(array: string[]|any[], target:BeeSpecies)=>{
+    var filtered = array.filter(function(value, index, arr){ 
+    return value.name !=target.name;
+  });
+  return filtered
+}
+    const removeDuplicates=(list: BeeSpecies[]):BeeSpecies[]=>{
+      if (list.length==1 || list.length==0){
+        return list
+      }else{
+      var queen = 0
+      var worker = 0
+      var unknown = 0
+      for(var index=0;index<list.length;index++){
+        for (var second=index+1;second<list.length;second++){
+          console.log(index + "index position")
+          console.log(second+"second")
+          if (list[index].name == list[second].name){
+            console.log("adding")
+            queen += list[second].queen
+            worker += list[second].worker
+            unknown +=list[second].unknown                  
+          } 
+          
+        }
+        queen += list[index].queen
+          worker += list[index].worker
+          unknown +=list[index].unknown
           var beecombined = new BeeSpecies(list[index].name, queen, worker, unknown )
-          arrayreturned.push(beecombined)
-        } 
+          list = listremove(list, list[index])
+          return [beecombined].concat(removeDuplicates(list.slice(index)))          
       }
+      return []
     }
-    return arrayreturned
-  };
+    };
   const RepeatRecords: React.FC<ContainerProps> = () => {
+    if (beedata.length >0){
     return(
       
       <><Context.Provider value={{ beedata: beedata, addBeeData: (list) => {return list } }}>
@@ -84,12 +104,19 @@ const DuringWalk: React.FC<ContainerProps> = () => {
       {console.log(removeDuplicates(beedata))}
         {removeDuplicates(beedata).map((item: any) => (
       
-      <BeeRecords name={item.name} queen={item.queen} worker={item.worker} unknown={item.unknown}/>
+      <BeeRecords key={item.name}name={item.name} queen={item.queen} worker={item.worker} unknown={item.unknown}/>
         ))}
         {console.log(beedata.length)}
         </Context.Provider></>
     )
+        }else{
+          console.log("No data entered")
+          return (
+            <h1>No Bee Records Entered</h1>
+          )
+        }
   };
+  /*
   const showRecords=(truth: boolean)=>{
     console.log("Entered loop")
     console.log(truth + "truth value")
@@ -101,12 +128,13 @@ const DuringWalk: React.FC<ContainerProps> = () => {
         ReactDOM.render(
           <><RepeatRecords />            
           
-            </> , body)
+            </> , document.getElementById("main"))
       }     
-  }
+  }*/
   
   const [showAlert1, setShowAlert1] = useState(false);
   const [redirectHome, setRedirectHome] = useState(false);
+  const[showRecords, setShowRecords] = useState(false)
   /*Change between pages when ok is clicked in alert*/
   if (redirectHome==true){
     return <Redirect to='/frontpage' />
@@ -151,14 +179,14 @@ const DuringWalk: React.FC<ContainerProps> = () => {
 
               <IonToolbar className="toolbar">
                 <IonSegment value="all">
-                  <IonSegmentButton value="all" onClick={() => showRecords(true)}>Enter Records</IonSegmentButton>
-                  <IonSegmentButton value="favorites" onClick={() => showRecords(false)}>Check Records</IonSegmentButton>
+                  <IonSegmentButton value="all" onClick={() => setShowRecords(false)}>Enter Records</IonSegmentButton>
+                  <IonSegmentButton value="favorites" onClick={() => setShowRecords(true)}>Check Records</IonSegmentButton>
                 </IonSegment>
               </IonToolbar>
 
             </IonHeader>
-            <div className="datacontent" id="main">              
-                <RepeatSpecies/>
+            <div className="datacontent" id="main"> 
+              {showRecords ? (<RepeatRecords/>):(<RepeatSpecies />) }
             </div>
 
 
