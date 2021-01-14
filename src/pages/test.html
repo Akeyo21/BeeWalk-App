@@ -2,7 +2,26 @@
 <html>
     <script>
 
-
+const remove=(list)=>{
+            x=0
+            y=x+1
+            arraylength = list.length
+            while(y<arraylength){
+              if (list[x].name == list[y].name){
+                var queen = list[x].queen + list[y].queen
+                var worker = list[x].worker+ list[y].worker
+                var unknown = list[x].unknown +list[y].unknown
+                var beecombined = new BeeSpecies(list[x].name, queen, worker, unknown )
+                list.splice(x, beecombined)
+                list.splice(y)
+                /*list.push(beecombined)*/
+                arraylength = list.length
+              }else{
+              x+=1
+            }
+            return list
+          }
+          }
         class BeeSpecies{
             constructor(name, queen, worker, unknown){
                 this.name = name;
@@ -11,26 +30,53 @@
                 this.unknown = unknown;
             }
         }
+
+        const listremove=(array, target)=>{
+        var filtered = array.filter(function(value, index, arr){ 
+        return value.name !=target.name;
+    });
+    return filtered
+  }
           const removeDuplicates=(list)=>{
-            var arrayreturned =[...list]
+            if (list.length==1 || list.length==0){
+              return list
+            }else{
+            var queen = 0
+            var worker = 0
+            var unknown = 0
             for(var index=0;index<list.length;index++){
               for (var second=index+1;second<list.length;second++){
+                console.log(index + "index position")
+                console.log(second+"second")
                 if (list[index].name == list[second].name){
-                  
-                  var queen = list[index].queen + list[second].queen
-                  var worker = list[index].worker+ list[second].worker
-                  var unknown = list[index].unknown +list[second].unknown
-                  var beecombined = new BeeSpecies(list[index].name, queen, worker, unknown )
-                  list.splice(index)
-                  list.splice(second)
-                  list.push(beecombined)
+                  console.log("adding")
+                  queen += list[second].queen
+                  worker += list[second].worker
+                  unknown +=list[second].unknown                  
                 } 
+                
               }
+              queen += list[index].queen
+                worker += list[index].worker
+                unknown +=list[index].unknown
+                var beecombined = new BeeSpecies(list[index].name, queen, worker, unknown )
+                list = listremove(list, list[index])
+                return [beecombined].concat(removeDuplicates(list.slice(index)))
+                
             }
-            return list
+          }
           };
+
+          
           var bee = new BeeSpecies("name", 1, 1, 1)
-          console.log(removeDuplicates([bee,bee, bee]))
+          var bee2 = new BeeSpecies("name1", 1, 1, 1)
+          var bee3 = new BeeSpecies("name2", 1, 1, 1)
+         x = removeDuplicates([bee, bee, bee, bee, bee2, bee3 , bee3, bee2, bee, bee3])
+          console.log(x)
+          let y =[1,2,3, 4, 5]
+          let z = y.splice(1,y.length-1)
+          let r = [1].concat([bee])
+          console.log(r[1])
         </script>
         
 </html>
