@@ -178,9 +178,9 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
                 ]} />
 
               <IonToolbar className="toolbar">
-                <IonSegment value="all">
-                  <IonSegmentButton value="all" onClick={() => setShowRecords(false)}>Enter Records</IonSegmentButton>
-                  <IonSegmentButton value="favorites" onClick={() => setShowRecords(true)}>Check Records</IonSegmentButton>
+                <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
+                  <IonSegmentButton value="enter" >Enter Records</IonSegmentButton>
+                  <IonSegmentButton value="records" >Check Records</IonSegmentButton>
                 </IonSegment>
               </IonToolbar>
 
