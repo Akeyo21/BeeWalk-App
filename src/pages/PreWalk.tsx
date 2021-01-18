@@ -1,6 +1,6 @@
 import React from 'react';
 import '../components/ExploreContainer.css';
-import { IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonGrid, IonHeader, IonInput, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonDatetime, IonGrid, IonHeader, IonInput, IonLabel, IonPage, IonRouterOutlet, IonRow, IonToolbar } from '@ionic/react';
 /*import '../components/LoginPage.css';*/
 import './PreWalk.css';
 import {Route} from 'react-router-dom';
@@ -34,17 +34,18 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                     <IonGrid>
                         <IonRow>
                             <IonCol size="10">
-                                <IonInput className="input" type="text"  required placeholder="Date(Automatic)" font-weight="bold" placeholder-opacity="1"/> 
+                                <IonDatetime className="date" displayFormat="DD MM YYYY" placeholder="Select Date"  ></IonDatetime>
+        
                             </IonCol>
                             
-                            <IonCol size="2">
-                                <IonButton color="light">Edit</IonButton>
+                            <IonCol size="1">
                             </IonCol>
                             
                         </IonRow>
 
                         <IonRow>
                             <IonCol size="10">
+                                
                                 <IonInput className="input" type="text"  required placeholder="Location(Automatic)" font-weight="bold" placeholder-opacity="1"/> 
                             </IonCol>
                             
