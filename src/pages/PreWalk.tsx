@@ -17,34 +17,86 @@ interface ContainerProps {
 const PreWalk: React.FC<ContainerProps> = (props) => {
     const [loading, setLoading] = useState(false)
     const[results, setResults] = useState<Object>()
-    let options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-    };
+    const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [items, setItems] = useState({});
     
-    const getLocation=async ()=>{
+    /*const getLocation=async ()=>{
         const location = await Geolocation.getCurrentPosition()
         setLoading(false)
         const long = String(location.coords.longitude)
         const lat = String(location.coords.latitude)
-        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude=hourly,daily&units=metric&appid=b5283a09cece585e260e8b686948e003")
+        
+        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude=hourly,daily&units=metric&appid=ffadcef2f1c452c320abcd1bb92a3891")
       .then(res => res.json())
       .then(
         (result) => {
-          setResults(result)
-          if (results) console.log(results.current.temp)
-          setIsLoaded(true);
+            setResults(result);
+            if(result){
+                console.log(typeof(result))
+                setIsLoaded(false)
+                console.log("not a value")
+            }else{
+                console.log("a value")
+            setIsLoaded(true);
+            }
+          if (results) console.log(results.current)
+          if(results==null) console.log("none")
+          
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
-          setIsLoaded(true);
+          setIsLoaded(false);
           setError(error);
         }
       )
         return location
     }
+    getLocation()
+    console.log(isLoaded)*/
+    /*const weather =async()=>{
+        const location = await Geolocation.getCurrentPosition()
+        setLoading(false)
+        const long = String(location.coords.longitude)
+        const lat = String(location.coords.latitude)
+        const result = await fetch("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&appid=ffadcef2f1c452c320abcd1bb92a3891")
+        return result
+    }
+    weather()*/
+    
+    useEffect(() => {
+        const getLocation=async ()=>{
+            const location = await Geolocation.getCurrentPosition()
+        setLoading(true)
+        const long = String(location.coords.longitude)
+        const lat = String(location.coords.latitude)
+        fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude=hourly,daily&units=metric&appid=6d837b2be67e2011e2992f53bd4de120")
+        .then(res => res.json())
+          .then(
+            (result) => {
+              if(result){
+                  setLoading(false)
+                  setIsLoaded(true)
+              }else{
+              setIsLoaded(true);
+              }
+              setResults(result);
+              if (result) console.log(result.current)
+              else console.log("where?")
+            },
+            // Note: it's important to handle errors here
+            // instead of a catch() block so that we don't swallow
+            // exceptions from actual bugs in components.
+            (error) => {
+              setIsLoaded(false);
+              setError(error);
+            }
+          )
+        }
+        getLocation()
+      }, [])
     /*const getAddress=async ()=>{
         const location = (await getLocation()).coords
         NativeGeocoder.reverseGeocode(location.latitude, location.longitude, options)
@@ -56,14 +108,14 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
       .catch((error: any) => console.log(error));
     }
     getAddress()*/
-const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   
     
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var now = new Date()
-    var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+    var time = new Date().getHours() + ":" + new Date().getMinutes()+":"+new Date().getSeconds();
+    var all = new Date(date + " "+time)
+    console.log(all.toISOString())
   return (
     <><><IonRouterOutlet>
         <Route path="/start/duringwalk" component={DuringWalk} />
@@ -79,7 +131,7 @@ const [error, setError] = useState(null);
         <div className="container">
             <div className="wholepage">
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
-            <IonLoading isOpen={loading} message="Filling form" onDidDismiss={()=>{setLoading(false)}}/>
+            <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}}/>
                 <form id="prewalkform">
                     <IonList>
                         <IonItem>
@@ -90,11 +142,11 @@ const [error, setError] = useState(null);
 
                         <IonItem>
                         <IonLabel className="align-left">Start Time</IonLabel>
-                        <IonDatetime display-format="h:mm A" picker-format="h:mm A" value={time}></IonDatetime>
+                        <IonDatetime display-format="h:mm A" picker-format="h:mm A" value={all.toISOString()}></IonDatetime>
         
                         </IonItem>
 
-                        <IonItem>
+                        <IonItem >
                         <IonLabel className="align-left">Temp(Celsius)</IonLabel>
                         {isLoaded? <IonText>{results?.current.temp}</IonText>: <IonText>Checking Temperature</IonText>}
                         
