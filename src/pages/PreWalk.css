@@ -8,7 +8,7 @@
     width: 80%;
 }
 
-.input, .date {
+.input {
     border: 1px solid black;
     border-radius: 50px;
     margin-bottom:20px;
@@ -16,6 +16,16 @@
 }
 
 .date{
-    
+    border: 1px solid black;
+    margin-bottom:20px;
+    background-color:rgba(255, 255, 255, 0.8);
     margin-left:5%;
+}
+
+.padding{
+    padding-top:5%;
+}
+
+.align-left{
+    text-align:left;
 }
