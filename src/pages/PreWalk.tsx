@@ -15,7 +15,7 @@ interface ContainerProps {
 }
 
 const PreWalk: React.FC<ContainerProps> = (props) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const[results, setResults] = useState<Object>()
     const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -69,7 +69,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     useEffect(() => {
         const getLocation=async ()=>{
             const location = await Geolocation.getCurrentPosition()
-        setLoading(true)
+        
         const long = String(location.coords.longitude)
         const lat = String(location.coords.latitude)
         fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+long+"&exclude=hourly,daily&units=metric&appid=6d837b2be67e2011e2992f53bd4de120")
