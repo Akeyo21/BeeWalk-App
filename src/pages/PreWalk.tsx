@@ -151,31 +151,14 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}}/>
                 <form id="prewalkform">
 
-                <IonGrid>
-                        
-
-                        <IonRow>
-                            <IonCol size="10">
-                                <IonInput className="input" type="text"  required placeholder="Recorder Name(Automatic)" font-weight="bold" placeholder-opacity="1"/> 
-                            </IonCol>
-                            
-                            <IonCol size="2">
-                                <IonButton color="light">Edit</IonButton>
-                            </IonCol>
-                        </IonRow>
-
-                        <IonRow>
-                            <IonCol size="10">
-                                <IonInput className="input" type="text"  required placeholder="Site(Automatic)" font-weight="bold" placeholder-opacity="1"/> 
-                            </IonCol>
-                            
-                            <IonCol size="2">
-                                <IonButton color="light">Edit</IonButton>
-                            </IonCol> 
-                        </IonRow>
-
-                    </IonGrid>
                     <IonList>
+                      <IonItem>
+                        <IonInput type="text" value=" Enter Recorder's name" font-weight="bold"></IonInput>
+                      </IonItem>
+
+                      <IonItem>
+                        <IonInput type="text" value=" Choose the transect being walked" font-weight="bold"></IonInput>
+                      </IonItem>
                         <IonItem>
                         <IonLabel className="align-left"> Date </IonLabel>
                         <IonDatetime  value ={date} displayFormat="DD MM YYYY" placeholder="Select Date"  ></IonDatetime>
