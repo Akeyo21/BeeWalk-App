@@ -115,6 +115,17 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
       else return "sunny/cloudy"
       
     }
+
+    const getWindSpeed=(windspeed:number)=>{
+      if (windspeed<0.3) return "0"
+      else if (windspeed<1.4) return "1"
+      else if (windspeed <3.1) return "2"
+      else if (windspeed<5.3) return "3"
+      else if (windspeed<7.8) return "4"
+      else if (windspeed<10.6) return "5"
+      else if (windspeed<13.6) return "6"
+      else return "not available"
+    }
     
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -139,42 +150,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
             <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}}/>
                 <form id="prewalkform">
-                    <IonList>
-                        <IonItem>
-                        <IonLabel className="align-left"> Date </IonLabel>
-                        <IonDatetime  value ={date} displayFormat="DD MM YYYY" placeholder="Select Date"  ></IonDatetime>
-        
-                        </IonItem>
 
-                        <IonItem>
-                        <IonLabel className="align-left">Start Time</IonLabel>
-                        <IonDatetime display-format="h:mm A" picker-format="h:mm A" value={all.toISOString()}></IonDatetime>
-        
-                        </IonItem>
-
-                        <IonItem >
-                        <IonLabel className="align-left">Temp(Celsius)</IonLabel>
-                        {isLoaded? <IonText>{results?.current.temp}</IonText>: <IonText>Checking Temperature</IonText>}
-                        
-                        </IonItem>
-
-                        <IonItem >
-                        <IonLabel className="align-left" >Sunshine</IonLabel>
-                        {isLoaded?
-                         <IonSelect interface="popover" value={getSunnyValue(results?.current.clouds)}>
-                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
-                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
-                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
-                         </IonSelect>: 
-                         <IonSelect interface="popover" value="not yet">
-                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
-                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
-                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
-                         </IonSelect>}
-                        
-                        </IonItem>
-                    </IonList>
-                    <IonGrid>
+                <IonGrid>
                         
 
                         <IonRow>
@@ -197,18 +174,69 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                             </IonCol> 
                         </IonRow>
 
-                        <IonRow>
-                            <IonCol size="10">
-                                <IonInput className="input" type="text"  required placeholder="Weather Conditions
-                                (Automatic)" font-weight="bold" placeholder-opacity="1"/> 
-                            </IonCol>
-                            
-                            <IonCol size="2">
-                                <IonButton color="light">Edit</IonButton>
-                            </IonCol>
-                        </IonRow>
-                        
                     </IonGrid>
+                    <IonList>
+                        <IonItem>
+                        <IonLabel className="align-left"> Date </IonLabel>
+                        <IonDatetime  value ={date} displayFormat="DD MM YYYY" placeholder="Select Date"  ></IonDatetime>
+        
+                        </IonItem>
+
+                        <IonItem>
+                        <IonLabel className="align-left">Start Time</IonLabel>
+                        <IonDatetime display-format="h:mm A" picker-format="h:mm A" value={all.toISOString()}></IonDatetime>
+        
+                        </IonItem>
+
+                        <IonItem >
+                        <IonLabel className="align-left">Temp(Celsius)</IonLabel>
+                        {isLoaded? <IonText>{results?.current.temp}</IonText>: <IonText>Checking Temperature</IonText>}
+                        
+                        </IonItem>
+
+                        <IonItem >
+                        <IonLabel className="align-left" >Sunshine</IonLabel>
+                        {isLoaded?
+                         <IonSelect interface="action-sheet" value={getSunnyValue(results?.current.clouds)}>
+                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
+                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
+                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
+                         </IonSelect>: 
+                         <IonSelect interface="action-sheet" >
+                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
+                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
+                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
+                         </IonSelect>}
+
+                         
+                        
+                        </IonItem>
+
+                        <IonItem className="align-left">
+                          <IonLabel>Wind Speed</IonLabel>
+                        {isLoaded?
+                         <IonSelect interface="action-sheet" value={getWindSpeed(results?.current.wind_speed)}>
+                         <IonSelectOption value="0">Smoke rises vertically</IonSelectOption>
+                          <IonSelectOption value="1">Sight smoke drift</IonSelectOption>
+                          <IonSelectOption value="2">Wind felt on face, leaves rustle</IonSelectOption>
+                          <IonSelectOption value="3">Leaves and twigs in slight motion</IonSelectOption>
+                          <IonSelectOption value="4">Dust raised and small branches move</IonSelectOption>
+                          <IonSelectOption value="5">Small trees in leaf beggin to sway</IonSelectOption>
+                          <IonSelectOption value="6">Large branches move and trees sway</IonSelectOption>
+                         </IonSelect>:
+                         <IonSelect interface="action-sheet" >
+                         <IonSelectOption value="0">Smoke rises vertically</IonSelectOption>
+                          <IonSelectOption value="1">Sight smoke drift</IonSelectOption>
+                          <IonSelectOption value="2">Wind felt on face, leaves rustle</IonSelectOption>
+                          <IonSelectOption value="3">Leaves and twigs in slight motion</IonSelectOption>
+                          <IonSelectOption value="4">Dust raised and small branches move</IonSelectOption>
+                          <IonSelectOption value="5">Small trees in leaf beggin to sway</IonSelectOption>
+                          <IonSelectOption value="6">Large branches move and trees sway</IonSelectOption>
+                         </IonSelect>
+                         }
+                        </IonItem>
+                    </IonList>
+                    
                 
                     <IonButton routerLink="/start/duringwalk"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
