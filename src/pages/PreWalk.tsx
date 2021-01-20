@@ -1,12 +1,13 @@
 import React, { constructor, useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
-import { IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonDatetime, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRouterOutlet, IonRow, IonText, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonDatetime, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRouterOutlet, IonRow, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/react';
 /*import '../components/LoginPage.css';*/
 import './PreWalk.css';
 import {Route} from 'react-router-dom';
 import DuringWalk from './DuringWalk';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
+import { createSecureContext } from 'tls';
 /*
     PreWalk - opens the first page containing details 
     required prior to starting the beewalk
@@ -108,7 +109,12 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
       .catch((error: any) => console.log(error));
     }
     getAddress()*/
-  
+    const getSunnyValue = (cloudiness: number)=>{
+      if (cloudiness>70) return "cloudy"
+      else if(cloudiness<30) return "sunny"
+      else return "sunny/cloudy"
+      
+    }
     
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -149,6 +155,22 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                         <IonItem >
                         <IonLabel className="align-left">Temp(Celsius)</IonLabel>
                         {isLoaded? <IonText>{results?.current.temp}</IonText>: <IonText>Checking Temperature</IonText>}
+                        
+                        </IonItem>
+
+                        <IonItem >
+                        <IonLabel className="align-left" >Sunshine</IonLabel>
+                        {isLoaded?
+                         <IonSelect interface="popover" value={getSunnyValue(results?.current.clouds)}>
+                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
+                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
+                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
+                         </IonSelect>: 
+                         <IonSelect interface="popover" value="not yet">
+                         <IonSelectOption value="sunny">Sunny</IonSelectOption>
+                          <IonSelectOption value="sunny/cloudy">Sunny/Cloudy</IonSelectOption>
+                          <IonSelectOption value="cloudy">Cloudy</IonSelectOption>
+                         </IonSelect>}
                         
                         </IonItem>
                     </IonList>
