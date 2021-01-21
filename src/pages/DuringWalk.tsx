@@ -132,13 +132,8 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
       }     
   }*/
   
-  const [showAlert1, setShowAlert1] = useState(false);
-  const [redirectHome, setRedirectHome] = useState(false);
   const[showRecords, setShowRecords] = useState(false)
-  /*Change between pages when ok is clicked in alert*/
-  if (redirectHome==true){
-    return <Redirect to='/frontpage' />
-  }
+ 
   console.log(beedata.length)
   console.log("Hello")
   return (
@@ -154,28 +149,7 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
                 Add Manually
               </IonButton>
 
-              <IonButton onClick={() => setShowAlert1(true)} className="whitebackground ion-float-right">
-                Submit
-              </IonButton>
-              <IonAlert
-                isOpen={showAlert1}
-                onDidDismiss={() => setShowAlert1(false)}
-                cssClass='submitalert'
-                header={'Submission'}
-                message={'Do you wish to submit your data?'}
-                buttons={[
-                  {
-                    text: 'OK',
-                    handler:()=>{
-                      setRedirectHome(true)
-                    }
-                  },
-
-                  {
-                    text: 'Cancel',
-                    role: 'cancel'
-                  }
-                ]} />
+              
 
               <IonToolbar className="toolbar">
                 <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
