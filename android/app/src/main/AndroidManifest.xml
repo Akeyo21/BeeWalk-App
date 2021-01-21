@@ -60,6 +60,4 @@
     <!-- Audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q" />
-  <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q" />
 </manifest>
