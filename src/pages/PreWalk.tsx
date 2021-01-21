@@ -8,6 +8,8 @@ import DuringWalk from './DuringWalk';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { createSecureContext } from 'tls';
+import MapWalk from './MapWalk';
+
 /*
     PreWalk - opens the first page containing details 
     required prior to starting the beewalk
@@ -136,6 +138,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
   return (
     <><><IonRouterOutlet>
         <Route path="/start/duringwalk" component={DuringWalk} />
+        <Route path="/start/duringwalk/map" component={MapWalk} />
+
     </IonRouterOutlet></>
       <IonPage>
         <IonHeader>
@@ -149,7 +153,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             <div className="wholepage">
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
             <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}}/>
-                <form id="prewalkform">
+                <form id="prewalkform" action="/start/duringwalk/map">
 
                     <IonList>
                       <IonItem>
@@ -221,7 +225,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                     </IonList>
                     
                 
-                    <IonButton routerLink="/start/duringwalk"
+                    <IonButton  type="submit"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Start Walk
                     </IonButton>
