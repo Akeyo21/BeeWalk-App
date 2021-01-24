@@ -58,7 +58,7 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
   return (
     
     <>
-     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Record with photo/video</IonButton>
+     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/duringwalk/photo">Record with photo/video</IonButton>
       <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/duringwalk/recordform">Record without photo/video</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Records entered</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => setShowAlert1(true)}>
