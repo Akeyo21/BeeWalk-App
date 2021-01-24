@@ -8,7 +8,10 @@ import DuringWalk from './DuringWalk';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { createSecureContext } from 'tls';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+/*import { Map, GoogleApiWrapper } from 'google-maps-react';*/
+import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
+
+import "leaflet/dist/leaflet.css";
 import {
     GoogleMaps,
     GoogleMap,
@@ -16,11 +19,12 @@ import {
     GoogleMapOptions,
     CameraPosition,
     MarkerOptions,
-    Marker,
+    /*Marker,*/
     Environment
   } from '@ionic-native/google-maps';
-/*
-    PreWalk - opens the first page containing details 
+import L from 'leaflet';
+
+    /*PreWalk - opens the first page containing details 
     required prior to starting the beewalk
 */
 interface ContainerProps { 
@@ -28,80 +32,33 @@ interface ContainerProps {
 }
 
 const MapWalk: React.FC<ContainerProps> = (props) => {
-   const [map,setMap] = useState<GoogleMap>()
-   /*const loadMap=()=>{
-    /*Environment.setEnv({
-        'API_KEY_FOR_BROWSER_RELEASE': 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q&callback=mapInit',
-        'API_KEY_FOR_BROWSER_DEBUG': 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q&callback=mapInit'
-      });
-      let mapOptions: GoogleMapOptions = {
-        camera: {
-           target: {
-             lat: 43.0741904,
-             lng: -89.3809802
-           },
-           zoom: 18,
-           tilt: 30
-         }
-      };
+   const [map,setMap] = useState<typeof MapContainer>()
+   
+   
 
-      setMap( GoogleMaps.create('map_canvas', mapOptions))
-
-    let marker: Marker |undefined = map?.addMarkerSync({
-      title: 'Ionic',
-      icon: 'blue',
-      animation: 'DROP',
-      position: {
-        lat: 43.0741904,
-        lng: -89.3809802
-      }
-    });
-    marker?.on(GoogleMapsEvent.MARKER_CLICK).subscribe(() => {
-      alert('clicked');
-    });
-   }
-   loadMap()
-   <><><IonRouterOutlet>
-        <Route path="/start/duringwalk" component={DuringWalk} />
-    </IonRouterOutlet></>
-      <IonPage>
-        <IonHeader>
-        </IonHeader>
-        <IonContent fullscreen>
-            
-        <IonHeader >
-        </IonHeader>
-
-        <div className="container">
-            <div className="wholepage">
-            
-                </div>
-            </div>
-          
-          
-        </IonContent>
-      </IonPage></>
-      <Map
-      google={props.google}
-      style={mapStyles}
-      initialCenter={{
-        lat: -1.2884,
-        lng: 36.8233
-      }} />*/
-
-      const mapStyles = {
-        width: '100%',
-        height: '100%'
-      };
       const [showAlert1, setShowAlert1] = useState(false);
       const [redirectHome, setRedirectHome] = useState(false);
-      /*Change between pages when ok is clicked in alert*/
+      /*Change between pages when ok is clicked in alert
+      <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}  style={{  height: "100vh" }}>
+    <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+           
+          />
+    <Marker position={[51.505, -0.09]}>
+      <Popup>
+        A pretty CSS3 popup. <br /> Easily customizable.
+      </Popup>
+    </Marker>
+  </MapContainer>
+     */
   if (redirectHome==true){
     return <Redirect to='/frontpage' />
-  }
+  } 
   return (
+    
     <>
-      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Record with photo/video</IonButton>
+     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Record with photo/video</IonButton>
       <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/duringwalk/recordform">Record without photo/video</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Records entered</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => setShowAlert1(true)}>
@@ -126,6 +83,7 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
                     role: 'cancel'
                   }
                 ]} />
+  
       </>
   
     
