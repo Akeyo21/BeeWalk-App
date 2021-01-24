@@ -225,8 +225,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                     </IonList>
                     
                 
-                    <IonButton  type="submit"
-                    color="warning" size="large" className="buttons" shape="round" expand="block">
+                    <IonButton 
+                    color="warning" size="large" className="buttons" shape="round" expand="block" href="/start/duringwalk/map">
                         Start Walk
                     </IonButton>
                 </form>
