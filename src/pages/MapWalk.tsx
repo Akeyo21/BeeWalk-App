@@ -51,7 +51,9 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
       </Popup>
     </Marker>
   </MapContainer>
-     */
+     
+  AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw - API key
+  */
   if (redirectHome==true){
     return <Redirect to='/frontpage' />
   } 
