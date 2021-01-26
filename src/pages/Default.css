@@ -79,8 +79,8 @@
     top:0;
     bottom: 0;
     overflow:scroll;
-    margin-top:30% ;
-    margin-bottom: 10%;
+    margin-top:10% ;
+    margin-bottom: 0;
 }
 
 .grid{
@@ -150,8 +150,16 @@ text-align:center;
 .input{
 padding: 18px;
     margin-top: 2%;
+     
+}
+.placeholder{
+    --placeholder-opacity: 1;
 }
 
 .margin-bottom{
     margin-bottom: 10%;
+}
+
+.text-center{
+    text-align:center;
 }
