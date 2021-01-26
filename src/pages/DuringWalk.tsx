@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 /*import '../components/ExploreContainer.css';*/
-import { IonAlert, IonButton,  IonCard,  IonCardContent,  IonCol,  IonContent, IonFooter, IonGrid, IonHeader, IonInput, IonPage, IonRouterLink, IonRouterOutlet, IonRow, IonSegment, IonSegmentButton, IonText, IonToolbar } from '@ionic/react';
+import { IonAlert, IonBackButton, IonButton,  IonCard,  IonCardContent,  IonCol,  IonContent, IonFooter, IonGrid, IonHeader, IonInput, IonPage, IonRouterLink, IonRouterOutlet, IonRow, IonSegment, IonSegmentButton, IonText, IonToolbar } from '@ionic/react';
 /*import '../components/LoginPage.css';
 import './PreWalk.css';*/
 import './Default.css';
@@ -14,6 +14,7 @@ import BeeRecords from '../components/BeeRecords'
 import ReactDOM from 'react-dom';
 import Postlogin from './Postlogin';
 import { ReactComponent } from '*.svg';
+import Photo from './Photo';
 
 /*
     DuringWalk - page that collects data during walk
@@ -116,21 +117,23 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
           )
         }
   };
-  /*
-  const showRecords=(truth: boolean)=>{
-    console.log("Entered loop")
-    console.log(truth + "truth value")
-      var body = document.getElementById("main")
-      if (truth){
-        ReactDOM.render(
-          <RepeatSpecies/> , body)
-      }else{
-        ReactDOM.render(
-          <><RepeatRecords />            
-          
-            </> , document.getElementById("main"))
-      }     
-  }*/
+  /** <IonToolbar className="toolbar">
+                <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
+                  <IonSegmentButton value="enter" >Enter Records</IonSegmentButton>
+                  <IonSegmentButton value="records" >Check Records</IonSegmentButton>
+                </IonSegment>
+              </IonToolbar>
+
+           
+            <div className="datacontent" id="main"> 
+              {showRecords ? (<RepeatRecords/>):(<RepeatSpecies />) }
+            </div>
+            
+            <IonButton color="light" href="/start/duringwalk/manual" >
+                Add Manually
+              </IonButton>
+              <IonBackButton defaultHref="/start/duringwalk/photo" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+            */
   
   const[showRecords, setShowRecords] = useState(false)
  
@@ -139,29 +142,19 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
   return (
     
     <><></><><IonRouterOutlet>
-      <Route path="/start/duringwalk/manual" component={ManualData} />
+      <Route path="/start/duringwalk/photo" component={Photo} />
     </IonRouterOutlet></>
       <IonPage>
           <IonContent fullscreen className="whitebackground ">
           
-            <IonHeader className="switch">
-              <IonButton color="light" href="/start/duringwalk/manual" >
-                Add Manually
-              </IonButton>
+            <IonHeader >
+            
+              </IonHeader>
+              <div className="datacontent" id="main"> 
+              <RepeatSpecies />
+            </div>
 
               
-
-              <IonToolbar className="toolbar">
-                <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
-                  <IonSegmentButton value="enter" >Enter Records</IonSegmentButton>
-                  <IonSegmentButton value="records" >Check Records</IonSegmentButton>
-                </IonSegment>
-              </IonToolbar>
-
-            </IonHeader>
-            <div className="datacontent" id="main"> 
-              {showRecords ? (<RepeatRecords/>):(<RepeatSpecies />) }
-            </div>
 
 
           </IonContent> </IonPage></>
