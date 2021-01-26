@@ -4,14 +4,14 @@ import './Default.css';
 import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonRow} from '@ionic/react';
 import { usePhotoGallery } from './Camera';
 import { camera } from 'ionicons/icons';
-import RecordingForm from '../components/RecordingForm';
+import RecordingForm from '../components/Form';
 
 const Photo: React.FC = () => {
 
     const {  photos, takePhoto } = usePhotoGallery();  
   return(
     <><>
-    <IonContent>
+    <IonContent className="whitebackground">
       <RecordingForm/>
     <IonGrid>
       <IonRow>
