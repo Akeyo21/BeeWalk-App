@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './ExploreContainer.css';
 import './LoginPage.css';
 import '../pages/Default.css';
 import {  IonList, IonItem,  IonInput, IonButton, IonText, IonLabel } from '@ionic/react';
+import { Context } from '../pages/RecordForm';
+import { BeeSpecies } from '../Reducers/SpeciesReducer';
 
 interface ContainerProps { 
-  
+  species: BeeSpecies
 }
 
-const Form: React.FC<ContainerProps> = () => {
-  /*<input type="submit" value="Log In" id="submit"></input>*/
+const Form: React.FC<ContainerProps> = (props) => {
+  
   return (   
 <div className="page">
             <h1 className="division margin-bottom">Edit Record</h1>
@@ -19,20 +21,31 @@ const Form: React.FC<ContainerProps> = () => {
                     <IonInput className="placeholder" placeholder="Section(filled automatically)"></IonInput>
                   </IonItem>
 
-                  <IonItem href="/start/duringwalk" className="text-center">
-                    <IonLabel >Species</IonLabel>                   
+                  <IonItem href="/start/duringwalk" className="text-center" >
+                    {props.species? <IonLabel >{props.species.getName()}</IonLabel>:<IonLabel >Species</IonLabel>}                   
                   </IonItem>
 
-                  <IonItem>
-                    <IonInput className="placeholder" placeholder="Caste(filled automatically)"></IonInput>
+                  {props.species? 
+                  props.species.getCaste().map((casteobject)=>(
+                    <><IonItem className="text-center"> 
+                      <IonLabel >
+                        {Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}
+                      </IonLabel> 
+                    </IonItem> </>
+                    ))
+                   
+                    :
+
+                  <><IonItem>
+                    <IonInput className="placeholder" placeholder="Caste"></IonInput>
                   </IonItem>
 
-                  <IonItem>
-                    <IonInput className="placeholder" placeholder="Number(filled automatically)"></IonInput>
-                  </IonItem>
+                    <IonItem>
+                      <IonInput className="placeholder" placeholder="Number(filled automatically)"></IonInput>
+                    </IonItem></>}
 
                   <IonItem>
-                    <IonInput  className="placeholder" placeholder="Flower" ></IonInput>
+                    <IonInput  className="placeholder" placeholder="Flower (optional)" ></IonInput>
                   </IonItem>
 
                   </IonList>
