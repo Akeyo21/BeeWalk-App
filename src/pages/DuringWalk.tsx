@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
-/*import '../components/ExploreContainer.css';*/
-import { IonAlert, IonBackButton, IonButton,  IonCard,  IonCardContent,  IonCol,  IonContent, IonFooter, IonGrid, IonHeader, IonInput, IonPage, IonRouterLink, IonRouterOutlet, IonRow, IonSegment, IonSegmentButton, IonText, IonToolbar } from '@ionic/react';
-/*import '../components/LoginPage.css';
-import './PreWalk.css';*/
+import { IonContent,  IonHeader,  IonPage,  IonRouterOutlet } from '@ionic/react';
 import './Default.css';
-import DuringWalkHeader from '../components/DuringWalkHeader'
-
 import '../theme/variables.css';
-import ManualData from "./ManualData";
-import {Redirect, Route} from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import BeeSpeciesFile from '../components/BeeSpecies'
 import BeeRecords from '../components/BeeRecords'
-import ReactDOM from 'react-dom';
-import Postlogin from './Postlogin';
-import { ReactComponent } from '*.svg';
 import Photo from './Photo';
+import RecordForm from './RecordForm';
 
 /*
     DuringWalk - page that collects data during walk
@@ -143,6 +135,7 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
     
     <><></><><IonRouterOutlet>
       <Route path="/start/duringwalk/photo" component={Photo} />
+            <Route  exact path="/start/walk/recordform" component={RecordForm} />
     </IonRouterOutlet></>
       <IonPage>
           <IonContent fullscreen className="whitebackground ">
@@ -151,7 +144,12 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
             
               </IonHeader>
               <div className="datacontent" id="main"> 
-              <RepeatSpecies />
+              <BeeSpeciesFile content="Bee Species Name 1" />
+              <BeeSpeciesFile content="Bee Species Name 2" />
+              <BeeSpeciesFile content="Bee Species Name 3" />
+              <BeeSpeciesFile content="Bee Species Name 4" />
+              <BeeSpeciesFile content="Bee Species Name 5" />
+              <BeeSpeciesFile content="Bee Species Name 6" />
             </div>
 
               
