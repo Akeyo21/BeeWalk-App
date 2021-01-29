@@ -63,7 +63,7 @@ const App: React.FC = () => (
         <Route path="/start/duringwalk" component={DuringWalk} />
         <Route path="/start/duringwalk/manual" component={ManualData} />
         <Route path="/start/duringwalk/map" component={MapWalk} />
-        <Route path="/start/duringwalk/recordform" component={RecordForm} />
+        <Route path="/start/walk/recordform" component={RecordForm} />
         <Route path="/start/duringwalk/photo" component={Photo} />
         <Route path="/more" component={More} />
      
