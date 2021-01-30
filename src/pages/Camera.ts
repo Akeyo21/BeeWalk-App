@@ -49,7 +49,7 @@ export function usePhotoGallery() {
         };
       }
     };
-    useEffect(() => {
+    /*useEffect(() => {
       const loadSaved = async () => {
         const photosString = await get('photos');
         const photosInStorage = (photosString ? JSON.parse(photosString) : []) as Photo[];
@@ -67,7 +67,7 @@ export function usePhotoGallery() {
         setPhotos(photosInStorage);
       };
       loadSaved();
-    }, [get, readFile]);
+    }, [get, readFile]);*/
     const takePhoto = async () => {
       const cameraPhoto = await getPhoto({
         resultType: CameraResultType.Uri,
@@ -76,6 +76,16 @@ export function usePhotoGallery() {
       });
     
       const fileName = new Date().getTime() + '.jpeg';
+      /*const newPhotos = [{
+        filepath: fileName,
+        webviewPath: cameraPhoto.webPath
+      }, ...photos];
+      const newPhotos = [{
+        filepath: fileName,
+        webviewPath: cameraPhoto.webPath
+      }, ...photos];
+      setPhotos(newPhotos)*/
+      
       const savedFileImage = await savePicture(cameraPhoto, fileName);
       const newPhotos = [savedFileImage, ...photos];
       setPhotos(newPhotos);
@@ -86,4 +96,9 @@ export function usePhotoGallery() {
       photos, 
       takePhoto
     };
+
+    
+  }
+  export const resetPhotos=()=>{
+
   }
