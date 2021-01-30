@@ -153,7 +153,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             <div className="wholepage">
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
             <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}}/>
-                <form id="prewalkform" action="/start/duringwalk/map">
+                <form id="prewalkform" action="/start/map">
 
                     <IonList>
                       <IonItem>
@@ -226,7 +226,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                     
                 
                     <IonButton 
-                    color="warning" size="large" className="buttons" shape="round" expand="block" href="/start/duringwalk/map">
+                    color="warning" size="large" className="buttons" shape="round" expand="block" href="/map">
                         Start Walk
                     </IonButton>
                 </form>
