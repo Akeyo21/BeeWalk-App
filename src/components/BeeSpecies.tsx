@@ -6,7 +6,6 @@ import BeeCastCount from "./BeeCastCount"
 import { add, addCircle, removeCircle, removeOutline } from 'ionicons/icons';
 /*import { Context } from '../pages/DuringWalk';*/
 import { State } from 'ionicons/dist/types/stencil-public-runtime';
-import HoldingData from '../pages/DataTransfer'
 import { Redirect } from 'react-router';
 import { connect, useDispatch } from 'react-redux'
 
@@ -34,21 +33,9 @@ let duplicate = null;
 const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
     const dispatch = useDispatch()
     const [showModal, setShowModal] = useState(false);
-    /*const {beedata, addBeeData} = useContext(Context);*/
     
     const [beespecies, setBeeSpecies] = useState<BeeSpecies>();
-    class BeeType{
-        name: String;
-        queen: number;
-        worker: number;
-        unknown: number;
-        constructor(name: String, queen: number, worker: number, unknown:number){
-            this.name = name;
-            this.queen = queen;
-            this.worker = worker;
-            this.unknown = unknown;
-        }
-    }
+    
     function addBeeDataToList(){
        
         setShowModal(false)
@@ -97,7 +84,6 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
     const bee = (state: { species: BeeSpecies; }) => state.species
   const todos = useSelector(bee)
   console.log(todos)
-    let x = HoldingData.getBeeSpecies();
     const [redirectHome, setRedirectHome] = useState(false)
     if (redirectHome==true){
         return <Redirect to='/start/walk/recordform' />
@@ -165,7 +151,6 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
 };
 export default BeeSpeciesFile;
 
-export const val = HoldingData.getBeeSpecies();
 export const MyContext = React.createContext(duplicate);
 /*
 const mapDispatchToProps = (dispatch: Dispatch) => {
