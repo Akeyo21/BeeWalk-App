@@ -32,7 +32,7 @@ export const initialState = {
 export default function speciesReducer(state = initialState, action: { type: any; payload: any; }) {
     switch (action.type) {
         case actions.SELECT_BEE_SPECIES:
-            return {species: action.payload}
+            return {...state, species: action.payload}
         case actions.SEND_BEE_SPECIES:
             return {...state}
       default:
