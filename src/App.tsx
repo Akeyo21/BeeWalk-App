@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
+import { IonApp,  IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Home from './pages/Home';
 import Login from "./pages/Login";
@@ -20,6 +20,7 @@ import More from './pages/More';
 import MapWalk from './pages/MapWalk';
 import RecordForm from './pages/RecordForm';
 import Photo from './pages/Photo';
+import Records from './pages/RecordsEntered';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -40,8 +41,6 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { walk, ellipsisHorizontal, leaf, navigate, home } from 'ionicons/icons';
-/*<Route path="/frontpage" component={Postlogin} />*/
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -62,9 +61,11 @@ const App: React.FC = () => (
         <Route path="/start/prewalk" component={PreWalk} />
         <Route path="/start/duringwalk" component={DuringWalk} />
         <Route path="/start/duringwalk/manual" component={ManualData} />
-        <Route path="/start/duringwalk/map" component={MapWalk} />
-        <Route path="/start/walk/recordform" component={RecordForm} />
-        <Route path="/start/duringwalk/photo" component={Photo} />
+        <Route path="/map" component={MapWalk} />
+        <Route path="/start/recordform" component={RecordForm} />
+        <Route path="/start/photo" component={Photo} />
+        <Route path="/start/records" component={Records} />
+
         <Route path="/more" component={More} />
      
       </IonRouterOutlet>
