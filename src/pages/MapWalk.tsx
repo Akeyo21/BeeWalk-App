@@ -10,7 +10,7 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { createSecureContext } from 'tls';
 /*import { Map, GoogleApiWrapper } from 'google-maps-react';*/
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
-
+import Records from './RecordsEntered'
 import "leaflet/dist/leaflet.css";
 import {
     GoogleMaps,
@@ -32,9 +32,11 @@ interface ContainerProps {
 }
 
 const MapWalk: React.FC<ContainerProps> = (props) => {
+  
    const [map,setMap] = useState<typeof MapContainer>()
    
    
+  const [redirectRecords, setRedirectRecords] = useState(false)
 
       const [showAlert1, setShowAlert1] = useState(false);
       const [redirectHome, setRedirectHome] = useState(false);
@@ -51,18 +53,25 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
       </Popup>
     </Marker>
   </MapContainer>
+      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/photo">Record with photo/video</IonButton>
      
   AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw - API key
   */
   if (redirectHome==true){
     return <Redirect to='/frontpage' />
   } 
+  if (redirectRecords ==true){
+    return <Redirect to='/start/records'/>
+  }
+  console.log("In the map page")
   return (
     
     <>
-     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/duringwalk/photo">Record with photo/video</IonButton>
-      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/duringwalk/recordform">Record without photo/video</IonButton>
-    <IonButton color="warning" size="large" className="buttons" shape="round" expand="block">Records entered</IonButton>
+    <IonRouterOutlet>
+          <Route exact path='/start/records' component={Records} />
+  </IonRouterOutlet>
+     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/recordform">Record without photo/video</IonButton>
+    <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => setRedirectRecords(true)}>Records entered</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => setShowAlert1(true)}>
       Save Records
       </IonButton>
