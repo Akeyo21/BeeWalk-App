@@ -5,7 +5,7 @@ export const SELECT_BEE_SPECIES = 'SELECT_BEE_SPECIES'
 export const SEND_BEE_SPECIES = 'SEND_BEE_SPECIES'
 
 // Create Redux action creators that return an action
-export const selectBeeSpecies = (speciesname: BeeSpecies) => ({
+export const selectBeeSpecies = (speciesname: BeeSpecies|null) => ({
     type: SELECT_BEE_SPECIES,
     payload: speciesname,
   })
