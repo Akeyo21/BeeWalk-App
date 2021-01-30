@@ -24,7 +24,7 @@ interface ContainerProps {
 const DuringWalk: React.FC<ContainerProps> = () => {
 //export default class DuringWalk extends React.Component{
   
-  const [beedata, addBeeData] = useState([]as any)
+  /*const [beedata, addBeeData] = useState([]as any)
   const RepeatSpecies: React.FC<ContainerProps> = () => {
     return(
       <>
@@ -109,7 +109,7 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
           )
         }
   };
-  /** <IonToolbar className="toolbar">
+   <IonToolbar className="toolbar">
                 <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
                   <IonSegmentButton value="enter" >Enter Records</IonSegmentButton>
                   <IonSegmentButton value="records" >Check Records</IonSegmentButton>
@@ -125,16 +125,15 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
                 Add Manually
               </IonButton>
               <IonBackButton defaultHref="/start/duringwalk/photo" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
-            */
+            
   
   const[showRecords, setShowRecords] = useState(false)
  
   console.log(beedata.length)
-  console.log("Hello")
+  console.log("Hello")*/
   return (
     
     <><></><><IonRouterOutlet>
-      <Route path="/start/duringwalk/photo" component={Photo} />
             <Route  exact path="/start/walk/recordform" component={RecordForm} />
     </IonRouterOutlet></>
       <IonPage>
@@ -160,5 +159,5 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
     
   );
 };
-export const Context = React.createContext({ beedata:[] as any, addBeeData: (list: any) => {return list} });
+/*export const Context = React.createContext({ beedata:[] as any, addBeeData: (list: any) => {return list} });*/
 export default DuringWalk;
