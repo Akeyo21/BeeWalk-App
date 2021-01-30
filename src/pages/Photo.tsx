@@ -2,17 +2,33 @@ import React, { useState } from 'react';
 
 import './Default.css';
 import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonIcon, IonImg, IonRow} from '@ionic/react';
-import { usePhotoGallery } from './Camera';
+import {  usePhotoGallery } from './Camera';
 import { camera } from 'ionicons/icons';
 import RecordingForm from '../components/Form';
+import { useDispatch } from 'react-redux';
+import { Record } from '../Reducers/RecordsReducer';
+import { addRecord } from '../Actions/Records';
 
 const Photo: React.FC = () => {
 
-    const {  photos, takePhoto } = usePhotoGallery();  
+    let {  photos, takePhoto } = usePhotoGallery();
+    const dispatch = useDispatch()
+
+    /**Add photos to the store */
+    const addPhotos=()=>{
+      takePhoto();
+      
+      console.log(photos)
+    }  
+    if (photos){
+      let record = new Record(photos)
+      dispatch(addRecord(record))
+    }
+    console.log(photos)
   return(
     <><>
     <IonContent className="whitebackground">
-      <RecordingForm/>
+      <RecordingForm species=""/>
     <IonGrid>
       <IonRow>
         {photos.map((photo, index) => (
@@ -23,7 +39,7 @@ const Photo: React.FC = () => {
       </IonRow>
     </IonGrid> 
     <IonFab vertical="bottom" horizontal="center" slot="fixed">
-    <IonFabButton onClick={() => takePhoto()}>
+    <IonFabButton onClick={() => addPhotos()}>
       <IonIcon icon={camera}></IonIcon>
     </IonFabButton>
   </IonFab>
