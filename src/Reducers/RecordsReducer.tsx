@@ -1,5 +1,5 @@
 // Import all actions
-import { threadId } from 'worker_threads';
+import { AnyAction } from 'redux';
 import * as actions from '../Actions/Records'
 import { Photo } from '../pages/Camera';
 import { BeeSpecies } from './SpeciesReducer';
@@ -32,13 +32,15 @@ export class Record{
 }
 
 export const initialState = {
-    records:[]
+    records:[] 
   }
   
-export default function recordsReducer(state = initialState, action: { type: any; payload: any; }) {
+export default function recordsReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case actions.ADD_RECORD:
             return {...state, records: state.records.concat(action.payload)}
+        case actions.RESET_RECORDS:
+            return {...state, records:action.payload}
       default:
         return state
     }
