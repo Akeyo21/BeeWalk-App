@@ -2,12 +2,19 @@ import { Record } from "../Reducers/RecordsReducer"
 
 // Create Redux action types
 export const ADD_RECORD = 'ADD_RECORD'
-
+export const RESET_RECORDS = 'RESET_RECORDS'
 // Create Redux action creators that return an action
 export const addRecord = (record: Record) => ({
     type: ADD_RECORD,
     payload: record,
   })
+
+export const resetRecords = ()=>({
+  type: RESET_RECORDS,
+  payload: [] ,
+})
+
+
 
 /*
   export function selectedSpecies(species){
