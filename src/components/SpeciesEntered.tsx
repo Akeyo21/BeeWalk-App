@@ -30,14 +30,14 @@ const SpeciesEntered: React.FC<ContainerProps> = (props) => {
         </IonSlides> :<IonText></IonText>}
     <IonCardHeader>
       <IonCardTitle className="dark">
-      {props.species.getName()} spotted on the walk<br/>
+      {props.species.name} spotted on the walk<br/>
       on section {props.section}
         </IonCardTitle>
     </IonCardHeader>
 
     <IonCardContent>
       Bee Caste with number<br></br>
-      {props.species.getCaste().map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
+      {props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
                 
                     <IonText>{Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}</IonText>
       ))}
