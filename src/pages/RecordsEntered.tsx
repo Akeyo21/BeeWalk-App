@@ -22,6 +22,9 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
     if (props.records){
       recordslist = Object.values(props.records)[0]
     }
+    console.log(recordslist[0].species)
+    recordslist.map((record: Record)=>(
+      console.log(typeof record)))
     /*let photosAvailable = false
     if(records.getPhotos()){
       photosAvailable = true
@@ -57,7 +60,7 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
             
         <div className="wholepage "> 
         {recordslist.map((record: Record)=>(
-         <SpeciesEntered species={record.getSpecies()} photos={record.getPhotos()} flower={record.getFlower()} section={record.getSection()}/>
+         <SpeciesEntered species={record.species} photos={record.photos} flower={record.flower} section={record.section}/>
         )) }
         
         </div>
