@@ -9,9 +9,11 @@ import MapWalk from '../pages/MapWalk'
 import SpeciesList from '../pages/DuringWalk';
 import { Photo } from '../pages/Camera';
 import { Record } from '../Reducers/RecordsReducer';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { addRecord } from '../Actions/Records';
 import { selectBeeSpecies } from '../Actions/Species';
+import { resetPhotos } from '../Actions/Photos';
+import { Link } from 'react-router-dom';
 interface ContainerProps { 
   species: BeeSpecies|any
   photos: Photo[]|any
@@ -22,7 +24,7 @@ const Form: React.FC<ContainerProps> = (props) => {
   const [choosingSpecies, setChoosingSpecies] = useState(false);
   const [showSpeciesAlert, setShowSpeciesAlert] = useState(false);
   const [showAlert1, setShowAlert1] = useState(false);
-  console.log(props.photos)
+  //console.log(props.photo)
   let section:number
   let flower:string
   const getSectionValue=(value:any)=>{
@@ -40,11 +42,13 @@ const Form: React.FC<ContainerProps> = (props) => {
       photolist = props.photos
     }
     if(props.species){
-      let beespecies = new BeeSpecies(props.species.getName(), props.species.getCaste())
+      let beespecies = new BeeSpecies(props.species.name, props.species.caste)
       let record = new Record(section, beespecies, flower, photolist)
       dispatch(addRecord(record))
+      //reset both species and photos
       dispatch(selectBeeSpecies(null))
-
+      //dispatch(resetPhotos())
+      //return <Link to= "/map"/>
       setRedirectMap(true)
     }else{
       setShowSpeciesAlert(true)
@@ -92,12 +96,12 @@ const Form: React.FC<ContainerProps> = (props) => {
               </IonInput>
             </IonItem>
 
-            <IonItem onClick={()=>{setChoosingSpecies(true)}} className="text-center">
-              {props.species ? <IonLabel>{props.species.getName()}</IonLabel> : <IonLabel>Species</IonLabel>}
+            <IonItem href="/start/duringwalk" className="text-center">
+              {props.species ? <IonLabel>{props.species.name}</IonLabel> : <IonLabel>Species</IonLabel>}
             </IonItem>
 
             {props.species ?
-              props.species.getCaste().map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
+              props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
                 <><IonItem className="text-center">
                   <IonLabel>
                     {Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}
@@ -123,7 +127,7 @@ const Form: React.FC<ContainerProps> = (props) => {
 
           <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Take Photo/Video</IonButton>
           <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Automatic ID</IonButton>
-          <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top" onClick={() => sendRecord()}>Add Record</IonButton>
+          <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top" onClick={() => sendRecord()} >Add Record</IonButton>
 
 
         </form>
