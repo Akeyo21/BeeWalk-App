@@ -107,7 +107,7 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                               <IonRow>
                                   <IonCol size="6">
                                       
-                                      <IonButton onClick={() => addBeeDataToList()}  color="dark" className="left-margin">Add species</IonButton>
+                                      <IonButton  onClick={() => addBeeDataToList()}  color="dark" className="left-margin">Add species</IonButton>
                                    
                                   </IonCol>
 
