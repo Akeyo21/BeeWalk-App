@@ -1,6 +1,5 @@
 // Import all actions
-import { addIcons } from 'ionicons';
-import { timeSharp } from 'ionicons/icons';
+import { AnyAction } from 'redux';
 import * as actions from '../Actions/Species'
 export class BeeSpecies{
     name:string;
@@ -29,7 +28,7 @@ export const initialState = {
     species: null
   }
   
-export default function speciesReducer(state = initialState, action: { type: any; payload: any; }) {
+export default function speciesReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case actions.SELECT_BEE_SPECIES:
             return {...state, species: action.payload}
