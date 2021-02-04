@@ -9,12 +9,18 @@ export interface Photo {
   webviewPath?: string;
 }
 const PHOTO_STORAGE = "photos";
-
+/*export function clearPhotos(){
+  const { get, set } = useStorage();
+const clear=async ()=>{
+  const photosString = await set('photos', clear());
+}
+}*/
 export function usePhotoGallery() {
   const { deleteFile, getUri, readFile, writeFile } = useFilesystem();
   const { get, set } = useStorage();
     const { getPhoto } = useCamera();
     const [photos, setPhotos] = useState<Photo[]>([]);
+    const [newPhotosTaken, setNewPhotos] = useState<Photo[]>([])
     const savePicture = async (photo: CameraPhoto, fileName: string): Promise<Photo> => {
       let base64Data: string;
       // "hybrid" will detect Cordova or Capacitor;
@@ -87,13 +93,19 @@ export function usePhotoGallery() {
       setPhotos(newPhotos)*/
       
       const savedFileImage = await savePicture(cameraPhoto, fileName);
-      const newPhotos = [savedFileImage, ...photos];
+      setNewPhotos([savedFileImage, ...newPhotosTaken])
+      const newPhotos = [...photos, savedFileImage, ];
       setPhotos(newPhotos);
       set(PHOTO_STORAGE, JSON.stringify(newPhotos));
     };
+    const clearPhotos=()=>{
+      setPhotos([])
+    }
   
     return {
-      photos, 
+      photos,
+      newPhotosTaken,
+      clearPhotos, 
       takePhoto
     };
 
