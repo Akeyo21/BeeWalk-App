@@ -1,6 +1,7 @@
 import React from 'react';
 import './ExploreContainer.css';
 import {IonButton} from '@ionic/react';
+import { useDispatch } from 'react-redux';
 
 
 interface ContainerProps { 
@@ -8,6 +9,7 @@ interface ContainerProps {
 }
 
 const HomePage: React.FC<ContainerProps> = () => {
+  
   return (
     
 
@@ -25,6 +27,7 @@ const HomePage: React.FC<ContainerProps> = () => {
             color="warning" size="large" className="buttons" shape="round" expand="block">
             Log in
           </IonButton>
+          
         </div>
 
       </div>
