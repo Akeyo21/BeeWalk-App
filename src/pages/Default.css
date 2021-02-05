@@ -51,11 +51,15 @@
 }
 .modal{
     position: absolute;
-    height:40%;
-    width:70%;
+    height:60%;
+    width:80%;
     --background:white;
     color:black;
-    margin: 39% 0 0 14%;
+    margin: 39% 0 0 8%;
+}
+.modal h1{
+    text-align: center;
+  
 }
 
 .toolbar{
@@ -87,6 +91,13 @@
 
 .nomargin, #specialh1, .number{
     margin:0;
+}
+#main{
+    text-align: center;
+    margin-top: 18%;
+}
+.italics{
+    font-style: italic;
 }
 /*Manual data page*/
 #manualform{
@@ -161,3 +172,4 @@ padding: 18px;
 .text-center{
     text-align:center;
 }
+
