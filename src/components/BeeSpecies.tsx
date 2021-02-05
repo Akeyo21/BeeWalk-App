@@ -102,8 +102,8 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                           <h1>{props.common}</h1>
 
                           <IonGrid className="grid">
-                              {props.caste.map((casteValue:Caste)=>(
-                              <BeeCastCount cast={casteValue}/>
+                              {props.caste.map((casteValue:Caste, key:number )=>(
+                              <BeeCastCount cast={casteValue} pos={key}/>
 
                               ))}
                           </IonGrid>
