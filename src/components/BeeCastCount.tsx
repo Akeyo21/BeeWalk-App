@@ -9,12 +9,13 @@ that collects data during the walk
               - Contains the counter of each bee cast 
 */
 interface ContainerProps {  
-    cast : string 
+    cast : string
+    pos:number
 }
 
 const BeeCastCount: React.FC<ContainerProps> = (props) => {
 
-    
+    const val = props.pos
     const changeNumber=(idPos: any, redOrAdd: String)=>{
         var currentNumber = document.getElementsByClassName("number")[idPos];
         var content = currentNumber?.textContent
@@ -30,14 +31,10 @@ const BeeCastCount: React.FC<ContainerProps> = (props) => {
         if (currentNumber) currentNumber.innerHTML = string
     }
     const addNumber=()=>{
-        if (props.cast == "Queen") changeNumber(0, "add")
-        else if (props.cast == "Worker") changeNumber(1, "add")
-        else if (props.cast == "Unknown") changeNumber(2, "add")
+        changeNumber(val, "add")
     }
     const reduceNumber=()=>{
-        if(props.cast == "Queen") changeNumber(0, "reduce")
-        else if (props.cast == "Worker") changeNumber(1, "reduce")
-        else if (props.cast == "Unknown") changeNumber(2, "reduce")
+        changeNumber(val, "reduce")
     }
   return ( 
       <>  
