@@ -24,6 +24,8 @@ const Form: React.FC<ContainerProps> = (props) => {
   const [choosingSpecies, setChoosingSpecies] = useState(false);
   const [showSpeciesAlert, setShowSpeciesAlert] = useState(false);
   const [showAlert1, setShowAlert1] = useState(false);
+  const [showSectionAlert, setShowSectionAlert] = useState(false);
+
   //console.log(props.photo)
   let section:number
   let flower:string
@@ -37,22 +39,25 @@ const Form: React.FC<ContainerProps> = (props) => {
   const sendRecord=()=>{
   //check if there are photos or not
   if (section){ 
-    let photolist:Photo[] =[]
-    if (props.photos){
-      photolist = props.photos
-    }
-    if(props.species){
-      let beespecies = new BeeSpecies(props.species.name, props.species.caste)
-      let record = new Record(section, beespecies, flower, photolist)
-      dispatch(addRecord(record))
-      //reset both species and photos
-      dispatch(selectBeeSpecies(null))
-      //dispatch(resetPhotos())
-      //return <Link to= "/map"/>
-      setRedirectMap(true)
+    if(section>10 || section<0){
+      setShowSectionAlert(true)
     }else{
-      setShowSpeciesAlert(true)
-    }}else{
+      let photolist:Photo[] =[]
+      if (props.photos){
+        photolist = props.photos
+      }
+      if(props.species){
+        let beespecies = new BeeSpecies(props.species.name, props.species.caste)
+        let record = new Record(section, beespecies, flower, photolist)
+        dispatch(addRecord(record))
+        //reset both species and photos
+        dispatch(selectBeeSpecies(null))
+        //dispatch(resetPhotos())
+        //return <Link to= "/map"/>
+        setRedirectMap(true)
+      }else{
+        setShowSpeciesAlert(true)
+    }}}else{
     //prompt for user to enter value
       setShowAlert1(true)
   }
@@ -88,13 +93,17 @@ const Form: React.FC<ContainerProps> = (props) => {
           message={'Choose a species'}
           buttons={['OK']}
         />
+        <IonAlert
+          isOpen={showSectionAlert}
+          onDidDismiss={() => setShowSectionAlert(false)}
+          cssClass='my-custom-class'
+          header={'Incorrect section value'}
+          message={'Enter a section value between 1 and 10'}
+          buttons={['OK']}
+        />
         <form>
           <IonList>
-            <IonItem>
-              <IonInput className="placeholder" placeholder="Section(filled automatically)" onIonInput={(e: any) => getSectionValue(e.target.value)}required>
-
-              </IonInput>
-            </IonItem>
+            
 
             <IonItem href="/start/duringwalk" className="text-center">
               {props.species ? <IonLabel>{props.species.name}</IonLabel> : <IonLabel>Species</IonLabel>}
@@ -111,13 +120,13 @@ const Form: React.FC<ContainerProps> = (props) => {
 
               :
 
-              <><IonItem>
-                <IonInput className="placeholder" placeholder="Caste"></IonInput>
-              </IonItem>
+              <></>}
 
                 <IonItem>
-                  <IonInput className="placeholder" placeholder="Number(filled automatically)"></IonInput>
-                </IonItem></>}
+              <IonInput className="placeholder" type="number" placeholder="Section(filled automatically)" onIonInput={(e: any) => getSectionValue(e.target.value)}required>
+
+              </IonInput>
+            </IonItem>
 
             <IonItem>
               <IonInput className="placeholder" placeholder="Flower (optional)" onIonInput={(e: any) => getFlower(e.target.value)}></IonInput>
