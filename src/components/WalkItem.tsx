@@ -6,6 +6,10 @@ import { chevronForwardOutline } from 'ionicons/icons';
 
 interface ContainerProps { 
   link: string;
+  transect:string;
+  date:string;
+  startTime:string;
+  endTime:string
 }
 
 const WalkItem: React.FC<ContainerProps> = (props) => {
@@ -13,10 +17,10 @@ const WalkItem: React.FC<ContainerProps> = (props) => {
 
     <IonItem className="item" href={props.link} >                
     <IonLabel slot="start" >
-        Botanical Gardens
+        {props.transect}
     </IonLabel>
-    <IonNote slot="end" >10/02/2020<br></br>11am - 12pm</IonNote>
-    <IonIcon  icon={chevronForwardOutline} slot="end"/>                  
+    <IonNote slot="end" >{props.date}<br></br>{props.startTime} - {props.endTime}</IonNote>
+                     
   </IonItem>
     
   );
