@@ -5,16 +5,14 @@ import React from 'react';
 /*import './Home.css';*/
 import '../components/ExploreContainer.css';
 import '../components/LoginPage.css';
-import Tabs from '../components/Tabs';
-import {Redirect, Route} from 'react-router-dom';
-
-import Home from './Home';
-import Terms from "./Terms&Conditions";
-import Walks from './Walks';
-import MySites from './MySites';
-import More from './More';
+import { useDispatch } from 'react-redux';
+import { resetWalks } from '../Actions/Walks';
 /**/
 const Postlogin: React.FC = () => {
+  const dispatch = useDispatch()
+ const reset=()=>{
+   dispatch(resetWalks())
+ }
   return (
     
     <><>
@@ -66,6 +64,9 @@ const Postlogin: React.FC = () => {
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Bees in my area
                     </IonButton>
+
+                    
+          <IonButton onClick={()=>(reset())}>Reset Walks</IonButton>
                 </div>
                 
                 
