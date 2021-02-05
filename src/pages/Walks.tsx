@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonButton } from '@ionic/react';
 import React from 'react';
 
 import './Default.css';
@@ -7,7 +7,19 @@ import Login from "../pages/Login";
 import Walkdetail from "./Detail";
 import {Route} from 'react-router-dom';
 import { chevronForward, ellipsisHorizontal, home, leaf, navigate, walk } from 'ionicons/icons';
-const Walks: React.FC = () => {
+import { connect, useDispatch } from 'react-redux';
+import { UpdatedWalk } from '../Reducers/WalksReducer';
+import { resetWalks } from '../Actions/Walks';
+interface ContainerProps { 
+  walks:[]
+}
+const Walks: React.FC<ContainerProps>= (props) => {
+  let walkslist: any[] =[]
+  for(const property in props.walks){
+   walkslist = props.walks[property]
+   
+ }
+ 
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -48,22 +60,13 @@ const Walks: React.FC = () => {
             </IonTabBar>
           <IonList lines="full" className="list">
               <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
-                <IonItem className="item" href="/walkdetail" >  
-                <IonLabel slot="start">
-                    Transect Name
-                </IonLabel>
-                <IonNote slot="end" className="note">Date<br></br>time</IonNote>
-                <IonIcon icon={chevronForward} slot="end"/>  
-            </IonItem>
+                
             
-            
-            <WalkItem link="/walkdetail"/>
-            <WalkItem link="/walkdetail" />
-            <WalkItem link="/walkdetail"/>
-            <WalkItem link="/walkdetail"/>
-            <WalkItem link="/walkdetail"/>
-            <WalkItem link="/walkdetail"/>
+            {walkslist.map((walk:UpdatedWalk)=>(
+              <WalkItem transect ={walk.transect} date={walk.date} startTime={walk.startTime} endTime={walk.endTime}link="/walkdetail"/>
+            ))}
           </IonList>
+
           
             
             
@@ -74,5 +77,11 @@ const Walks: React.FC = () => {
       </IonPage></>
   );
 };
+const mapStateToProps = function(state: any) {
+  return {
+    walks:state.walks
+  }
+}
 
-export default Walks;
+export default connect(mapStateToProps)(Walks);/*
+export default Walks;*/
