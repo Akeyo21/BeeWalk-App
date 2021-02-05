@@ -19,14 +19,18 @@ import type {
 import RecordForm from '../pages/RecordForm';
 import { IonReactRouter } from '@ionic/react-router';
 import { BeeSpecies } from '../Reducers/SpeciesReducer';
-  
+import {Caste} from '../beeInfo/DifferentBeeSpecies'
+
 /* BeeSpecies - Template for the body of the DuringWalk page t
 hat collects data during the walk 
               - Contains the specific bee species info 
 */
 
 interface ContainerProps {  
-    content: string
+    //content: string
+    common: string|any
+    scientific:string|any
+    caste: Caste[]|any
     /*selectBeeSpecies: (arg0: BeeSpecies) => void*/
 }
 let duplicate = null;
@@ -70,7 +74,7 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
             unknown["UnKnown"] = unknownvalue
             caste.push(unknown)
         }
-        let beeEntered = new BeeSpecies(props.content, caste)
+        let beeEntered = new BeeSpecies(props.common, caste)
         setBeeSpecies(beeEntered)
         //dispatch({ type: 'selectBeeSpecies', payload: beeEntered })
         dispatch(selectBeeSpecies(beeEntered))
@@ -95,12 +99,13 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
   </IonRouterOutlet>
         <><IonModal isOpen={showModal} cssClass='modal' showBackdrop backdrop-dismiss={false}>
 
-                          <h1>{props.content}</h1>
+                          <h1>{props.common}</h1>
 
                           <IonGrid className="grid">
-                              <BeeCastCount cast="Queen" />
-                              <BeeCastCount cast="Worker" />
-                              <BeeCastCount cast="Unknown" />
+                              {props.caste.map((casteValue:Caste)=>(
+                              <BeeCastCount cast={casteValue}/>
+
+                              ))}
                           </IonGrid>
 
                           <IonGrid>
@@ -111,7 +116,7 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                                    
                                   </IonCol>
 
-                                  <IonCol size="4">
+                                  <IonCol size="6">
                                       <IonButton onClick={() => setShowModal(false)} color="dark" className="left-margin">Cancel</IonButton>
                                   </IonCol>
                               </IonRow>
@@ -125,12 +130,13 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                                       <IonCardContent className="nopadding">
                                           <IonGrid className="nopadding">
                                               <IonRow>
-                                                  <IonCol size="8" className="nopadding">
+                                                  <IonCol size="5" className="nopadding">
                                                       <img src="assets/images/bee.jpg"></img>
                                                   </IonCol>
 
-                                                  <IonCol size="4">
-                                                      <h1 className="ion-padding-start ion-padding-top">{props.content}</h1>
+                                                  <IonCol size="7">
+                                                      <h1 className="ion-padding-start ion-padding-top">{props.common}</h1>
+                                                      <h2 className="italics">{props.scientific}</h2>
                                                   </IonCol>
                                               </IonRow>
                                           </IonGrid>
