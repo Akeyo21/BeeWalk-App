@@ -23,54 +23,71 @@ import {
     Environment
   } from '@ionic-native/google-maps';
 import L from 'leaflet';
-import { useDispatch } from 'react-redux';
-import { addRecord, resetRecords } from '../Actions/Records';
+import { connect, useDispatch } from 'react-redux';
+import {  resetRecords } from '../Actions/Records';
 import { photosPresent } from '../Actions/Photos';
 import { usePhotoGallery } from './Camera';
-
+import { Walk } from '../Reducers/WalksBeforeReducer';
+import { addWalk, resetWalk } from '../Actions/Walks';
+import { UpdatedWalk } from '../Reducers/WalksReducer';
 
     /*PreWalk - opens the first page containing details 
     required prior to starting the beewalk
 */
 interface ContainerProps { 
   google: any
+  records:[]|any
+  walk:any
 }
 
 const MapWalk: React.FC<ContainerProps> = (props) => {
   
    const [map,setMap] = useState<typeof MapContainer>()
    
+   console.log(props.walk)
    
  const dispatch = useDispatch()
   const [redirectRecords, setRedirectRecords] = useState(false)
   let {  photos,clearPhotos} = usePhotoGallery();
-  useEffect(()=>{
+  /*useEffect(()=>{
     dispatch(photosPresent(photos.length))
     //document.title = `You clicked ${count} times`;
-  },[photos.length]);
+  },[photos.length]);*/
       const [showAlert1, setShowAlert1] = useState(false);
       const [redirectHome, setRedirectHome] = useState(false);
       /*Change between pages when ok is clicked in alert
-      <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}  style={{  height: "100vh" }}>
-    <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-           
-          />
-    <Marker position={[51.505, -0.09]}>
-      <Popup>
-        A pretty CSS3 popup. <br /> Easily customizable.
-      </Popup>
-    </Marker>
-  </MapContainer>
-      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" routerLink="/start/photo">Record with photo/video</IonButton>
-     
+      
   AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw - API key
   */
+ let recordsEntered:[] = []
+ for(const property in props.records){
+   recordsEntered = props.records[property]
+  
+}
+console.log(recordsEntered)
+ const sendRecordsToStorage=()=>{
+   //write 
+   for(const property in props.walk){
+    console.log(props.walk[property])
+    let walk = props.walk[property]
+    
+    //endtime
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = new Date().getHours() + ":" + new Date().getMinutes()
+    var all = new Date(date + " "+time)
+    dispatch(addWalk(new UpdatedWalk(walk.recorder, walk.transect,walk.date,walk.startTime, walk.temp,
+      walk.sunshine, walk.windSpeed 
+      ,time, recordsEntered)))
+  }
+ }
  const clearRecords=()=>{
+  sendRecordsToStorage()
+  dispatch(resetWalk())
   dispatch(resetRecords())
   //clearPhotos()
   setShowAlert1(true)
+  setRedirectHome(true)
  }
   if (redirectHome==true){
     return <Redirect to='/frontpage' />
@@ -89,7 +106,7 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
   </IonRouterOutlet>
      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" href="/start/recordform" >Record without photo/video</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" href="/start/records" >Records entered</IonButton>
-    <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => clearRecords()}>
+    <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={() => setShowAlert1(true)}>
       Save Records
       </IonButton>
       <IonAlert
@@ -102,7 +119,7 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
                   {
                     text: 'OK',
                     handler:()=>{
-                      setRedirectHome(true)
+                      clearRecords()
                     }
                   },
 
@@ -120,4 +137,13 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
 /*export default GoogleApiWrapper({
   apiKey: 'AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q'
 })(MapWalk);*/
-export default MapWalk;
+
+const mapStateToProps = function(state: any) {
+  return {
+    records:state.records,
+    walk:state.walk
+  }
+}
+
+export default connect(mapStateToProps)(MapWalk);
+/*export default MapWalk;*/
