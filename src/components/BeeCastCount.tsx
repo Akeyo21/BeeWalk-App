@@ -38,9 +38,9 @@ const BeeCastCount: React.FC<ContainerProps> = (props) => {
     }
   return ( 
       <>  
-                <IonRow>
+                <IonRow className="row">
                     <IonCol size="7">
-                        <h1 id="specialh1">{props.cast}</h1>
+                        <h1 id="specialh1" className="casteName">{props.cast}</h1>
                     </IonCol>
 
                     <IonCol size="2">
