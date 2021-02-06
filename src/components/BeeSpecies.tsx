@@ -46,42 +46,30 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
         var queenvalue = document.getElementsByClassName("number")[0].textContent
         var workervalue = document.getElementsByClassName("number")[1].textContent
         var unknownvalue = document.getElementsByClassName("number")[2].textContent
+        let x =0
+        
+        var castelist = []
+        for(let caste in document.getElementsByClassName("casteName")){
+            if ( Number (document.getElementsByClassName("number")[caste].textContent) >0){
+                let casteGiven:any = {}
+                let l = String(document.getElementsByClassName("casteName")[caste].textContent)
+                casteGiven[l] = Number (document.getElementsByClassName("number")[caste].textContent)
+                castelist.push(casteGiven)
+            }
+        }
+        console.log(castelist)
 
-        /*if (queenvalue && workervalue && unknownvalue ){
-            let beeEntered = new BeeType(props.content, parseInt(queenvalue),
-            parseInt(workervalue), parseInt(unknownvalue))
-            /*beedatalist.push(beeEntered)
-            var beedatalist: BeeType[] = beedata.push(beeEntered)
-            /*console.log(beedatalist)
-            addBeeData(beedatalist)
-            
-        }*/
 
-        var caste = []
-        if (Number(queenvalue)>0|| Number(workervalue)>0||Number(unknownvalue)>0){
-        if(Number(queenvalue)>0){
-            let queen: {[k: string]: any} = {};
-            queen["Queen"] = queenvalue
-            caste.push(queen)
-        }
-        if (Number(workervalue)>0){
-           let  worker: {[k: string]: any} = {};
-            worker["Worker"] = workervalue
-            caste.push(worker)
-        }
-        if (Number(unknownvalue)>0){
-            let unknown: {[k: string]: any} = {};
-            unknown["UnKnown"] = unknownvalue
-            caste.push(unknown)
-        }
-        let beeEntered = new BeeSpecies(props.common, caste)
+        if(castelist.length>0){
+        let beeEntered = new BeeSpecies(props.common, castelist)
         setBeeSpecies(beeEntered)
         //dispatch({ type: 'selectBeeSpecies', payload: beeEntered })
         dispatch(selectBeeSpecies(beeEntered))
         /*props.selectBeeSpecies(beeEntered)
         /*console.log(HoldingData.getBeeSpecies())*/
         setRedirectHome(true)
-        }
+    }
+        
         
 
     }
