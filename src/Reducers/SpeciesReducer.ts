@@ -3,12 +3,12 @@ import { AnyAction } from 'redux';
 import * as actions from '../Actions/Species'
 export class BeeSpecies{
     name:string;
-    caste:[{}]
+    caste:any[]
     /*
     caste:string;//consider making an enum
     no:number; //how many they are
     The list is meant to contain caste and number*/
-    constructor(name:string, caste:[{}]){
+    constructor(name:string, caste:any[]){
         this.name = name;
         this.caste = caste;
     }
