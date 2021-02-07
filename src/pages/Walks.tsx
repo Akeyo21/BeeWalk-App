@@ -62,8 +62,8 @@ const Walks: React.FC<ContainerProps>= (props) => {
               <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
                 
             
-            {walkslist.map((walk:UpdatedWalk)=>(
-              <WalkItem transect ={walk.transect} date={walk.date} startTime={walk.startTime} endTime={walk.endTime}link="/walkdetail"/>
+            {walkslist.map((walk:UpdatedWalk, key)=>(
+              <WalkItem transect ={walk.transect} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${key}`}/>
             ))}
           </IonList>
 
