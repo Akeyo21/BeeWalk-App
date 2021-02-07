@@ -1,15 +1,27 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet, IonList, IonItem, IonItemDivider, IonIcon, IonLabel, IonNote, IonListHeader, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonImg, IonSlide, IonSlides, IonBackButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet, IonList, IonItem, IonItemDivider, IonIcon, IonLabel, IonNote, IonListHeader, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonImg, IonSlide, IonSlides, IonBackButton, IonText } from '@ionic/react';
 import React from 'react';
 
 import './Default.css';
 import Login from "./Login";
 import Register from "./Register";
-import {Route} from 'react-router-dom';
-const Detail: React.FC = () => {
+import {Route, useParams} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Photo } from './Camera';
+interface ContainerProps { 
+  walks:[]
+}
+const Detail: React.FC<ContainerProps>= (props) => {
   const slideOpts = {
     initialSlide: 1,
     speed: 400
   };
+  const { id } = useParams()
+  console.log(id)
+  let walkslist: any[] =[]
+  for(const property in props.walks){
+   walkslist = props.walks[property]
+   
+ }
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -25,70 +37,47 @@ const Detail: React.FC = () => {
           <IonBackButton defaultHref="/walks" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
    
           <h2>
-              Transect
+              {walkslist[id].transect}
           </h2>
           <h4>
-              Date<br></br>Time
+          {walkslist[id].date}<br></br>{walkslist[id].startTime} - {walkslist[id].endTime}
           </h4>
-          <IonCard className="card">
-            <IonCardHeader>
-              <IonCardTitle className="dark">
-              Bee Species spotted on the walk
-                </IonCardTitle>
-            </IonCardHeader>
+          {walkslist[id].records.map((record: Record)=>(
+          <><IonCard className="card">
+        {record.photos.length==1?  record.photos.map((photo: Photo) => (<IonImg src={photo.webviewPath} />)) :
+        record.photos.length>1? 
+        <IonSlides pager={true} options={slideOpts}>
+            {record.photos.map((photo: Photo) => ( <IonSlide>
+                <IonImg src={photo.webviewPath} />
+            </IonSlide>))}
+        </IonSlides> :<IonText></IonText>}
+    <IonCardHeader>
+      <IonCardTitle className="dark">
+      {record.species.name} spotted on the walk<br/>
+      on section {record.section}
+        </IonCardTitle>
+    </IonCardHeader>
 
-            <IonCardContent>
-              Bee Caste with number<br></br>
-              Queen:5
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="card">
-            <img src="assets/images/bee.jpg"></img>
-            <IonCardHeader>
-              <IonCardTitle className="dark">
-              Single image taken<br></br>
-              Bee Species spotted on the walk
-              
-                </IonCardTitle>
-            </IonCardHeader>
-
-            <IonCardContent>
-              Bee Caste with number<br></br>
-              Queen:5
-            </IonCardContent>
-          </IonCard>
-
-          <IonCard className="card">
-          <IonSlides pager={true} options={slideOpts}>
-            <IonSlide>
-            <img src="assets/images/bee.jpg"></img>
-            </IonSlide>
-            <IonSlide>
-            <img src="assets/images/bee.jpg"></img>
-            </IonSlide>
-            <IonSlide>
-            <img src="assets/images/bee.jpg"></img>
-            </IonSlide>
-          </IonSlides>
-            <IonCardHeader>
-              <IonCardTitle className="dark">
-              Many images taken<br/>
-              Bee Species spotted on the walk
-              
-                </IonCardTitle>
-            </IonCardHeader>
-
-            <IonCardContent>
-              Bee Caste with number<br></br>
-              Queen:5
-            </IonCardContent>
-          </IonCard>
+    <IonCardContent>
+      Bee Caste with number<br></br>
+      {record.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
+                
+                    <IonText>{Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}</IonText>
+      ))} 
+      </IonCardContent>
+  </IonCard></>
+      ))}
           </div>
           
         </IonContent>
       </IonPage></>
   );
 };
+const mapStateToProps = function(state: any) {
+  return {
+    walks:state.walks
+  }
+}
 
-export default Detail;
+export default connect(mapStateToProps)(Detail);/*
+export default Detail;*/
