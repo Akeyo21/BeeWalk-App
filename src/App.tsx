@@ -54,7 +54,7 @@ const App: React.FC = () => (
         <Route path="/acknowledgement" component={Acknowledgment} />
         <Route path="/frontpage" component={Postlogin} />
         <Route path="/walks" component={Walks} />
-        <Route path="/walkdetail" component={Walkdetail} />
+        <Route path="/walkdetail/:id" component={Walkdetail} />
         <Route path="/commonbees" component={CommonBees} />
         <Route path="/mysites" component={MySites} />
         <Route path="/mysites/add" component={AddSites} />
