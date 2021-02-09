@@ -135,16 +135,16 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
             <IonHeader >
             <IonGrid>
                   <IonRow>
-                  <IonCol size="4">
-                    <IonButton href="/start/duringwalk#white" color="light " size="large"> White tailed</IonButton>
+                  <IonCol size="4" className="margin">
+                    <IonButton href="/start/duringwalk#white" className="light" size="large"> White <br/>tailed</IonButton>
 
                   </IonCol>
                   <IonCol size="4">
-                    <IonButton href="/start/duringwalk#red" color="light " size="large">Red tailed </IonButton>
+                    <IonButton href="/start/duringwalk#red" className="light" size="large">Red<br/> tailed </IonButton>
 
                   </IonCol>
                   <IonCol size="4">
-                    <IonButton href="/start/duringwalk#ginger" color="light " size="large">Ginger</IonButton>
+                    <IonButton href="/start/duringwalk#ginger" className="light" size="large">Ginger</IonButton>
 
                   </IonCol>
 
