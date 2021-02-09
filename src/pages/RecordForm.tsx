@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonInput, IonButton, IonLoading, IonFabButton, IonFab, IonCol, IonGrid, IonImg, IonRow } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonInput, IonButton, IonLoading, IonFabButton, IonFab, IonCol, IonGrid, IonImg, IonRow, IonAlert, IonText } from '@ionic/react';
 import React, { useContext, useEffect, useState } from 'react';
 
 import './Default.css';
@@ -14,25 +14,16 @@ import MapWalk from './MapWalk';
 import SpeciesList from './DuringWalk';
 import { photosPresent } from '../Actions/Photos';
 import { ObjectFlags } from 'typescript';
+import { setFalse } from '../Actions/MemoryFull';
 //import { BeeSpecies } from '../reducers/SpeciesReducer';
 interface ContainerProps { 
   species: BeeSpecies|any,
-  photo:number|any
+  photo:number|any,
+  memory:boolean
 }
 const RecordForm: React.FC<ContainerProps> = (props) => {
   
-  /*const bee = (state: { photos: number; }) => state.photos
-  const todos = useSelector(bee)
-  console.log(todos)*/
   
-  /*if (props.species){
-    if (!props.species) setLoading(true)
-    setLoading(false)
-  }<ul>
-      {elements.map((value, index) => {
-        return <li className="dark"key={index}>{value}</li>
-      })}
-    </ul>*/
     let {  newPhotosTaken,photos, takePhoto } = usePhotoGallery();
     
      
@@ -46,8 +37,17 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
     
     
   const dispatch = useDispatch()
-  const addPhotosToStore=()=>{
-    addPhotos();
+  const [memoryAlert, setMemoryAlert] = useState(false)
+
+  const addPhotosToStore=async ()=>{
+    
+    let s = await addPhotos();
+    if(photos.length==0){
+      dispatch(setFalse())
+    }
+    if(props.memory==true){
+      setMemoryAlert(true)
+    }
       //dispatch(addPhoto()) 
     
   }
@@ -57,34 +57,10 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
       console.log("There are some")
       
     }
-    /*let recordslist:Record[]=[]
-    if (photos){ 
-      let record = new Record(photos)
-      dispatch(addRecord(record))
-    }else if(){
-
-    }
-    
-    
-    {props.photos? props.photos.map((photo, index) => (
-          <IonCol size="6" key={index}>
-            <IonImg src={photo.webviewPath} />
-          </IonCol>
-        )): <IonCol></IonCol>}*/
-        /*for (const property in (props.photos)){   
-         console.log( props.photos[property])
-        }*/
-    //let start = (photos.length-(props.photos+1))
     console.log(photos)
     console.log(newPhotosTaken)
   let speciesEntered:any
-  const [photostaken, setPhotosTaken]= useState(0);
-  useEffect(() => {
-    // Update the document title using the browser API
-    //document.title = `You clicked ${count} times`;
-    setPhotosTaken(photos.length)
-  });
-  console.log(photostaken)
+  
 
   //const head=()=>{
   //extracts the beespecies value from the props(extracted from the store)
@@ -115,19 +91,35 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
         <IonContent fullscreen className="content">
           <IonHeader collapse="condense">            
           </IonHeader>
+          <IonAlert
+                isOpen={memoryAlert}
+                onDidDismiss={() => setMemoryAlert(false)}
+                cssClass='submitalert'
+                header={'Memory Full'}
+                message={'Photos cannot be stored with full memory'}
+                buttons={[
+                  {
+                    text: 'OK'
+                  },
+
+                  {
+                    text: 'Cancel',
+                    role: 'cancel'
+                  }
+                ]} />
             
                    
           <RecordingForm species = {speciesEntered} photos={photos.slice(photos.length-difference, photos.length)}/>
           <IonGrid>
       <IonRow>
-      { photos.slice(photos.length-difference, photos.length).map((photo, index) => (
+      { props.memory==true? <IonText></IonText>: photos.slice(photos.length-difference, photos.length).map((photo, index) => (
           <IonCol size="6" key={index}>
             <IonImg src={photo.webviewPath} />
           </IonCol>
         ))}
       </IonRow>
     </IonGrid> 
-          <IonFab vertical="bottom" horizontal="center" slot="fixed">
+          <IonFab vertical="bottom" horizontal="center" slot="fixed" color="warning">
           <IonFabButton onClick={() => addPhotosToStore()}>
       <IonIcon icon={camera}></IonIcon>
     </IonFabButton>
@@ -140,7 +132,8 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
 const mapStateToProps = function(state: any) {
   return {
     species: state.species,
-    photo:state.photos
+    photo:state.photos,
+    memory:state.memoryFull,
   }
 }
 
