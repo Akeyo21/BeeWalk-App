@@ -134,7 +134,6 @@ const Form: React.FC<ContainerProps> = (props) => {
 
           </IonList>
 
-          <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Take Photo/Video</IonButton>
           <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Automatic ID</IonButton>
           <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top" onClick={() => sendRecord()} >Add Record</IonButton>
 
