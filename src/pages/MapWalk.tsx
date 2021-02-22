@@ -4,34 +4,28 @@ import { IonAlert, IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, 
 /*import '../components/LoginPage.css';*/
 import './PreWalk.css';
 import {Redirect, Route} from 'react-router-dom';
-import DuringWalk from './DuringWalk';
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
-import { createSecureContext } from 'tls';
-/*import { Map, GoogleApiWrapper } from 'google-maps-react';*/
-import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
+/*import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'*/
 import Records from './RecordsEntered'
 import "leaflet/dist/leaflet.css";
-import {
+/*import {
     GoogleMaps,
     GoogleMap,
     GoogleMapsEvent,
     GoogleMapOptions,
     CameraPosition,
     MarkerOptions,
-    /*Marker,*/
+    Marker,
     Environment
-  } from '@ionic-native/google-maps';
-import L from 'leaflet';
+  } from '@ionic-native/google-maps';*/
 import { connect, useDispatch } from 'react-redux';
 import {  resetRecords } from '../Actions/Records';
 import { photosPresent } from '../Actions/Photos';
 import { usePhotoGallery, promiseState } from './Camera';
-import { Walk } from '../Reducers/WalksBeforeReducer';
 import { addWalk, resetWalk } from '../Actions/Walks';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { setFalse } from '../Actions/MemoryFull';
-
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
     /*PreWalk - opens the first page containing details 
     required prior to starting the beewalk
 */
@@ -44,7 +38,6 @@ interface ContainerProps {
 
 const MapWalk: React.FC<ContainerProps> = (props) => {
   
-   const [map,setMap] = useState<typeof MapContainer>()
    
   let { photos, takePhoto } = usePhotoGallery();
    console.log(props.walk)
@@ -136,7 +129,13 @@ console.log(recordsEntered)
     setEnterRecord(true)
 
     }
-    
+    /**
+
+                <Map google={props.google} >
+ 
+        
+      </Map>
+   */
   }
   console.log("In the map page")
   return (
@@ -205,6 +204,9 @@ const mapStateToProps = function(state: any) {
     memoryFull: state.memoryFull
   }
 }
-
-export default connect(mapStateToProps)(MapWalk);
+/*
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw'
+})/* connect(mapStateToProps)(MapWalk);
 /*export default MapWalk;*/
+export default connect(mapStateToProps)(MapWalk);
