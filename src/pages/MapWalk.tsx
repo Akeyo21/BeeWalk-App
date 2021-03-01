@@ -41,7 +41,6 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
    
   let { photos, takePhoto } = usePhotoGallery();
    console.log(props.walk)
-   
  const dispatch = useDispatch()
   const [redirectRecords, setRedirectRecords] = useState(false)
   /*useEffect(()=>{
