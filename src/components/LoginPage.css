@@ -7,7 +7,9 @@
     text-align: center;
     width: 80%;
 }
-
+.black{
+    color:black;
+}
 #center{
     position: absolute;
     top: 21%;
