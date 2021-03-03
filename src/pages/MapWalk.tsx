@@ -7,7 +7,7 @@ import {Redirect, Route} from 'react-router-dom';
 /*import { Map, GoogleApiWrapper } from 'google-maps-react';
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'*/
 import Records from './RecordsEntered'
-import "leaflet/dist/leaflet.css";
+//import "leaflet/dist/leaflet.css";
 /*import {
     GoogleMaps,
     GoogleMap,
@@ -43,14 +43,14 @@ const MapWalk: React.FC<ContainerProps> = (props) => {
    console.log(props.walk)
  const dispatch = useDispatch()
   const [redirectRecords, setRedirectRecords] = useState(false)
-  /*useEffect(()=>{
-    dispatch(photosPresent(photos.length))
-    //document.title = `You clicked ${count} times`;
-  },[photos.length]);*/
+  
       const [showAlert1, setShowAlert1] = useState(false);
       const [redirectHome, setRedirectHome] = useState(false);
-      
+  
+      const [latitude, setlat] = useState(0)
+      const [long,  setlong] = useState(0)  
  const [memoryAlert, setMemoryAlert] = useState(false)
+ const [ filled, setfilled] = useState(false)
       /*Change between pages when ok is clicked in alert
       
   AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw - API key
@@ -129,21 +129,7 @@ console.log(recordsEntered)
 
     }
     /**
-
-                <Map google={props.google} >
- 
-        
-      </Map>
-   */
-  }
-  console.log("In the map page")
-  return (
-    
-    <>
-    <IonRouterOutlet>
-          <Route exact path='/start/records' component={Records} />
-  </IonRouterOutlet>
-  <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={()=>(take())}>Record with photo/video</IonButton>
+      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={()=>(take())}>Record with photo/video</IonButton>
     
      <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" href="/start/recordform" >Record without photo/video</IonButton>
     <IonButton color="warning" size="large" className="buttons" shape="round" expand="block" onClick={()=>(record())}>Records entered</IonButton>
@@ -186,16 +172,100 @@ console.log(recordsEntered)
                     role: 'cancel'
                   }
                 ]} />
+                
+   */
+  }
+  console.log("In the map page")
+  navigator.geolocation.getCurrentPosition(function(position) {
+    
+    console.log("Latitude is :", position.coords.latitude);
+    console.log("Longitude is :", position.coords.longitude);
+    setlat(position.coords.latitude)
+    setlong(position.coords.longitude)
+    setfilled(true)
+  });
+  console.log(latitude)
+  console.log(long)
+  const style = {
+    position:'absolute',
+    height:'100%'
+  }
+  return (
+    
+    <>
+    <IonRouterOutlet>
+          <Route exact path='/start/records' component={Records} />
+  </IonRouterOutlet>
+  
+      
+  {filled?
+  <Map google={props.google} initialCenter={{
+            lat: latitude,
+            lng:long
+        }} style={style}>
+
+<IonButton color="warning" className="move-lower" shape="round" onClick={()=>(take())}>Record with<br/>photo/video</IonButton>
+  <IonButton color="warning"  className="move-lower" shape="round" href="/start/recordform" >Record without<br/> photo/video</IonButton>
+    <IonButton color="warning"  className="buttons" shape="round"  onClick={()=>(record())}>Records <br/>entered</IonButton>
+    <IonButton color="warning"  className="buttons" shape="round" onClick={() => setShowAlert1(true)}>
+      Save Records
+      </IonButton>
+  <IonAlert
+                isOpen={showAlert1}
+                onDidDismiss={() => setShowAlert1(false)}
+                cssClass='submitalert'
+                header={'Submission'}
+                message={'Do you wish to submit your data?'}
+                buttons={[
+                  {
+                    text: 'OK',
+                    handler:()=>{
+                      clearRecords()
+                    }
+                  },
+
+                  {
+                    text: 'Cancel',
+                    role: 'cancel'
+                  }
+                ]} />
+
+<IonAlert
+                isOpen={memoryAlert}
+                onDidDismiss={() => setMemoryAlert(false)}
+                cssClass='submitalert'
+                header={'Memory Full'}
+                message={'Photos cannot be taken with full memory'}
+                buttons={[
+                  {
+                    text: 'OK'
+                  },
+
+                  {
+                    text: 'Cancel',
+                    role: 'cancel'
+                  }
+                ]} />
+     
+ 
+        
+ </Map>:<IonText></IonText>}
   
       </>
   
     
   );
 };
-/*export default GoogleApiWrapper({
-  apiKey: 'AIzaSyDhPMb0EavEJE-Hb_bd3E3VmtzrkARXc7Q'
-})(MapWalk);*/
+const WrappedContainer = GoogleApiWrapper({
+  apiKey: 'AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw'
+})(MapWalk);
+/*
+export default WrappedContainer;
 
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw'
+})(MapWalk);
+*/
 const mapStateToProps = function(state: any) {
   return {
     records:state.records,
@@ -207,5 +277,5 @@ const mapStateToProps = function(state: any) {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw'
 })/* connect(mapStateToProps)(MapWalk);
-/*export default MapWalk;*/
-export default connect(mapStateToProps)(MapWalk);
+export default MapWalk;*/
+export default connect(mapStateToProps)(WrappedContainer);
