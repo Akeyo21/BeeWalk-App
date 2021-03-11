@@ -42,6 +42,12 @@
   top:65%;
 }
 
+.home-buttons{
+  position: relative;
+  margin: 20px 20px 40px 20px;
+  top:0%;
+}
+
 .text{
   overflow: scroll;
   color:black;
@@ -58,8 +64,27 @@
   color:white;
 }
 
+.transectmap{
+  height:100%;
+}
 
+.align-left{
+  text-align:left;
+}
+
+.tabs{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+}
+
+#buttonsDiv{
+  top:10% !important;
+  left:5% !important;
+}
 /*
+
 .container strong {
   font-size: 20px;
   line-height: 26px;
