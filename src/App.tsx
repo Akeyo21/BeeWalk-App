@@ -21,6 +21,7 @@ import MapWalk from './pages/MapWalk';
 import RecordForm from './pages/RecordForm';
 import Photo from './pages/Photo';
 import Records from './pages/RecordsEntered';
+import Transect from './pages/Transect'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -65,7 +66,7 @@ const App: React.FC = () => (
         <Route path="/start/recordform" component={RecordForm} />
         <Route path="/start/photo" component={Photo} />
         <Route path="/start/records" component={Records} />
-
+        <Route path="/transect" component={Transect} />
         <Route path="/more" component={More} />
      
       </IonRouterOutlet>
