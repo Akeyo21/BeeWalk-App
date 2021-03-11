@@ -19,12 +19,12 @@ const HomePage: React.FC<ContainerProps> = () => {
           <h1>Walk</h1>
 
           <IonButton routerLink="/register"
-            color="warning" size="large" className="buttons" shape="round" expand="block">
+            color="warning" size="large" className="home-buttons" shape="round" expand="block">
             Register
           </IonButton><br></br>
 
           <IonButton routerLink="/login"
-            color="warning" size="large" className="buttons" shape="round" expand="block">
+            color="warning" size="large" className="home-buttons" shape="round" expand="block">
             Log in
           </IonButton>
           
