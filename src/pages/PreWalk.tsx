@@ -1,4 +1,4 @@
-import React, { constructor, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import { IonAlert, IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonDatetime, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRouterOutlet, IonRow, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/react';
 /*import '../components/LoginPage.css';*/
@@ -78,7 +78,6 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var now = new Date()
     var time = new Date().getHours() + ":" + new Date().getMinutes()+":"+new Date().getSeconds();
     var hr = new Date().getHours() + ":" + new Date().getMinutes()
     var all = new Date(date + " "+time)
