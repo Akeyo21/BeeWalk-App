@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import '../components/ExploreContainer.css';
 import '../pages/Default.css';
 import {IonAlert, IonBackButton, IonButton, IonContent, IonDatetime, IonInput, IonLabel, IonRouterOutlet, IonSelect, IonSelectOption, IonText} from '@ionic/react';
-import { RouteStart } from '../Reducers/RouteStartReducer';
+import { RouteStart } from '../Reducers/TransectReducer';
 import { useDispatch } from 'react-redux';
-import { setRouteStart } from '../Actions/RouteStart';
+import { setRouteStart } from '../Actions/Transect';
 import { Redirect, Route } from 'react-router';
 import TransectMap from './Transect';
 
