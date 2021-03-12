@@ -26,7 +26,7 @@ import { addWalk, resetWalk } from '../Actions/Walks';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { setFalse } from '../Actions/MemoryFull';
 import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline} from 'google-maps-react';
-import * as $ from 'jquery';
+
 //import {GoogleApiWrapper} from 'google-maps-react';
 //import {GoogleMapReact} from "google-map-react";
 /*import GoogleMapReact from 'google-map-react';
