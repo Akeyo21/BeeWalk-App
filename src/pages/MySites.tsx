@@ -6,9 +6,21 @@ import Login from "../pages/Login";
 import AddSite from "../pages/AddSites";
 import {Route} from 'react-router-dom';
 import { home, walk, leaf, navigate, ellipsisHorizontal } from 'ionicons/icons';
+import { connect } from 'react-redux';
 /*MySites - gives a page that shows a list of sites the user has
 entered*/
-const MySites: React.FC = () => {
+interface ContainerProps { 
+  transects:[]
+}
+
+/*Form that is rendered when the manual adding of bee data
+is selected*/
+const MySites: React.FC<ContainerProps> = (props) => {
+  let transectslist: any[] =[]
+  for(const property in props.transects){
+   transectslist = props.transects[property]
+   
+ }
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -50,37 +62,22 @@ const MySites: React.FC = () => {
             </IonTabBar>
                 <IonList lines="full" className="list">
                     <IonListHeader lines="full" color="light" id="header" >My Sites</IonListHeader>
-
-                    <IonItem className="item" >  
-                    <IonLabel> Site Name</IonLabel>
-                        <IonGrid>
-                            <IonRow>
-                                <IonCol size="8">
-                                    <IonNote className="note">0 Records submitted<br/>0 Species submitted</IonNote>
-                                </IonCol>
-
-                                <IonCol size="4">
-                                    <IonButton  color="dark">Edit  </IonButton>
-                                </IonCol>
-                            </IonRow>
-                        </IonGrid>               
-                    </IonItem>
-
-                    <IonItem className="item" >  
-                    <IonLabel> Site Name</IonLabel>
-                        <IonGrid>
-                            <IonRow>
-                                <IonCol size="8">
-                                    <IonNote className="note">0 Records submitted<br/>0 Species submitted</IonNote>
-                                </IonCol>
-
-                                <IonCol size="4">
-                                    <IonButton  color="dark">Edit  </IonButton>
-                                </IonCol>
-                            </IonRow>
-                        </IonGrid>               
-                    </IonItem>
-
+                    {transectslist.map((transect)=>(
+                      <IonItem className="item" >  
+                      <IonLabel> {transect.name}</IonLabel>
+                          <IonGrid>
+                              <IonRow>
+                                  <IonCol size="8">
+                                      <IonNote className="note">0 Records submitted<br/>0 Species submitted</IonNote>
+                                  </IonCol>
+  
+                                  <IonCol size="4">
+                                      <IonButton  color="dark">Edit  </IonButton>
+                                  </IonCol>
+                              </IonRow>
+                          </IonGrid>               
+                      </IonItem>
+                    ))}
                    
                 </IonList>
                 <IonButton color="dark" className="top-margin" href="/mysites/add">Add Site</IonButton>
@@ -90,5 +87,11 @@ const MySites: React.FC = () => {
       </IonPage></>
   );
 };
+const mapStateToProps = function(state: any) {
+  return {
+    transects:state.transects
+  }
+}
+export default connect(mapStateToProps)(MySites);/*
 
-export default MySites;
+export default MySites;*/
