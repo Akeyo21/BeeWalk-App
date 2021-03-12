@@ -83,6 +83,13 @@
   top:10% !important;
   left:5% !important;
 }
+
+#dark-text{
+  color:black;
+}
+.select{
+  width: 90%;
+}
 /*
 
 .container strong {
