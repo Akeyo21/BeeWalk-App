@@ -7,7 +7,8 @@ import photosReducer from './PhotosReducer'
 import walksBeforeReducer from './WalksBeforeReducer'
 import walksReducer from './WalksReducer'
 import memoryFull from './MemoryReducer'
-import routeStartReducer from './RouteStartReducer'
+import routeStartReducer, { transectReducer } from './TransectReducer'
+import sectionReducer from './SectionsReducer';
 export const rootReducer = combineReducers({
   species: speciesReducer,
   records: recordsReducer,
@@ -16,6 +17,8 @@ export const rootReducer = combineReducers({
   walks: walksReducer,
   memoryFull: memoryFull,
   routeStart: routeStartReducer,
+  sections: sectionReducer,
+  transects: transectReducer,
 })
 
 export default rootReducer
