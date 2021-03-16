@@ -22,6 +22,11 @@ const AddSites: React.FC<ContainerProps> = () => {
     //redirect to transect page
     const [ redirectMap, setRedirectMap] = useState(false);
 
+
+    const [addTransect, setAddTransect] = useState(false);
+    const[redirectManualTransect, setManualTransect]= useState(false);
+  const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
+  
     //list of counties available on select option
     const counties =['Aberdeenshire', 'Alderney', 'Angus', 'Antrim', 'Argyll and Bute', 'Armagh','Avon','Bath and North East Somerset',
 'Bedforshire','Berkshire', 'Borders','Bournemouth','Bracknell Forest','Bridgend','Brighton and Hove','Bristol City','Buckinghamshire',
@@ -75,13 +80,15 @@ const AddSites: React.FC<ContainerProps> = () => {
     //submitting data
     const startTransect = ()=>{
         //check if transect name is filled
+        
         if (transect){
             if(gridref){
-                //send data to redux 
+                //send data to redux               
                 let route = new RouteStart(transect, gridref,county, yearEstablished)
                 dispatch(setRouteStart(route))
                 //go to map page to enter transect
-                setRedirectMap(true)
+                setAddTransect(true)
+                
             }else{
                 setFillGrid(true)
             }
@@ -92,6 +99,9 @@ const AddSites: React.FC<ContainerProps> = () => {
     if(redirectMap==true){      
         return <Redirect to='/transect'/>
       }
+      if(redirectAutomaticTransect==true){
+        return <Redirect to='/automatic'/>
+      }
     return (   
         <><IonRouterOutlet>
             <Route path="/transect" component={TransectMap} />
@@ -99,7 +109,32 @@ const AddSites: React.FC<ContainerProps> = () => {
         </IonRouterOutlet>
             <IonContent fullscreen className="content">
                 <IonBackButton defaultHref="/mysites" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
+                <IonAlert
+          isOpen={addTransect}
+          onDidDismiss={() => setAddTransect(false)}
+          cssClass='my-custom-class'
+          header={"Transect Missing"}
+          message={"Enter the transect being walked"}
+          buttons={[
+            {
+              text: 'Add Manually',
+              handler:()=>{
+                setRedirectMap(true)}
+              
+            },
 
+            {
+              text: 'Add when surveying',
+              handler:()=>{
+                setAutomaticTransect(true)
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            }
+          ]}
+        />
                 <IonAlert
                     isOpen={fillTransect}
                     onDidDismiss={() => setFillTransect(false)}
