@@ -5,7 +5,7 @@ import * as actions from '../Actions/Walks'
 export class UpdatedWalk extends Walk{
     endTime:string;
     records: [];
-    constructor(recorder:string, transect:string, date:string, 
+    constructor(recorder:string, transect:number, date:string, 
         startTime:string, temp:number, sunshine:string, windSpeed:string, endTime:string, records:[]){
         super(recorder, transect, date, startTime, temp,sunshine,windSpeed);
         this.endTime = endTime;

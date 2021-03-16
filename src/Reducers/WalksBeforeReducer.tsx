@@ -3,14 +3,14 @@ import { AnyAction } from "redux";
 import * as actions from '../Actions/Walks'
 export class Walk{
     recorder: string; //name of recorder
-    transect: string; //transect being walked
+    transect: number; //transect being walked
     date: string;
     startTime: string;
     temp:number;
     sunshine:string;
     windSpeed: string;
     constructor(recorder: string, //name of recorder
-        transect: string, //transect being walked
+        transect: number, //transect being walked
         date: string,
         startTime: string,
         temp:number,
