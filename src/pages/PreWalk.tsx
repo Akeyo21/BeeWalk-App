@@ -10,23 +10,29 @@ import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@io
 import { createSecureContext } from 'tls';
 import MapWalk from './MapWalk';
 import { Walk } from '../Reducers/WalksBeforeReducer';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { setWalk } from '../Actions/Walks';
-
+import UpdatedMapWalk from './Map';
 /*
     PreWalk - opens the first page containing details 
     required prior to starting the beewalk
 */
 interface ContainerProps { 
+  transects:[]
 }
 
 const PreWalk: React.FC<ContainerProps> = (props) => {
+  const [addTransect, setAddTransect] = useState(false);
     const [loading, setLoading] = useState(true)
     const[results, setResults] = useState<Object>()
     const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState({});
-    
+  const[redirectManualTransect, setManualTransect]= useState(false);
+  const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
+  let transectslist: any[] =[]
+  for(const property in props.transects){
+   transectslist = props.transects[property]
+ }
     
     useEffect(() => {
         const getLocation=async ()=>{
@@ -97,8 +103,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     }
 
     //transect
-    let transect:string
-    const getTransect=( transectEntered:string)=>{
+    let transect:number
+    const getTransect=( transectEntered:number)=>{
       transect = transectEntered
     }
 
@@ -123,16 +129,17 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     const [redirectToMap, setRedirectToMap] = useState(false)
  const dispatch = useDispatch()
     const addWalkDataToStore=()=>{
+      console.log("Transect ", transect)
       if (recorder){
         if(transect){
           if(temp && sunshine &&windspeed){
-          dispatch(setWalk(new Walk(recorder, transect,
+          dispatch(setWalk(new Walk(recorder, (transect-1),
              date, hr, temp,sunshine, 
              windspeed)))
           
           
           }else{
-            dispatch(setWalk(new Walk(recorder, transect,
+            dispatch(setWalk(new Walk(recorder, (transect-1),
               date, hr,results?.current.temp,getSunnyValue(results?.current.clouds), 
               getWindSpeed(results?.current.wind_speed))))
           }
@@ -147,12 +154,19 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
       }
     }
     if(redirectToMap==true){      
-      return <Redirect to='/map'/>
+      return <Redirect to='/mapwalk'/>
     }
+    if(redirectAutomaticTransect==true){
+      return <Redirect to='/automatic'/>
+    }
+    if(redirectManualTransect==true){
+      return <Redirect to='/transect'/>
+    }
+   
   return (
     <><><IonRouterOutlet>
         <Route path="/start/duringwalk" component={DuringWalk} />
-        <Route path="/map" component={MapWalk} />
+        <Route path="/mapwalk" component={UpdatedMapWalk} />
 
     </IonRouterOutlet></>
       <IonPage>
@@ -182,6 +196,33 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
           message={"Enter the transect being walked"}
           buttons={['OK']}
         />
+
+<IonAlert
+          isOpen={addTransect}
+          onDidDismiss={() => setAddTransect(false)}
+          cssClass='my-custom-class'
+          header={"Transect Missing"}
+          message={"Enter the transect being walked"}
+          buttons={[
+            {
+              text: 'Add Manually',
+              handler:()=>{
+                setManualTransect(true)}
+              
+            },
+
+            {
+              text: 'Add when surveying',
+              handler:()=>{
+                setAutomaticTransect(true)
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            }
+          ]}
+        />
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
             <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={20000}/>
                 <form id="prewalkform" action="/start/map">
@@ -192,7 +233,15 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                       </IonItem>
 
                       <IonItem>
-                        <IonInput type="text" placeholder=" Choose the transect being walked" font-weight="bold" onIonInput={(e: any) => getTransect(e.target.value)} ></IonInput>
+                      {transectslist.length>0?
+                        <IonLabel onClick={()=>(setAddTransect(true))}>Choose Transect</IonLabel>:
+                        <><IonLabel>Choose Transect</IonLabel>
+                        <IonSelect interface="action-sheet" onIonChange={(e: any) => getTransect(e.target.value)}>
+                          {transectslist.map((transect, key) => (
+                            <IonSelectOption value={key + 1}>{transect.name}</IonSelectOption>
+                          ))}
+                        </IonSelect></>
+                        }
                       </IonItem>
                         <IonItem>
                         <IonLabel className="align-left"> Date </IonLabel>
@@ -295,4 +344,11 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
   );
 };
 
-export default PreWalk;
+const mapStateToProps = function(state: any) {
+  return {
+    transects:state.transects
+  }
+}
+export default connect(mapStateToProps)(PreWalk);
+
+//export default PreWalk;
