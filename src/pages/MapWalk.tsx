@@ -40,9 +40,6 @@ interface ContainerProps {
   walk:any
   memoryFull:boolean
 }
-const line = ()=>{
-  return 
-}
 const MapWalk: React.FC<ContainerProps> = (props) => {
   
    
@@ -127,19 +124,7 @@ console.log(recordsEntered)
     setEnterRecord(true)
 
     }
-    /**
-     
-                <Map google={props.google} initialCenter={{
-            lat: latitude,
-            lng:long
-        }} style={style} 
-      >
-           <Polyline
-          path={triangleCoords}
-          strokeColor="#0000FF"
-          strokeOpacity={0.8}
-          strokeWeight={2}  geodesic={true} editable/>     
-   */
+   
   }
   
 
@@ -153,8 +138,6 @@ console.log(path1)
     setlong(position.coords.longitude)
     setfilled(true)
   });
-  console.log(latitude)
-  console.log(long)
   const style1 = {
     position:'absolute',
     height:'100%'
