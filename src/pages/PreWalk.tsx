@@ -233,7 +233,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
                       </IonItem>
 
                       <IonItem>
-                      {transectslist.length>0?
+                      {transectslist.length==0?
                         <IonLabel onClick={()=>(setAddTransect(true))}>Choose Transect</IonLabel>:
                         <><IonLabel>Choose Transect</IonLabel>
                         <IonSelect interface="action-sheet" onIonChange={(e: any) => getTransect(e.target.value)}>
