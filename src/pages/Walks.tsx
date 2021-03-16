@@ -11,13 +11,19 @@ import { connect, useDispatch } from 'react-redux';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { resetWalks } from '../Actions/Walks';
 interface ContainerProps { 
-  walks:[]
+  walks:[],
+  transects:[]
 }
 const Walks: React.FC<ContainerProps>= (props) => {
+  
   let walkslist: any[] =[]
   for(const property in props.walks){
    walkslist = props.walks[property]
    
+ }
+ let transectslist: any[] =[]
+  for(const property in props.transects){
+   transectslist = props.transects[property]
  }
  
   return (
@@ -64,7 +70,7 @@ const Walks: React.FC<ContainerProps>= (props) => {
             
             {walkslist.map((walk:UpdatedWalk, key)=>(
               
-              <WalkItem transect ={walk.transect} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${key}`}/>
+              <WalkItem transect ={transectslist[walk.transect].name} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${key}`}/>
             ))}
           </IonList>
 
@@ -80,7 +86,8 @@ const Walks: React.FC<ContainerProps>= (props) => {
 };
 const mapStateToProps = function(state: any) {
   return {
-    walks:state.walks
+    walks:state.walks,
+    transects: state.transects
   }
 }
 
