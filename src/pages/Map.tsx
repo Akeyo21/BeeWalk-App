@@ -49,9 +49,6 @@ const   Map: React.FC<ContainerProps> = (props) => {
 }
  //console.log(selectedPath)
     //get user current position
-    const [latitude, setlat] = useState(0);
-    const [long,  setlong] = useState(0);
-    const[filled, setfilled] = useState(false);
     const[findLive, setFindLive] = useState(false);
     const [redirectRecords, setRedirectRecords] = useState(false)
 
@@ -64,14 +61,8 @@ const   Map: React.FC<ContainerProps> = (props) => {
     const dispatch = useDispatch()
     //prompts user to scroll to the position if navigation
     //fails
-    const [showScrollToPos, setScrollToPos] = useState(true)
-    navigator.geolocation.getCurrentPosition(function(position) {        
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-        setlat(position.coords.latitude)
-        setlong(position.coords.longitude)
-        setfilled(true)
-      });
+    const [showScrollToPos, setScrollToPos] = useState(false)
+    
     
   let { photos, takePhoto } = usePhotoGallery();
   
@@ -137,12 +128,6 @@ console.log(recordsEntered)
     //button controls added on top of map
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
-        /*<IonButton color="warning" className="move-lower" shape="round" onClick={()=>(take())}>Record with<br/>photo/video</IonButton>
-  <IonButton color="warning" className="move-lower"  shape="round" href="/start/recordform" >Record without<br/> photo/video</IonButton>
-    <IonButton color="warning"  className="buttons" shape="round"  onClick={()=>(record())}>Records <br/>entered</IonButton>
-    <IonButton color="warning"  className="buttons" shape="round" onClick={() => setShowAlert1(true)}>
-      Save Records
-      </IonButton>*/
         const photoButton = document.createElement("button");
         photoButton.innerHTML = "Record with photo/video";
         photoButton.style.padding="4% 3%";
@@ -193,19 +178,17 @@ console.log(recordsEntered)
       let poly: google.maps.Polyline;
       loader.load()
       .then(() => {
-          console.log("map should be here")
-        if (filled){
-            
-            setScrollToPos(false)
+         
         map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-          center: { lat: latitude, lng: long },
+         
           zoom: 14,
-        });}else{
-            map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-                center: { lat: latitude, lng: long },
-                zoom: 14,
-              })  
-        }
+        })
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+             let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              map.setCenter(initialLocation);
+          });
+      } 
         poly = new google.maps.Polyline({
             strokeColor: "#000000",
             strokeOpacity: 1.0,
@@ -260,6 +243,11 @@ console.log(recordsEntered)
         //console.log(position.coords.latitude);
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
         //addLatLng(liveposition);
+        let marker = new google.maps.Marker({
+          position: liveposition,
+          //title: "#" + sections.length,
+          map: map,
+        });
     };
 
     const catchErrors = (e)=>{

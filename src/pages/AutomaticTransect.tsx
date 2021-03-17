@@ -29,14 +29,8 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
 
     //prompts user to scroll to the position if navigation
     //fails
-    const [showScrollToPos, setScrollToPos] = useState(true)
-    navigator.geolocation.getCurrentPosition(function(position) {        
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-        setlat(position.coords.latitude)
-        setlong(position.coords.longitude)
-        setfilled(true)
-      });
+    const [showScrollToPos, setScrollToPos] = useState(false)
+    
     
     
     //button controls added on top of map
@@ -67,6 +61,53 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
       console.log("here")
       let map: google.maps.Map;
       let poly: google.maps.Polyline;
+      loader.load()
+      .then(() => {
+          console.log("map should be here")
+          
+          map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+            //center: { lat: lat, lng: lng },
+            zoom: 15,
+          }); 
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+               let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(initialLocation);
+            });
+        } 
+          poly = new google.maps.Polyline({
+            strokeColor: "#000000",
+            strokeOpacity: 1.0,
+            strokeWeight: 3,
+            editable:true
+          });
+          poly.setMap(map);
+          
+        // Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        const buttonsDiv = document.createElement("div");
+        buttonsDiv.id = "buttonsDiv";
+        buttonsControl(buttonsDiv, map);
+    
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
+          // Add a listener for the click event
+          map.addListener("click", addLatLng);
+          initLiveLocation();
+          //remove an edge of the transect when setting up
+          poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
+            const path = poly.getPath();
+            console.log(path)
+            let pathlist = path.getArray();
+            let reduced = pathlist.filter(item=>item!==event.latLng)
+            for (let i=0; i<path.getLength();i++){
+                if( path.getAt(i) == event.latLng){
+                    path.removeAt(i)
+                }
+            }
+        });
+      });
+        
+    /*
       loader.load()
       .then(() => {
           console.log("map should be here")
@@ -114,13 +155,13 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
         });
 
        
-    });
+    });*/
 
     
     function addLatLng(event) {
         console.log(event)
         const path = poly.getPath();
-      
+        
         // Because path is an MVCArray, we can simply append a new coordinate
         // and it will automatically appear.
         //path.push(event.latLng);
@@ -217,8 +258,9 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
     //first add current location of user to the polyline then add the prograssive ones 
     const trackUser = (position)=>{
         //console.log(position.coords.latitude);
+        console.log(position)
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
-        addLatLng(liveposition);
+        setTimeout( addLatLng(liveposition), 120000);
     };
 
     const catchErrors = (e)=>{

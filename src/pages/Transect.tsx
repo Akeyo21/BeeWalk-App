@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import {IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
 import { useDispatch } from 'react-redux';
@@ -13,26 +13,23 @@ interface ContainerProps {
 }
 
 const Transect: React.FC<ContainerProps> = () => {
-    //get user current position
-    const [latitude, setlat] = useState(0)
-    const [long,  setlong] = useState(0)  
-    const[filled, setfilled] = useState(false)
-
     const [sections, changeSections] = useState([]);
     const [emptySection, setEmptySections]= useState(false);
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
     //prompts user to scroll to the position if navigation
     //fails
-    const [showScrollToPos, setScrollToPos] = useState(true)
-    navigator.geolocation.getCurrentPosition(function(position) {        
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-        setlat(position.coords.latitude)
-        setlong(position.coords.longitude)
-        setfilled(true)
+    const [showScrollToPos, setScrollToPos] = useState(false)
+    let lat=0;
+    let lng=0;
+   navigator.geolocation.getCurrentPosition(function(position) {   
+        //lat = position.coords.latitude
+        //lng = position.coords.longitude
+        //setlat(position.coords.latitude)
+        //setlong(position.coords.longitude)
+        //setfilled(true)
       });
-    
-    
+    console.log(lat)
+    console.log(lng)
     //button controls added on top of map
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
@@ -55,28 +52,30 @@ const Transect: React.FC<ContainerProps> = () => {
         fillSectionButton.addEventListener("click", addSections)
         
     }
+    
+    
     const loader = new Loader({
-        apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
-      });
+      apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
+    });
       console.log("here")
-      let map: google.maps.Map;
-      let poly: google.maps.Polyline;
+    let map: google.maps.Map;
+    let poly: google.maps.Polyline;
+    
       loader.load()
       .then(() => {
           console.log("map should be here")
-        if (filled){
-            
-            setScrollToPos(false)
-        map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-          center: { lat: latitude, lng: long },
-          zoom: 14,
-        });}else{
-            map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-                center: { lat: latitude, lng: long },
-                zoom: 14,
-              })  
-        }
-        poly = new google.maps.Polyline({
+          
+          map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+            //center: { lat: lat, lng: lng },
+            zoom: 15,
+          }); 
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+               let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(initialLocation);
+            });
+        } 
+          poly = new google.maps.Polyline({
             strokeColor: "#000000",
             strokeOpacity: 1.0,
             strokeWeight: 3,
@@ -89,11 +88,11 @@ const Transect: React.FC<ContainerProps> = () => {
         const buttonsDiv = document.createElement("div");
         buttonsDiv.id = "buttonsDiv";
         buttonsControl(buttonsDiv, map);
-
+    
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
           // Add a listener for the click event
           map.addListener("click", addLatLng);
-
+    
           //remove an edge of the transect when setting up
           poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
             const path = poly.getPath();
@@ -106,9 +105,10 @@ const Transect: React.FC<ContainerProps> = () => {
                 }
             }
         });
-    });
-
+      });
+        
     
+      
     function addLatLng(event: google.maps.MapMouseEvent) {
         const path = poly.getPath();
       
