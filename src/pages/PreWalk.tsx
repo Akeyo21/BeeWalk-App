@@ -27,8 +27,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     const[results, setResults] = useState<Object>()
     const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const[redirectManualTransect, setManualTransect]= useState(false);
-  const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
+  const[newTransect, setUpTransect]= useState(false);
   let transectslist: any[] =[]
   for(const property in props.transects){
    transectslist = props.transects[property]
@@ -156,11 +155,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     if(redirectToMap==true){      
       return <Redirect to='/mapwalk'/>
     }
-    if(redirectAutomaticTransect==true){
-      return <Redirect to='/automatic'/>
-    }
-    if(redirectManualTransect==true){
-      return <Redirect to='/transect'/>
+    if(newTransect==true){
+      return <Redirect to='/mysites/add'/>
     }
    
   return (
@@ -201,21 +197,14 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
           isOpen={addTransect}
           onDidDismiss={() => setAddTransect(false)}
           cssClass='my-custom-class'
-          header={"Transect Missing"}
-          message={"Enter the transect being walked"}
+          header={"No listed transects"}
+          message={"Enter a new transect"}
           buttons={[
             {
-              text: 'Add Manually',
+              text: 'OK',
               handler:()=>{
-                setManualTransect(true)}
+                setUpTransect(true)}
               
-            },
-
-            {
-              text: 'Add when surveying',
-              handler:()=>{
-                setAutomaticTransect(true)
-              }
             },
             {
               text: 'Cancel',
