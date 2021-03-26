@@ -83,12 +83,8 @@ navigator.geolocation.getCurrentPosition(function(position) {
     <><>
      </>
       <IonPage>
-        <IonHeader>
-        </IonHeader>
         <IonContent fullscreen>
-          <IonHeader collapse="condense">
-            
-          </IonHeader>
+          
           
           <div className="container">
             
@@ -133,7 +129,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
             
                 <div id="move">
                 
-                    <IonButton routerLink="/start/prewalk"
+                    <IonButton href="/start/prewalk"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Start Walk
                     </IonButton>
@@ -144,7 +140,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
                     </IonButton>
 
                     
-          <IonButton onClick={()=>(reset())}>Reset Walks</IonButton>
+         
                 </div>
                 
                 
