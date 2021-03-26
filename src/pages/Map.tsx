@@ -35,13 +35,14 @@ const   Map: React.FC<ContainerProps> = (props) => {
     console.log(walk)
  }
  let selectedPath = [];
-
+if(transectslist[walk.transect]){
+  //console.log("here")
  for (const section in transectslist[walk.transect].sections){
      console.log(transectslist[walk.transect].sections[section])
     for (const pos in transectslist[walk.transect].sections[section].positions){
         selectedPath.push(transectslist[walk.transect].sections[section].positions[pos])
     }
- }
+ }}
  let recordsEntered:[] = []
  for(const property in props.records){
    recordsEntered = props.records[property]
@@ -57,7 +58,7 @@ const   Map: React.FC<ContainerProps> = (props) => {
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
     const [showAlert1, setShowAlert1] = useState(false);
     const [redirectHome, setRedirectHome] = useState(false);
-
+    const [emptyRecords, setEmptyRecords] = useState(false);
     const dispatch = useDispatch()
     //prompts user to scroll to the position if navigation
     //fails
@@ -78,18 +79,23 @@ console.log(recordsEntered)
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = new Date().getHours() + ":" + new Date().getMinutes()
     var all = new Date(date + " "+time)
+    
     dispatch(addWalk(new UpdatedWalk(walk.recorder, walk.transect,walk.date,walk.startTime, walk.temp,
       walk.sunshine, walk.windSpeed 
       ,time, recordsEntered)))
   }
  }
  const clearRecords=()=>{
+   if(recordsEntered.length>0){
     sendRecordsToStorage()
     dispatch(resetWalk())
     dispatch(resetRecords())
     //clearPhotos()
-    setShowAlert1(true)
+    //setShowAlert1(true)
     setRedirectHome(true)
+   }else{
+     setEmptyRecords(true);
+   }
    }
   
     if (redirectHome==true){
@@ -294,6 +300,19 @@ console.log(recordsEntered)
                   },
                   {
                     text: 'Set Manually',
+                   
+                  }
+                ]} />
+
+            <IonAlert
+                isOpen={emptyRecords}
+                onDidDismiss={() => setEmptyRecords(false)}
+                cssClass='submitalert'
+                header={'No record entered'}
+                message={'No records entered. Enter a record to submit'}
+                buttons={[
+                  {
+                    text: 'OK',
                    
                   }
                 ]} />
