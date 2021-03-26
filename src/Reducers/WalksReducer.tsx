@@ -18,12 +18,21 @@ export const initialState = {
     walks:[],
   }
   
+  function removeItemOnce(arr, index) {
+    //var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }
 export default function walksReducer(state = initialState, action: AnyAction) {
     switch (action.type) {
         case actions.ADD_WALK:
             return {...state, walks: state.walks.concat(action.payload)}
-            case actions.RESET_WALKS:
-                return {...state, walks: []}
+        case actions.RESET_WALKS:
+            return {...state, walks: []}
+        case actions.DELETE_WALK:
+            return {...state, walks: removeItemOnce(state.walks, action.payload)}
       default:
         return state
     }
