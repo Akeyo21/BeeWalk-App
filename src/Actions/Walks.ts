@@ -5,7 +5,7 @@ export const SET_WALK = 'SET_WALK'
 export const RESET_WALK = 'RESET_WALK'
 export const ADD_WALK = 'ADD_WALK'
 export const RESET_WALKS = 'RESET_WALKS'
-
+export const DELETE_WALK = 'DELETE_WALK';
 //export const RESET_RECORDS = 'RESET_RECORDS'
 // Create Redux action creators that return an action
 export const setWalk = (walk: Walk) => ({
@@ -26,4 +26,9 @@ export const resetWalks = () => ({
     type: RESET_WALKS,
   })
 
+  
 
+  export const deleteWalk=(index)=>({
+    type:DELETE_WALK,
+    payload:index
+  })
