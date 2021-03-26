@@ -155,33 +155,33 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
                 
                 <h1 id="white">White-tailed bumblebees</h1>
                 <h2>Social bumblebees</h2>
-                {whiteTailed.whiteSocial.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {whiteTailed.whiteSocial.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
-                {whiteTailed.whiteCuckoo.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {whiteTailed.whiteCuckoo.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
 
                 <h1 id="red">Red-tailed bumblebees</h1>
                 <h2>Social bumblebees</h2>
-                {redTailed.redSocial.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {redTailed.redSocial.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
-                {redTailed.redCuckoo.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {redTailed.redCuckoo.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
 
 
                 <h1 id="ginger">Ginger-yellow bumblebees</h1>
                 <h2>Social bumblebees</h2>
-                {gingerYellow.gingerSocial.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {gingerYellow.gingerSocial.map((bee:Bee,index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
-                {gingerYellow.gingerCuckoo.map((bee:Bee)=>(
-                  <BeeSpeciesFile common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                {gingerYellow.gingerCuckoo.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
                 ))}
             </div>
 
