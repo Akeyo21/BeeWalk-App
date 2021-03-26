@@ -63,8 +63,9 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
       let poly: google.maps.Polyline;
       loader.load()
       .then(() => {
-          console.log("map should be here")
           
+          console.log("map should be here")
+          //window.location.reload(false);
           map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
             //center: { lat: lat, lng: lng },
             zoom: 15,
@@ -73,6 +74,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
             navigator.geolocation.getCurrentPosition(function (position) {
                let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 map.setCenter(initialLocation);
+                addLatLng(initialLocation)
             });
         } 
           poly = new google.maps.Polyline({
@@ -91,7 +93,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
     
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
           // Add a listener for the click event
-          map.addListener("click", addLatLng);
+          //map.addListener("click", addLatLng);
           initLiveLocation();
           //remove an edge of the transect when setting up
           poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
@@ -104,62 +106,14 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
                     path.removeAt(i)
                 }
             }
+
         });
+        console.log("inside function" , loaded)
       });
-        
-    /*
-      loader.load()
-      .then(() => {
-          console.log("map should be here")
-        if (filled){
-            
-            setScrollToPos(false)
-        map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-          center: { lat: latitude, lng: long },
-          zoom: 14,
-        });}else{
-            map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-                center: { lat: latitude, lng: long },
-                zoom: 14,
-              })  
-        }
-        poly = new google.maps.Polyline({
-            strokeColor: "#000000",
-            strokeOpacity: 1.0,
-            strokeWeight: 3,
-            editable:true
-          });
-          poly.setMap(map);
-          
-        // Create the DIV to hold the control and call the CenterControl()
-        // constructor passing in this DIV.
-        const buttonsDiv = document.createElement("div");
-        buttonsDiv.id = "buttonsDiv";
-        buttonsControl(buttonsDiv, map);
-
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
-          // Add a listener for the click event
-        //map.addListener("click", addLatLng);
-        initLiveLocation();
-          //remove an edge of the transect when setting up
-          poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
-            const path = poly.getPath();
-            console.log(path)
-            let pathlist = path.getArray();
-            let reduced = pathlist.filter(item=>item!==event.latLng)
-            for (let i=0; i<path.getLength();i++){
-                if( path.getAt(i) == event.latLng){
-                    path.removeAt(i)
-                }
-            }
-        });
-
-       
-    });*/
-
+    
     
     function addLatLng(event) {
-        console.log(event)
+        console.log("Adding latlng")
         const path = poly.getPath();
         
         // Because path is an MVCArray, we can simply append a new coordinate
@@ -260,7 +214,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
         //console.log(position.coords.latitude);
         console.log(position)
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
-        setTimeout( addLatLng(liveposition), 120000);
+        setTimeout( addLatLng, 60000, liveposition);
     };
 
     const catchErrors = (e)=>{
@@ -335,3 +289,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
 
 //export default connect(mapStateToProps)(AutomaticTransect);
 export default AutomaticTransect;
+
+function e(e: any): ((reason: any) => PromiseLike<never>) | null | undefined {
+  throw new Error('Function not implemented.');
+}
