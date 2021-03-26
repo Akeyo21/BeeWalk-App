@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonButton, IonItemOption, IonItemOptions, IonItemSliding } from '@ionic/react';
 import React from 'react';
 
 import './Default.css';
@@ -9,7 +9,7 @@ import {Route} from 'react-router-dom';
 import { chevronForward, ellipsisHorizontal, home, leaf, navigate, walk } from 'ionicons/icons';
 import { connect, useDispatch } from 'react-redux';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
-import { resetWalks } from '../Actions/Walks';
+import { deleteWalk, resetWalks } from '../Actions/Walks';
 interface ContainerProps { 
   walks:[],
   transects:[]
@@ -21,22 +21,28 @@ const Walks: React.FC<ContainerProps>= (props) => {
    walkslist = props.walks[property]
    
  }
+ 
  let transectslist: any[] =[]
   for(const property in props.transects){
    transectslist = props.transects[property]
  }
- 
+ console.log(transectslist[0].name)
+ for(let i=0; i<walkslist.length;i++){
+   try{
+  console.log(transectslist[walkslist[i].transect].name)
+   }catch(e){
+     console.log(i)
+   }
+}
+const dispatch = useDispatch()
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
       <Route path="/walkdetail" component={Walkdetail} />
     </IonRouterOutlet></>
       <IonPage >
-        <IonHeader>
-        </IonHeader>
         <IonContent fullscreen className="content">
-          <IonHeader collapse="condense">            
-          </IonHeader>
+          
           <div className="page">
           <IonTabBar slot="bottom" color="warning" className="tabs">
             <IonTabButton tab="home" href="/frontpage">
@@ -68,9 +74,13 @@ const Walks: React.FC<ContainerProps>= (props) => {
               <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
                 
             
-            {walkslist.map((walk:UpdatedWalk, key)=>(
+            {walkslist.map((walk:UpdatedWalk, index)=>(              
               
-              <WalkItem transect ={transectslist[walk.transect].name} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${key}`}/>
+              <IonItemSliding key={index} ><WalkItem transect={transectslist[walk.transect].name} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${index}`} />
+                <IonItemOptions side="end">
+                  <IonItemOption onClick={() => dispatch(deleteWalk(index))}>Delete</IonItemOption>
+                </IonItemOptions>
+                </IonItemSliding>
             ))}
           </IonList>
 

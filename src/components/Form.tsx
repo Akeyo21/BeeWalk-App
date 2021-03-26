@@ -64,7 +64,7 @@ const Form: React.FC<ContainerProps> = (props) => {
 }
 
   if(redirectMap==true){
-    return <Redirect to="/map"/>
+    return <Redirect to="/mapwalk"/>
   }
   if(choosingSpecies==true){
     return <Redirect to="/start/duringwalk"/>
@@ -110,12 +110,12 @@ const Form: React.FC<ContainerProps> = (props) => {
             </IonItem>
 
             {props.species ?
-              props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
-                <><IonItem className="text-center">
+              props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>, index) => (
+                <IonItem className="text-center" key={index}>
                   <IonLabel>
                     {Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}
                   </IonLabel>
-                </IonItem> </>
+                </IonItem> 
               ))
 
               :

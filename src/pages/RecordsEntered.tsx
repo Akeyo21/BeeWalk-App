@@ -37,7 +37,7 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
             
         <div className="wholepage "> 
         <div className="top">
-        <IonButton href="/map" className="light move-left" >Back</IonButton>
+        <IonButton href="/mapwalk" className="light move-left" >Back</IonButton>
 
         </div>
         {recordslist.map((record: Record)=>(

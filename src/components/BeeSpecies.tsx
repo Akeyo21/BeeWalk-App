@@ -1,23 +1,13 @@
-import React, { useContext, useState } from 'react';
-import {IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonRow, IonRouterLink, IonModal, IonPicker, IonFab, IonFabButton, IonIcon, IonBackdrop, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonRouterOutlet} from '@ionic/react';
+import React, {  useState } from 'react';
+import {IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonRow,  IonModal,   IonItem, IonItemOption, IonItemOptions, IonItemSliding,  IonRouterOutlet} from '@ionic/react';
 
 import "../pages/Default.css";
 import BeeCastCount from "./BeeCastCount"
-import { add, addCircle, removeCircle, removeOutline } from 'ionicons/icons';
-/*import { Context } from '../pages/DuringWalk';*/
-import { State } from 'ionicons/dist/types/stencil-public-runtime';
 import { Redirect } from 'react-router';
-import { connect, useDispatch } from 'react-redux'
-
-import { useSelector } from 'react-redux'
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux'
 import { selectBeeSpecies } from '../Actions/Species';
-import { BrowserRouter as Router,Link, Route, Switch} from 'react-router-dom';
-import type {
-    MemoryHistory
-  } from 'history'
+import { BrowserRouter as Route} from 'react-router-dom';
 import RecordForm from '../pages/RecordForm';
-import { IonReactRouter } from '@ionic/react-router';
 import { BeeSpecies } from '../Reducers/SpeciesReducer';
 import {Caste} from '../beeInfo/DifferentBeeSpecies'
 
@@ -73,9 +63,7 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
         
 
     }
-    const bee = (state: { species: BeeSpecies; }) => state.species
-  const todos = useSelector(bee)
-  console.log(todos)
+
     const [redirectHome, setRedirectHome] = useState(false)
     if (redirectHome==true){
         return <Redirect to='/start/walk/recordform' />
@@ -90,8 +78,8 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                           <h1>{props.common}</h1>
 
                           <IonGrid className="grid">
-                              {props.caste.map((casteValue:Caste, key:number )=>(
-                              <BeeCastCount cast={casteValue} pos={key}/>
+                              {props.caste.map((casteValue:Caste, index:number )=>(
+                              <BeeCastCount cast={casteValue} pos={index} key={index}/>
 
                               ))}
                           </IonGrid>

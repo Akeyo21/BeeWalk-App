@@ -1,12 +1,12 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonButton, IonCol, IonGrid, IonRow, IonTabBar, IonTabButton } from '@ionic/react';
-import React from 'react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonButton, IonCol, IonGrid, IonRow, IonTabBar, IonTabButton, IonItemSliding, IonItemOption, IonItemOptions, IonAlert } from '@ionic/react';
+import React, { useState } from 'react';
 
 import './Default.css';
 import Login from "../pages/Login";
 import AddSite from "../pages/AddSites";
 import {Route} from 'react-router-dom';
 import { home, walk, leaf, navigate, ellipsisHorizontal } from 'ionicons/icons';
-import { connect } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 /*MySites - gives a page that shows a list of sites the user has
 entered*/
 interface ContainerProps { 
@@ -21,6 +21,11 @@ const MySites: React.FC<ContainerProps> = (props) => {
    transectslist = props.transects[property]
    
  }
+ const [showWarning, setShowWarning] = useState(false);
+  //const [proceedDelete, setProceedDelete] = useState(false);
+ const deleteTransect=(key)=>{
+   
+ }
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -32,7 +37,20 @@ const MySites: React.FC<ContainerProps> = (props) => {
         <IonContent fullscreen className="content">
             <IonHeader>            
             </IonHeader>
-
+            <IonAlert
+                isOpen={showWarning}
+                onDidDismiss={() => setShowWarning(false)}
+                cssClass='submitalert'
+                header={'Are you sure you?'}
+                message={'It also deletes walks made on the transect'}
+                buttons={[
+                  {
+                    text: 'OK',
+                   handler(){
+                     //deleteTransect(showWarning[1]);
+                   }
+                  }
+                ]} />
             <div className="sites">
             <IonTabBar slot="bottom" color="warning" className="tabs">
             <IonTabButton tab="home" href="/frontpage">
@@ -62,7 +80,8 @@ const MySites: React.FC<ContainerProps> = (props) => {
             </IonTabBar>
                 <IonList lines="full" className="list">
                     <IonListHeader lines="full" color="light" id="header" >My Sites</IonListHeader>
-                    {transectslist.map((transect)=>(
+                    {transectslist.map((transect, index)=>(
+                      <IonItemSliding key={index}>
                       <IonItem className="item" >  
                       <IonLabel> {transect.name}</IonLabel>
                           <IonGrid>
@@ -71,12 +90,15 @@ const MySites: React.FC<ContainerProps> = (props) => {
                                       <IonNote className="note">0 Records submitted<br/>0 Species submitted</IonNote>
                                   </IonCol>
   
-                                  <IonCol size="4">
-                                      <IonButton  color="dark">Edit  </IonButton>
-                                  </IonCol>
+                                  
                               </IonRow>
-                          </IonGrid>               
+                          </IonGrid>  
+                                   
                       </IonItem>
+                      <IonItemOptions side="end">
+                  <IonItemOption onClick={(index)=>(deleteTransect(index))}>Delete</IonItemOption>
+                </IonItemOptions> 
+                      </IonItemSliding>
                     ))}
                    
                 </IonList>

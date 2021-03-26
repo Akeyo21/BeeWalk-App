@@ -86,11 +86,8 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
       <Route path="/start/duringwalk" component={SpeciesList}/>
     </IonRouterOutlet></>
       <IonPage >
-        <IonHeader>
-        </IonHeader>
         <IonContent fullscreen className="content">
-          <IonHeader collapse="condense">            
-          </IonHeader>
+          
           <IonAlert
                 isOpen={memoryAlert}
                 onDidDismiss={() => setMemoryAlert(false)}
