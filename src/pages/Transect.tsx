@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
-import {IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
+import {IonAlert,IonContent, IonHeader,  IonPage, IonRouterOutlet} from '@ionic/react';
 import { useDispatch } from 'react-redux';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Section } from '../Reducers/SectionsReducer';
@@ -19,17 +19,7 @@ const Transect: React.FC<ContainerProps> = () => {
     //prompts user to scroll to the position if navigation
     //fails
     const [showScrollToPos, setScrollToPos] = useState(false)
-    let lat=0;
-    let lng=0;
-   navigator.geolocation.getCurrentPosition(function(position) {   
-        //lat = position.coords.latitude
-        //lng = position.coords.longitude
-        //setlat(position.coords.latitude)
-        //setlong(position.coords.longitude)
-        //setfilled(true)
-      });
-    console.log(lat)
-    console.log(lng)
+   
     //button controls added on top of map
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
@@ -53,7 +43,9 @@ const Transect: React.FC<ContainerProps> = () => {
         
     }
     
-    
+    useEffect(() => {
+      
+    }, []);
     const loader = new Loader({
       apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
     });

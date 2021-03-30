@@ -108,7 +108,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
             }
 
         });
-        console.log("inside function" , loaded)
+        //console.log("inside function" , loaded)
       });
     
     
