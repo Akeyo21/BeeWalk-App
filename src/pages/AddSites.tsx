@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import '../pages/Default.css';
-import {IonAlert, IonBackButton, IonButton, IonContent, IonDatetime, IonInput, IonLabel, IonRouterOutlet, IonSelect, IonSelectOption, IonText} from '@ionic/react';
+import {IonAlert, IonBackButton, IonButton, IonContent, IonDatetime, IonInput, IonLabel, IonRouterOutlet, IonSelect, IonSelectOption,
+    
+    IonModal,
+    IonGrid,
+    IonRow,
+    IonCol} from '@ionic/react';
 import { RouteStart } from '../Reducers/TransectReducer';
 import { useDispatch } from 'react-redux';
 import { setRouteStart } from '../Actions/Transect';
@@ -21,10 +26,8 @@ const AddSites: React.FC<ContainerProps> = () => {
 
     //redirect to transect page
     const [ redirectMap, setRedirectMap] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
-
-    const [addTransect, setAddTransect] = useState(false);
-    const[redirectManualTransect, setManualTransect]= useState(false);
   const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
   
     //list of counties available on select option
@@ -87,8 +90,8 @@ const AddSites: React.FC<ContainerProps> = () => {
                 let route = new RouteStart(transect, gridref,county, yearEstablished)
                 dispatch(setRouteStart(route))
                 //go to map page to enter transect
-                setAddTransect(true)
                 
+                setShowModal(true)
             }else{
                 setFillGrid(true)
             }
@@ -96,8 +99,17 @@ const AddSites: React.FC<ContainerProps> = () => {
             setFillTransect(true)
         }
     }
-    if(redirectMap==true){      
+     
+    
+    
+    if(redirectMap==true){     
         return <Redirect to='/transect'/>
+        
+       
+      }
+      const goToTransect=()=>{
+          setRedirectMap(true);
+       // return  <Redirect to='/transect'/>
       }
       if(redirectAutomaticTransect==true){
         return <Redirect to='/automatic'/>
@@ -109,32 +121,36 @@ const AddSites: React.FC<ContainerProps> = () => {
         </IonRouterOutlet>
             <IonContent fullscreen className="content">
                 <IonBackButton defaultHref="/mysites" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
-                <IonAlert
-          isOpen={addTransect}
-          onDidDismiss={() => setAddTransect(false)}
-          cssClass='my-custom-class'
-          header={"Transect Missing"}
-          message={"Enter the transect being walked"}
-          buttons={[
-            {
-              text: 'Add Manually',
-              handler:()=>{
-                setRedirectMap(true)}
-              
-            },
+           
+        <IonModal isOpen={showModal} cssClass='choose-transect'>
+            <h1>Enter Transect</h1>
+            <h2>Choose how to enter transect</h2>
+            <IonGrid>
+                <IonRow>
+                    <IonCol size="6">
+                        <IonButton onClick={() => {
+                            setRedirectMap(true);
+                            setShowModal(false);                
+                        }}>
+                            Enter <br></br>Manually
+                        </IonButton>
+                    </IonCol>
 
-            {
-              text: 'Add when surveying',
-              handler:()=>{
-                setAutomaticTransect(true)
-              }
-            },
-            {
-              text: 'Cancel',
-              role: 'cancel'
-            }
-          ]}
-        />
+                    <IonCol size="6">
+                        <IonButton onClick={() => {
+                            setAutomaticTransect(true);
+                            setShowModal(false);                
+                        }}>
+                            Enter <br></br>Automatically
+                        </IonButton>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
+            
+
+           
+        </IonModal>
+    
                 <IonAlert
                     isOpen={fillTransect}
                     onDidDismiss={() => setFillTransect(false)}
@@ -157,8 +173,8 @@ const AddSites: React.FC<ContainerProps> = () => {
 
                     <IonLabel>County</IonLabel>
                     <IonSelect okText="Okay" cancelText="Dismiss" onIonChange={(e: any) => { getCounty(e.target.value); } }>
-                        {counties.map((name, key) => (
-                            <IonSelectOption value={name}>{name}</IonSelectOption>
+                        {counties.map((name, index) => (
+                            <IonSelectOption key={index} value={name}>{name}</IonSelectOption>
                         ))}
                     </IonSelect>
 
