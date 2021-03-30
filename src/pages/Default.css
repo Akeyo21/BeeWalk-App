@@ -61,6 +61,14 @@
     text-align: center;
   
 }
+.choose-transect{
+    position: absolute;
+    height:35%;
+    width:80%;
+    margin: 39% 0 0 8%;
+    text-align:center;
+    top:10%;
+}
 
 .toolbar{
     --background:white !important;
