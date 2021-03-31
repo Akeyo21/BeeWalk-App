@@ -34,7 +34,7 @@ const MySites: React.FC<ContainerProps> = (props) => {
       <IonPage >
         <IonHeader>
         </IonHeader>
-        <IonContent fullscreen className="content">
+        <IonContent force-overscroll className="content">
             <IonHeader>            
             </IonHeader>
             <IonAlert
