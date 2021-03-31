@@ -63,11 +63,11 @@
 }
 .choose-transect{
     position: absolute;
-    height:35%;
-    width:80%;
+    height:40%;
+    width:83%;
     margin: 39% 0 0 8%;
     text-align:center;
-    top:10%;
+    top:7%;
 }
 
 .toolbar{
@@ -109,9 +109,18 @@
 }
 /*Manual data page*/
 #manualform{
-    position: absolute;
-    top: 21%;
-    left: 9%;
+   
+    color: black;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+    margin-bottom: 10%;
+    margin:10% 0 25% 5%;
+}
+#siteform{
+    left:10%;
+    top:25%;
+    position:absolute;
     color: black;
     font-size: 16px;
     text-align: center;
@@ -195,5 +204,12 @@ padding: 18px;
 .top{
     margin-bottom: 18%;}
 
-
+/*Section details*/
+.bottom{
+position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index:10;
+}
 
