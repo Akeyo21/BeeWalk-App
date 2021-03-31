@@ -30,7 +30,7 @@ const Transect: React.FC<ContainerProps> = () => {
         addSectionButton.style.color = "black";
         
         const fillSectionButton = document.createElement("button");
-        fillSectionButton.innerHTML = "Fill Section details";
+        fillSectionButton.innerHTML = "Submit Sections";
         fillSectionButton.style.padding="10% 3%";
         fillSectionButton.style.margin="10% 0";
         fillSectionButton.style.backgroundColor = "white";
@@ -46,13 +46,68 @@ const Transect: React.FC<ContainerProps> = () => {
     useEffect(() => {
       
     }, []);
+
     const loader = new Loader({
       apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
     });
       console.log("here")
     let map: google.maps.Map;
     let poly: google.maps.Polyline;
-    
+    let marker : google.maps.Marker
+    let polylines:[]=[];
+    let markers:[] = [];
+    function removePoint(event: google.maps.MapMouseEvent){
+      const path = poly.getPath();
+      console.log(path)
+      let pathlist = path.getArray();
+      let reduced = pathlist.filter(item=>item!==event.latLng)
+      let found = false;
+      console.log(markers);
+      for (let i=0; i<path.getLength();i++){
+          if( path.getAt(i) == event.latLng){
+            found = true;
+              path.removeAt(i)
+              if(i==0){
+                //check if the path has another point
+                if(path.getLength()>0){
+                  console.log("Trying to move"+polylines.length );
+                  sections[polylines.length] = new Section(google.maps.geometry.spherical.computeLength(path), 
+                     "0", [],[],path.getArray());
+                   
+                  markers[polylines.length].setPosition(path.getAt(i))
+                }else{
+                  sections.splice(polylines.length, 1);
+                  markers[polylines.length].setMap(null)
+                }
+                //if not remove the marker
+              }
+          }
+      }
+      if (!found){
+        for(let i=0; i<polylines.length;i++){
+          for (let j=0; j<polylines[i].getPath().getLength();j++){
+            if( polylines[i].getPath().getAt(j) == event.latLng){
+                found=true;
+                polylines[i].getPath().removeAt(j)
+                if(j==0){
+                  //check if the path has another point
+                  if(polylines[i].getPath().getLength()>0){
+                    sections[i] = new Section(google.maps.geometry.spherical.computeLength(polylines[i].getPath()), 
+                     "0", [],[],polylines[i].getPath().getArray());
+                    console.log("Trying to move"+polylines.length );
+  
+                    markers[i].setPosition(polylines[i].getPath().getAt(i))
+                  }else{
+                    //array.splice(index, 1);
+                    sections.splice(i, 1);
+                    markers[i].setMap(null)
+                  }
+                }
+            }
+        }
+        }
+      }
+  }
       loader.load()
       .then(() => {
           console.log("map should be here")
@@ -86,41 +141,22 @@ const Transect: React.FC<ContainerProps> = () => {
           map.addListener("click", addLatLng);
     
           //remove an edge of the transect when setting up
-          poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
-            const path = poly.getPath();
-            console.log(path)
-            let pathlist = path.getArray();
-            let reduced = pathlist.filter(item=>item!==event.latLng)
-            for (let i=0; i<path.getLength();i++){
-                if( path.getAt(i) == event.latLng){
-                    path.removeAt(i)
-                }
-            }
-        });
+          poly.addListener("dblclick", removePoint);
       });
         
     
       
     function addLatLng(event: google.maps.MapMouseEvent) {
+      console.log(polylines);
         const path = poly.getPath();
       
         // Because path is an MVCArray, we can simply append a new coordinate
         // and it will automatically appear.
         path.push(event.latLng);
       
-        let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-    });  
-        // Add a new marker at the new plotted point on the polyline.
-        let marker = new google.maps.Marker({
-          position: path.getAt(0),
-          title: "#" + sections.length,
-          map: map,
-        });
-        marker.addListener("click", () => {
-          infowindow.open(map, marker);
-        });
+       
+        
+        
     }
 
     //add button to set up the sections
@@ -141,10 +177,25 @@ const Transect: React.FC<ContainerProps> = () => {
         }
     }
     function saveSection(){   
-           
         const path = poly.getPath()
         const distance = google.maps.geometry.spherical.computeLength(path);
-        
+        if(sections.length==0){
+          let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });  
+          marker = new google.maps.Marker({
+            draggable:true,
+            position: path.getAt(0),
+            title: "#" + sections.length,
+            map: map,
+          });
+          marker.addListener("click", () => {
+            infowindow.open(map, marker);
+          });
+          markers.push(marker);
+        }
+        polylines.push(poly);
         //ensure that an actual section has bee entered
         if(path.getArray().length>0){
         let section: Section;
@@ -154,12 +205,26 @@ const Transect: React.FC<ContainerProps> = () => {
 
         //append last position to new polyline to join them all
         let last = path.getArray()[path.getArray().length-1]
-
+          // Add a new marker at the new plotted point on the polyline.
+          let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });  
+        marker = new google.maps.Marker({
+          draggable:true,
+          position: last,
+          title: "#" + sections.length,
+          map: map,
+        });
+        marker.addListener("click", () => {
+          infowindow.open(map, marker);
+        });
+        markers.push(marker);
         //generate different colors for the different poylines
         let colors = ['red', 'maroon', 'blue','silver', 'yellow','olive', 'lime', 'purple', 'orange', 'green',
         'pink', 'brown', 'coral', 'magenta', 'tan']
         let randomColor =Math.floor(Math.random()*colors.length-1)
-        
+        console.log(polylines);
         //new polyline for different sections
         poly=new google.maps.Polyline({
             path:[last],
@@ -170,20 +235,11 @@ const Transect: React.FC<ContainerProps> = () => {
           });
         poly.setMap(map);
         //remove an edge of the transect when setting up
-        poly.addListener("dblclick", function giveOptions(event: google.maps.MapMouseEvent){
-            const path = poly.getPath();
-            console.log(path)
-            let pathlist = path.getArray();
-            let reduced = pathlist.filter(item=>item!==event.latLng)
-            for (let i=0; i<path.getLength();i++){
-                if( path.getAt(i) == event.latLng){
-                    path.removeAt(i)
-                }
-            }
-        });
+        poly.addListener("dblclick", removePoint);
         console.log(sections) 
         }    
     }
+    console.log(polylines);
     if(redirectToSectionDetails ==true){
         return <Redirect to="/sectiondetails"/>
     }
