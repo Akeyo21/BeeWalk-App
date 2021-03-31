@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import '../components/ExploreContainer.css';
 import '../pages/Default.css';
-import {IonAlert, IonBackButton, IonButton, IonContent, IonDatetime, IonInput, IonItem, IonLabel, IonRouterOutlet, IonSelect, IonSelectOption, IonText} from '@ionic/react';
+import {IonAlert, IonBackButton, IonButton, IonContent,  IonFooter,  IonItem, IonLabel, IonRouterOutlet, IonSelect, IonSelectOption, IonText, IonTitle, IonToolbar} from '@ionic/react';
 import { RouteStart, Transect } from '../Reducers/TransectReducer';
 import { connect, useDispatch } from 'react-redux';
 import { Redirect, Route } from 'react-router';
-import TransectMap from './Transect';
 import { Section } from '../Reducers/SectionsReducer';
 import { addTransect, resetRouteStart, resetSections } from '../Actions/Transect';
 import Sites from './MySites';
@@ -178,8 +177,8 @@ return (
             <Route path="/mysites" component={Sites} />
 
         </IonRouterOutlet>
-            <IonContent fullscreen className="content">
-                <IonBackButton defaultHref="/mysites" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
+            <IonContent fullscreen force-overscroll className="content">
+                <IonBackButton defaultHref="/transect" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
 
                 <form id="manualform" >
                     
@@ -215,11 +214,16 @@ return (
                             </>
                         ))}
                         
-                    
-                    <IonButton onClick={() => { setUpTransect() } } color="warning" size="large">Save</IonButton>
-                </form>
+                        
+                  </form>
+                  
+            </IonContent>
+            <IonFooter>
+            <IonButton onClick={() => { setUpTransect() } }className="bottom" color="warning" size="large">Save</IonButton>
+                
+    </IonFooter>
 
-            </IonContent></>
+            </>
            
     );
 };
