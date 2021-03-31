@@ -122,7 +122,7 @@ const AddSites: React.FC<ContainerProps> = () => {
             <IonContent fullscreen className="content">
                 <IonBackButton defaultHref="/mysites" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
            
-        <IonModal isOpen={showModal} cssClass='choose-transect'>
+        <IonModal isOpen={showModal} cssClass='choose-transect' swipeToClose={true}>
             <h1>Enter Transect</h1>
             <h2>Choose how to enter transect</h2>
             <IonGrid>
@@ -167,7 +167,7 @@ const AddSites: React.FC<ContainerProps> = () => {
                     message={"Enter the Grid Reference"}
                     buttons={['OK']} />
 
-                <form id="manualform" action="/mysites">
+                <form id="siteform" action="/mysites">
                     <IonInput placeholder="Transect Name" type="text" required className="input" onIonInput={(e: any) => { getTransect(e.target.value); } }></IonInput>
                     <IonInput placeholder="Grid Reference" type="text" className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
 
