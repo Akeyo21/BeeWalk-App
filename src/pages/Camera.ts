@@ -96,6 +96,8 @@ export function usePhotoGallery() {
             photo.webviewPath = `data:image/jpeg;base64,${file.data}`;
           }
         }
+        //empty photos
+        //setPhotos([]);
         setPhotos(photosInStorage);
       };
       loadSaved();
