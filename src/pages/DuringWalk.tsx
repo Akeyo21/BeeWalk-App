@@ -7,7 +7,7 @@ import BeeSpeciesFile from '../components/BeeSpecies'
 import BeeRecords from '../components/BeeRecords'
 import Photo from './Photo';
 import RecordForm from './RecordForm';
-import {whiteTailed, redTailed, gingerYellow, Bee} from '../beeInfo/DifferentBeeSpecies'
+import {whiteTailed, redTailed, gingerYellow, Bee, allCastes} from '../beeInfo/DifferentBeeSpecies'
 /*
     DuringWalk - page that collects data during walk
 */
@@ -15,115 +15,7 @@ interface ContainerProps {
 }
 
 const DuringWalk: React.FC<ContainerProps> = () => {
-//export default class DuringWalk extends React.Component{
-  
-  /*const [beedata, addBeeData] = useState([]as any)
-  const RepeatSpecies: React.FC<ContainerProps> = () => {
-    return(
-      <>
-      <Context.Provider value={{beedata:beedata as any , addBeeData: (list) => {return list} }}>
-      <BeeSpeciesFile content="Bee Species Name 1" />
-      <BeeSpeciesFile content="Bee Species Name 2" />
-      <BeeSpeciesFile content="Bee Species Name 3" />
-      <BeeSpeciesFile content="Bee Species Name 4" />
-      <BeeSpeciesFile content="Bee Species Name 5" />
-      <BeeSpeciesFile content="Bee Species Name 6" />
-        </Context.Provider></>
-    )
-  };
-  class BeeSpecies{
-    name: String;
-    queen: number;
-    worker: number;
-    unknown: number;
-    constructor(name: String, queen: number, worker: number, unknown:number){
-        this.name = name;
-        this.queen = queen;
-        this.worker = worker;
-        this.unknown = unknown;
-    }
-}
 
-const listremove=(array: string[]|any[], target:BeeSpecies)=>{
-    var filtered = array.filter(function(value, index, arr){ 
-    return value.name !=target.name;
-  });
-  return filtered
-}
-    const removeDuplicates=(list: BeeSpecies[]):BeeSpecies[]=>{
-      if (list.length==1 || list.length==0){
-        return list
-      }else{
-      var queen = 0
-      var worker = 0
-      var unknown = 0
-      for(var index=0;index<list.length;index++){
-        for (var second=index+1;second<list.length;second++){
-          console.log(index + "index position")
-          console.log(second+"second")
-          if (list[index].name == list[second].name){
-            console.log("adding")
-            queen += list[second].queen
-            worker += list[second].worker
-            unknown +=list[second].unknown                  
-          } 
-          
-        }
-        queen += list[index].queen
-          worker += list[index].worker
-          unknown +=list[index].unknown
-          var beecombined = new BeeSpecies(list[index].name, queen, worker, unknown )
-          list = listremove(list, list[index])
-          return [beecombined].concat(removeDuplicates(list.slice(index)))          
-      }
-      return []
-    }
-    };
-  const RepeatRecords: React.FC<ContainerProps> = () => {
-    if (beedata.length >0){
-    return(
-      
-      <><Context.Provider value={{ beedata: beedata, addBeeData: (list) => {return list } }}>
-        
-        
-      {console.log(beedata)}
-      {console.log(removeDuplicates(beedata))}
-        {removeDuplicates(beedata).map((item: any) => (
-      
-      <BeeRecords key={item.name}name={item.name} queen={item.queen} worker={item.worker} unknown={item.unknown}/>
-        ))}
-        {console.log(beedata.length)}
-        </Context.Provider></>
-    )
-        }else{
-          console.log("No data entered")
-          return (
-            <h1>No Bee Records Entered</h1>
-          )
-        }
-  };
-   <IonToolbar className="toolbar">
-                <IonSegment onIonChange={(e) => {(e.detail.value == "enter")? setShowRecords(false) : setShowRecords(true) }}>
-                  <IonSegmentButton value="enter" >Enter Records</IonSegmentButton>
-                  <IonSegmentButton value="records" >Check Records</IonSegmentButton>
-                </IonSegment>
-              </IonToolbar>
-
-           
-            <div className="datacontent" id="main"> 
-              {showRecords ? (<RepeatRecords/>):(<RepeatSpecies />) }
-            </div>
-            
-            <IonButton color="light" href="/start/duringwalk/manual" >
-                Add Manually
-              </IonButton>
-              <IonBackButton defaultHref="/start/duringwalk/photo" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
-            
-  
-  const[showRecords, setShowRecords] = useState(false)
- 
-  console.log(beedata.length)
-  console.log("Hello")*/
   return (
     
     <><></><><IonRouterOutlet>
@@ -152,36 +44,38 @@ const listremove=(array: string[]|any[], target:BeeSpecies)=>{
                 </IonGrid>
               </IonHeader>
               <div className="datacontent" id="main">
-                
-                <h1 id="white">White-tailed bumblebees</h1>
-                <h2>Social bumblebees</h2>
-                {whiteTailed.whiteSocial.map((bee:Bee, index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+              <BeeSpeciesFile common={"White/Buff-tailed"} scientific={"Bombus lucorum/terrestris"} caste={allCastes} image={""}/>
+              <BeeSpeciesFile common={"Bumble Bee"} scientific={"Bumble Bee"} caste={allCastes} image={""}/>
+               
+              <h1 id="white">White-tailed bumblebees</h1>
+              <h2>Social bumblebees</h2>
+               {whiteTailed.whiteSocial.map((bee:Bee, index)=>(
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
                 {whiteTailed.whiteCuckoo.map((bee:Bee, index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
 
                 <h1 id="red">Red-tailed bumblebees</h1>
                 <h2>Social bumblebees</h2>
                 {redTailed.redSocial.map((bee:Bee, index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
                 {redTailed.redCuckoo.map((bee:Bee, index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
 
 
                 <h1 id="ginger">Ginger-yellow bumblebees</h1>
                 <h2>Social bumblebees</h2>
                 {gingerYellow.gingerSocial.map((bee:Bee,index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
                 <h2>Cuckoo bumblebees</h2> 
                 {gingerYellow.gingerCuckoo.map((bee:Bee, index)=>(
-                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()}/>
+                  <BeeSpeciesFile key={index} common={bee.getCommon()} scientific={bee.getScientific()} caste={bee.getCaste()} image={bee.getImage()}/>
                 ))}
             </div>
 
