@@ -1,5 +1,5 @@
 import React, {  useState } from 'react';
-import {IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonRow,  IonModal,   IonItem, IonItemOption, IonItemOptions, IonItemSliding,  IonRouterOutlet} from '@ionic/react';
+import {IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonRow,  IonModal,   IonItem, IonItemOption, IonItemOptions, IonItemSliding,  IonRouterOutlet, IonText} from '@ionic/react';
 
 import "../pages/Default.css";
 import BeeCastCount from "./BeeCastCount"
@@ -21,6 +21,7 @@ interface ContainerProps {
     common: string|any
     scientific:string|any
     caste: Caste[]|any
+    image: string|any
     /*selectBeeSpecies: (arg0: BeeSpecies) => void*/
 }
 let duplicate = null;
@@ -106,14 +107,23 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                                       <IonCardContent className="nopadding">
                                           <IonGrid className="nopadding">
                                               <IonRow>
-                                                  <IonCol size="5" className="nopadding">
-                                                      <img src="assets/images/bee.jpg"></img>
-                                                  </IonCol>
+                                                {props.image==""?
+                                                <IonCol size="12" className="">
+                                                <h1 className="ion-padding-start ion-padding-top">{props.common}</h1>
+                                                <h2 className="italics">{props.scientific}</h2>
+                                                </IonCol> 
+                                            : <>
+                                            <IonCol size="5" className="nopadding">
+                                              <img src={props.image}></img>
+                                          </IonCol>
 
-                                                  <IonCol size="7">
-                                                      <h1 className="ion-padding-start ion-padding-top">{props.common}</h1>
-                                                      <h2 className="italics">{props.scientific}</h2>
-                                                  </IonCol>
+                                              <IonCol size="7">
+                                                  <h1 className="ion-padding-start ion-padding-top">{props.common}</h1>
+                                                  <h2 className="italics">{props.scientific}</h2>
+                                              </IonCol></>
+                                                }
+                                                 
+                                                  
                                               </IonRow>
                                           </IonGrid>
                                       </IonCardContent>
