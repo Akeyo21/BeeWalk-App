@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import {IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
 import { connect, useDispatch } from 'react-redux';
@@ -66,7 +66,48 @@ if(transectslist[walk.transect]){
     
     
   let { photos, takePhoto } = usePhotoGallery();
-  
+ 
+  useEffect(() => {
+    // Update the document title using the browser API
+    const loader = new Loader({
+      apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
+    });
+    loader.load()
+      .then(() => {
+         
+        map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+         
+          zoom: 14,
+        })
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+             let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              map.setCenter(initialLocation);
+          });
+      } 
+        poly = new google.maps.Polyline({
+            strokeColor: "#000000",
+            strokeOpacity: 1.0,
+            strokeWeight: 3,
+            editable:true
+          });
+          poly.setMap(map);
+          
+        // Create the DIV to hold the control and call the CenterControl()
+        // constructor passing in this DIV.
+        const buttonsDiv = document.createElement("div");
+        buttonsDiv.id = "buttonsDiv";
+        buttonsControl(buttonsDiv, map);
+
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
+          // Add a listener for the click event
+        //map.addListener("click", addLatLng);
+        initLiveLocation();
+          //remove an edge of the transect when setting up
+          
+
+    });
+  });
 console.log(recordsEntered)
  const sendRecordsToStorage=()=>{
    //write 
@@ -136,32 +177,24 @@ console.log(recordsEntered)
         //the buttons to be included on the map
         const photoButton = document.createElement("button");
         photoButton.innerHTML = "Record with photo/video";
-        photoButton.style.padding="4% 3%";
-        photoButton.style.backgroundColor = "white";
-        photoButton.style.color = "black";
+        photoButton.className = "map-buttons";         
         photoButton.style.margin = "0 2% 0 0";
         
         const withoutButton = document.createElement("a");
         withoutButton.id = "without"
         withoutButton.innerHTML = "Record without photo/video";
-        withoutButton.style.padding="4% 3%";
+        withoutButton.className = "map-buttons";
         withoutButton.style.margin="10% 0";
-        withoutButton.style.backgroundColor = "white";
-        withoutButton.style.color = "black";
 
         const recordsButton = document.createElement("button");
         recordsButton.innerHTML = "Records entered";
-        recordsButton.style.padding="4% 3%";
+        recordsButton.className = "map-buttons";
         recordsButton.style.margin="0 2% 0 0";
-        recordsButton.style.backgroundColor = "white";
-        recordsButton.style.color = "black";
 
         const saveButton = document.createElement("button");
         saveButton.innerHTML = "Save Records";
-        saveButton.style.padding="4% 3%";
+        saveButton.className = "map-buttons";
         saveButton.style.margin="10% 0";
-        saveButton.style.backgroundColor = "white";
-        saveButton.style.color = "black";
         
         div.appendChild(photoButton);
         div.appendChild(withoutButton);
@@ -176,56 +209,12 @@ console.log(recordsEntered)
         })
         
     }
-    const loader = new Loader({
-        apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
-      });
+    
+   
       console.log("here")
       let map: google.maps.Map;
       let poly: google.maps.Polyline;
-      loader.load()
-      .then(() => {
-         
-        map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-         
-          zoom: 14,
-        })
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-             let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              map.setCenter(initialLocation);
-          });
-      } 
-        poly = new google.maps.Polyline({
-            strokeColor: "#000000",
-            strokeOpacity: 1.0,
-            strokeWeight: 3,
-            editable:true
-          });
-          poly.setMap(map);
-          
-        // Create the DIV to hold the control and call the CenterControl()
-        // constructor passing in this DIV.
-        const buttonsDiv = document.createElement("div");
-        buttonsDiv.id = "buttonsDiv";
-        buttonsControl(buttonsDiv, map);
-
-        map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
-          // Add a listener for the click event
-        //map.addListener("click", addLatLng);
-        initLiveLocation();
-          //remove an edge of the transect when setting up
-          
-
-        const bermudaTriangle = new google.maps.Polygon({
-            paths: selectedPath,
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-          });
-          bermudaTriangle.setMap(map);
-    });
+      
 
     
     //add button to set up the sections

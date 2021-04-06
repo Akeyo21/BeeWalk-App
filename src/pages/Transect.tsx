@@ -108,6 +108,9 @@ const Transect: React.FC<ContainerProps> = () => {
         }
       }
   }
+  useEffect(() => {
+    // Update the document title using the browser API
+  });
       loader.load()
       .then(() => {
           console.log("map should be here")

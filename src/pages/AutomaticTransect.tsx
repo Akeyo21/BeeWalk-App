@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import {IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
 import { connect, useDispatch } from 'react-redux';
@@ -109,12 +109,14 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
         }
       }
   }
+  let map: google.maps.Map;
+  let poly: google.maps.Polyline;
+  useEffect(() => {
+    // Update the document title using the browser API
     const loader = new Loader({
         apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
       });
       console.log("here")
-      let map: google.maps.Map;
-      let poly: google.maps.Polyline;
       loader.load()
       .then(() => {
           
@@ -153,6 +155,8 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
           poly.addListener("dblclick", removePoint);
         //console.log("inside function" , loaded)
       });
+    
+  });
     
     
     function addLatLng(event) {
