@@ -213,7 +213,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
           ]}
         />
             <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
-            <IonLoading isOpen={loading} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={20000}/>
+            <IonLoading isOpen={loading} backdrop-dismiss message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
                 <form id="prewalkform" action="/start/map">
 
                     <IonList>
