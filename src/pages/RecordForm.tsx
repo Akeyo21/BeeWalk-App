@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonInput, IonButton, IonLoading, IonFabButton, IonFab, IonCol, IonGrid, IonImg, IonRow, IonAlert, IonText } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonInput, IonButton, IonLoading, IonFabButton, IonFab, IonCol, IonGrid, IonImg, IonRow, IonAlert, IonText, IonBackButton } from '@ionic/react';
 import React, { useContext, useEffect, useState } from 'react';
 
 import './Default.css';
@@ -87,7 +87,8 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
     </IonRouterOutlet></>
       <IonPage >
         <IonContent fullscreen className="content">
-          
+        <IonBackButton defaultHref="/mapwalk" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+            
           <IonAlert
                 isOpen={memoryAlert}
                 onDidDismiss={() => setMemoryAlert(false)}
