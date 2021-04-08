@@ -47,7 +47,8 @@ const dispatch = useDispatch()
           <div className="page">
            
           <IonList lines="full" className="list">
-              <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
+              <IonListHeader lines="full" className="whitebackground" id="header" >
+                <h1>My Walks</h1></IonListHeader>
                 
             
             {walkslist.map((walk:UpdatedWalk, index)=>(              
