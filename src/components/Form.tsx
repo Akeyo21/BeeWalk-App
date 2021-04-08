@@ -76,7 +76,7 @@ const Form: React.FC<ContainerProps> = (props) => {
       
     </IonRouterOutlet></>
       <div className="page">
-        <h1 className="division margin-bottom">Edit Record</h1>
+        <h1 className="division margin-bottom">Add Record</h1>
         <IonAlert
           isOpen={showAlert1}
           onDidDismiss={() => setShowAlert1(false)}
