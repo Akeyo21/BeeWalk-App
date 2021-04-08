@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import AddSite from "../pages/AddSites";
 import {Route} from 'react-router-dom';
 import { home, walk, leaf, navigate, ellipsisHorizontal } from 'ionicons/icons';
+import Tabs from '../components/Tabs';
 /*MySites - gives a page that shows a list of sites the user has
 entered*/
 const More: React.FC = () => {
@@ -22,32 +23,7 @@ const More: React.FC = () => {
             </IonHeader>
 
             <div className="morecontent">
-            <IonTabBar slot="bottom" color="warning" className="tabs">
-            <IonTabButton tab="home" href="/frontpage">
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
-              </IonTabButton>
-      
-              <IonTabButton tab="walks" href="/walks">
-                <IonIcon icon={walk} />
-                <IonLabel>My walks</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="sites" href="/mysites">
-                <IonIcon icon={leaf} />
-                <IonLabel>My Sites</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="terms" href="/terms">
-                <IonIcon icon={navigate} />
-                <IonLabel>Explore</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="more" href="/more">
-                <IonIcon icon={ellipsisHorizontal} />
-                <IonLabel>More</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
+           
                 <IonList lines="full" className="list">
                     <IonItem className="item" onClick={() => window.open('https://www.bumblebeeconservation.org/wp-content/uploads/2017/11/ID-sheet-big-8.pdf', '_system')} >  
                         <IonLabel >Bee ID Guide</IonLabel>             
@@ -57,10 +33,9 @@ const More: React.FC = () => {
                         <IonLabel> More Info about BeeWak </IonLabel>       
                     </IonItem>
 
-                    <IonItem className="item" href="/">  
-                        <IonLabel> Logout</IonLabel>            
-                    </IonItem>                  
+                                      
                 </IonList>
+                <Tabs/>
             </div>
           
         </IonContent>

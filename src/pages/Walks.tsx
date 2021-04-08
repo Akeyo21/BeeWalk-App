@@ -10,6 +10,7 @@ import { chevronForward, ellipsisHorizontal, home, leaf, navigate, walk } from '
 import { connect, useDispatch } from 'react-redux';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { deleteWalk, resetWalks } from '../Actions/Walks';
+import Tabs from '../components/Tabs';
 interface ContainerProps { 
   walks:[],
   transects:[]
@@ -44,32 +45,7 @@ const dispatch = useDispatch()
         <IonContent fullscreen className="content">
           
           <div className="page">
-          <IonTabBar slot="bottom" color="warning" className="tabs">
-            <IonTabButton tab="home" href="/frontpage">
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
-              </IonTabButton>
-      
-              <IonTabButton tab="walks" href="/walks">
-                <IonIcon icon={walk} />
-                <IonLabel>My walks</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="sites" href="/mysites">
-                <IonIcon icon={leaf} />
-                <IonLabel>My Sites</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="terms" href="/terms">
-                <IonIcon icon={navigate} />
-                <IonLabel>Explore</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="more" href="/more">
-                <IonIcon icon={ellipsisHorizontal} />
-                <IonLabel>More</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
+           
           <IonList lines="full" className="list">
               <IonListHeader lines="full" color="light" id="header" >My Walks</IonListHeader>
                 
@@ -87,7 +63,7 @@ const dispatch = useDispatch()
           
             
             
-          
+          <Tabs/>
             </div>
           
         </IonContent>

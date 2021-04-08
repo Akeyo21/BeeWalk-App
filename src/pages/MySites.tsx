@@ -7,6 +7,7 @@ import AddSite from "../pages/AddSites";
 import {Route} from 'react-router-dom';
 import { home, walk, leaf, navigate, ellipsisHorizontal } from 'ionicons/icons';
 import { connect, useStore } from 'react-redux';
+import Tabs from '../components/Tabs';
 /*MySites - gives a page that shows a list of sites the user has
 entered*/
 interface ContainerProps { 
@@ -52,32 +53,7 @@ const MySites: React.FC<ContainerProps> = (props) => {
                   }
                 ]} />
             <div className="sites">
-            <IonTabBar slot="bottom" color="warning" className="tabs">
-            <IonTabButton tab="home" href="/frontpage">
-                <IonIcon icon={home} />
-                <IonLabel>Home</IonLabel>
-              </IonTabButton>
-      
-              <IonTabButton tab="walks" href="/walks">
-                <IonIcon icon={walk} />
-                <IonLabel>My walks</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="sites" href="/mysites">
-                <IonIcon icon={leaf} />
-                <IonLabel>My Sites</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="terms" href="/terms">
-                <IonIcon icon={navigate} />
-                <IonLabel>Explore</IonLabel>
-              </IonTabButton>
-              
-              <IonTabButton tab="more" href="/more">
-                <IonIcon icon={ellipsisHorizontal} />
-                <IonLabel>More</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
+           
                 <IonList lines="full" className="list">
                     <IonListHeader lines="full" color="light" id="header" >My Sites</IonListHeader>
                     {transectslist.map((transect, index)=>(
@@ -103,6 +79,7 @@ const MySites: React.FC<ContainerProps> = (props) => {
                    
                 </IonList>
                 <IonButton color="dark" className="top-margin" href="/mysites/add">Add Site</IonButton>
+                <Tabs/>
             </div>
           
         </IonContent>
