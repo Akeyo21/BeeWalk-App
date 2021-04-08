@@ -139,9 +139,7 @@ console.log(recordsEntered)
    }
    }
   
-    if (redirectHome==true){
-      return <Redirect to='/frontpage' />
-    } 
+    
     if (redirectRecords ==true){
       return <Redirect to='/start/records'/>
     }
@@ -182,24 +180,24 @@ console.log(recordsEntered)
         
         const withoutButton = document.createElement("a");
         withoutButton.id = "without"
-        withoutButton.innerHTML = "Record without photo/video";
+        withoutButton.innerHTML = "Record Observation";
         withoutButton.className = "map-buttons";
         withoutButton.style.margin="10% 0";
 
         const recordsButton = document.createElement("button");
-        recordsButton.innerHTML = "Records entered";
+        recordsButton.innerHTML = "View Records entered";
         recordsButton.className = "map-buttons";
-        recordsButton.style.margin="0 2% 0 0";
+        recordsButton.style.margin="12% 2% 0 0";
 
         const saveButton = document.createElement("button");
         saveButton.innerHTML = "Save Records";
         saveButton.className = "map-buttons";
         saveButton.style.margin="10% 0";
         
-        div.appendChild(photoButton);
+        //div.appendChild(photoButton);
         div.appendChild(withoutButton);
         div.appendChild(recordsButton);
-        div.appendChild(saveButton);
+        //div.appendChild(saveButton);
         photoButton.addEventListener("click",take)
 
         withoutButton.href = "/start/recordform"
@@ -233,6 +231,7 @@ console.log(recordsEntered)
     const options ={
         enableHighAccuracy : true
     };
+    let markers: [] = [];
     //first add current location of user to the polyline then add the prograssive ones 
     const trackUser = (position)=>{
         //console.log(position.coords.latitude);
@@ -243,6 +242,7 @@ console.log(recordsEntered)
           //title: "#" + sections.length,
           map: map,
         });
+        markers.push(marker);
     };
 
     const catchErrors = (e)=>{
@@ -250,6 +250,11 @@ console.log(recordsEntered)
     };
     //get live location everytime
     const initLiveLocation = ()=>{
+      //remove any markers present in the ap showing the location
+        if(markers.length>=1){
+          markers[0].setMap(null);
+          markers = [];
+        }
         liveLocation = navigator.geolocation.watchPosition(trackUser, catchErrors, options);
     }
     
@@ -293,18 +298,7 @@ console.log(recordsEntered)
                   }
                 ]} />
 
-            <IonAlert
-                isOpen={emptyRecords}
-                onDidDismiss={() => setEmptyRecords(false)}
-                cssClass='submitalert'
-                header={'No record entered'}
-                message={'No records entered. Enter a record to submit'}
-                buttons={[
-                  {
-                    text: 'OK',
-                   
-                  }
-                ]} />
+            
         
         <IonAlert
                 isOpen={showAlert1}
