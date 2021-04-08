@@ -36,10 +36,9 @@ const SpeciesEntered: React.FC<ContainerProps> = (props) => {
     </IonCardHeader>
 
     <IonCardContent>
-      Bee Caste with number<br></br>
       {props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>) => (
                 
-                    <IonText>{Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}</IonText>
+                    <p> {Object.values(casteobject)[0]} {Object.keys(casteobject)[0]}</p>
       ))}
     </IonCardContent>
   </IonCard>
