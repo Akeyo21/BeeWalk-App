@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
-import {IonAlert, IonButton, IonContent, IonHeader, IonIcon, IonLabel, IonPage, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs} from '@ionic/react';
+import {IonAlert,  IonContent, IonHeader,  IonPage, IonRouterOutlet} from '@ionic/react';
 import { connect, useDispatch } from 'react-redux';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Redirect, Route } from 'react-router';
@@ -8,9 +8,7 @@ import SectionDetails from './SectionDetails';
 
 import {  resetRecords } from '../Actions/Records';
 import { photosPresent } from '../Actions/Photos';
-import { usePhotoGallery, promiseState } from './Camera';
-import { addWalk, resetWalk } from '../Actions/Walks';
-import { UpdatedWalk } from '../Reducers/WalksReducer';
+import { usePhotoGallery} from './Camera';
 import { setFalse } from '../Actions/MemoryFull';
 
 interface ContainerProps { 
@@ -56,9 +54,6 @@ if(transectslist[walk.transect]){
     const [enterRecord, setEnterRecord] = useState(false);
     const [memoryAlert, setMemoryAlert] = useState(false)
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
-    const [showAlert1, setShowAlert1] = useState(false);
-    const [redirectHome, setRedirectHome] = useState(false);
-    const [emptyRecords, setEmptyRecords] = useState(false);
     const dispatch = useDispatch()
     //prompts user to scroll to the position if navigation
     //fails
@@ -109,35 +104,8 @@ if(transectslist[walk.transect]){
     });
   });
 console.log(recordsEntered)
- const sendRecordsToStorage=()=>{
-   //write 
-   for(const property in props.walk){
-    console.log(props.walk[property])
-    let walk = props.walk[property]
-    
-    //endtime
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = new Date().getHours() + ":" + new Date().getMinutes()
-    var all = new Date(date + " "+time)
-    
-    dispatch(addWalk(new UpdatedWalk(walk.recorder, walk.transect,walk.date,walk.startTime, walk.temp,
-      walk.sunshine, walk.windSpeed 
-      ,time, recordsEntered)))
-  }
- }
- const clearRecords=()=>{
-   if(recordsEntered.length>0){
-    sendRecordsToStorage()
-    dispatch(resetWalk())
-    dispatch(resetRecords())
-    //clearPhotos()
-    //setShowAlert1(true)
-    setRedirectHome(true)
-   }else{
-     setEmptyRecords(true);
-   }
-   }
+ 
+ 
   
     
     if (redirectRecords ==true){
@@ -188,11 +156,6 @@ console.log(recordsEntered)
         recordsButton.innerHTML = "View Records entered";
         recordsButton.className = "map-buttons";
         recordsButton.style.margin="12% 2% 0 0";
-
-        const saveButton = document.createElement("button");
-        saveButton.innerHTML = "Save Records";
-        saveButton.className = "map-buttons";
-        saveButton.style.margin="10% 0";
         
         //div.appendChild(photoButton);
         div.appendChild(withoutButton);
@@ -202,9 +165,7 @@ console.log(recordsEntered)
 
         withoutButton.href = "/start/recordform"
         recordsButton.addEventListener("click", record)
-        saveButton.addEventListener("click", function(){
-            setShowAlert1(true)
-        })
+        
         
     }
     
@@ -295,28 +256,6 @@ console.log(recordsEntered)
                   {
                     text: 'Set Manually',
                    
-                  }
-                ]} />
-
-            
-        
-        <IonAlert
-                isOpen={showAlert1}
-                onDidDismiss={() => setShowAlert1(false)}
-                cssClass='submitalert'
-                header={'Submission'}
-                message={'Do you wish to submit your data?'}
-                buttons={[
-                  {
-                    text: 'OK',
-                    handler:()=>{
-                      clearRecords()
-                    }
-                  },
-
-                  {
-                    text: 'Cancel',
-                    role: 'cancel'
                   }
                 ]} />
 
