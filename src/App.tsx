@@ -2,12 +2,12 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp,  IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import Postlogin from './pages/Postlogin';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Terms from "./pages/Terms&Conditions";
 import Acknowledgment from "./pages/Acknowledgment";
-import Postlogin from './pages/Postlogin';
+import Home from './pages/Home';
 import Walks from './pages/Walks';
 import Walkdetail from './pages/Detail';
 import CommonBees from './pages/CommonBees';
@@ -50,7 +50,7 @@ const App: React.FC = () => (
     
       <IonRouterOutlet>
         <Route path="/home" component={Home} exact={true} />
-        <Route exact path="/" render={() => <Redirect to="/frontpage" />} />
+        <Route exact path="/" render={() => <Redirect to="/home" />} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/terms" component={Terms} />
