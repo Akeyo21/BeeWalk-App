@@ -32,7 +32,7 @@
 }
 .card{
     --background: white;
-    width:100%;
+    width:90%;
 }
 .dark{
     color:black;
@@ -195,6 +195,10 @@ padding: 18px;
 .move-left{
     position:absolute;
     left:0;
+}
+.move-button-right{
+    margin-left:65%;
+
 }
 .light{
     --background: #f4f5f8;
