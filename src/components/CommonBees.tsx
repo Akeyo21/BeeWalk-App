@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IonCol,  IonRow, IonFab, IonFabButton, IonIcon, IonSlide, IonSlides} from '@ionic/react';
 
 import "../pages/Default.css";
@@ -40,10 +40,10 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
     const latStart = 40
     const longStart = -10
     const interval = 0.5
-    const [commonBees, setbees] = useState([])
+    //const [commonBees, setbees] = useState([])
     const [notInUK, setnotInUK] = useState(false)
     //check if current location is in the UK or not
-    const giveIndex=(lat:number, long:number)=>{
+    /*const giveIndex=(lat:number, long:number)=>{
       try{
         inUK(lat, long)
         //setbees(bee_data[20][10][6].filter((species: number)=>species>0&&species!=26))
@@ -51,9 +51,32 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
       catch(error){
         setnotInUK(true)
       }
-    }
+    }*/
     var today = new Date();
+
+/*useEffect(()=>{
+    navigator.geolocation.getCurrentPosition(function(position) {
     
+        let long = position.coords.longitude
+        let lat = position.coords.latitude
+        /*console.log(typeof long)
+        console.log("Latitude is :", typeof position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+        try{
+          inUK(lat, long)
+          setbees(bee_data[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26))
+        }
+        catch(error){
+          setnotInUK(true)
+          setbees([])
+        }
+      });
+      return function cleanup(){
+          setnotInUK(false);
+          setbees([]);
+      }
+});*/
+let commonBees:[] = [];
 navigator.geolocation.getCurrentPosition(function(position) {
     
     let long = position.coords.longitude
@@ -63,13 +86,14 @@ navigator.geolocation.getCurrentPosition(function(position) {
     console.log("Longitude is :", position.coords.longitude);*/
     try{
       inUK(lat, long)
-      setbees(bee_data[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26))
+      commonBees = bee_data[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26)
     }
     catch(error){
       setnotInUK(true)
-      setbees([])
+      //setbees([])
     }
-  });
+});
+
   
     
   return ( 
