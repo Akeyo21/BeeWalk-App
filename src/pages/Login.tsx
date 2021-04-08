@@ -2,7 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonRouterOutlet }
 import React from 'react';
 import LoginPage from '../components/LoginPage';
 import './Home.css';
-import Postlogin from './Postlogin';
+import Postlogin from './Home';
 
 import {Route} from 'react-router-dom';
 /*<Route path="/frontpage" component={Postlogin} />*/

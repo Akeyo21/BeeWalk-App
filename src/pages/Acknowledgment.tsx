@@ -4,7 +4,7 @@ import React from 'react';
 import '../components/ExploreContainer.css';
 import '../components/LoginPage.css';
 import {Route} from 'react-router-dom';
-import Home from './Home';
+import Home from './Postlogin';
 const Acknowledgement: React.FC = () => {
   return (
     <><><IonRouterOutlet>
