@@ -19,11 +19,11 @@ interface ContainerProps {
 }
 
 const   Map: React.FC<ContainerProps> = (props) => {
-    let transectslist: any[] =[]
+   let transectslist: any[] =[]
   for(const property in props.transects){
    transectslist = props.transects[property]
  }
- //console.log(transectslist[0]);
+// console.log(transectslist[0]);
 
  //let selectedPath = new google.maps.MVCArray([]);
  let walk;
@@ -34,13 +34,19 @@ const   Map: React.FC<ContainerProps> = (props) => {
  }
  let selectedPath = [];
 if(transectslist[walk.transect]){
-  //console.log("here")
+  console.log("transect", transectslist[walk.transect])
  for (const section in transectslist[walk.transect].sections){
-     console.log(transectslist[walk.transect].sections[section])
-    for (const pos in transectslist[walk.transect].sections[section].positions){
-        selectedPath.push(transectslist[walk.transect].sections[section].positions[pos])
-    }
+     //console.log(transectslist[walk.transect].sections[section])
+     //console.log(transectslist[walk.transect].sections[section].length)
+    //for (const pos in transectslist[walk.transect].sections[section].positions){
+    let last=transectslist[walk.transect].sections[section].positions.length-1
+    let firstpos = transectslist[walk.transect].sections[section].positions[0]
+    let lastpos = transectslist[walk.transect].sections[section].positions[last]
+     //console.log()
+        selectedPath.push({first: firstpos, last:lastpos})
+    //}
  }}
+ //console.log(selectedPath);
  let recordsEntered:[] = []
  for(const property in props.records){
    recordsEntered = props.records[property]
@@ -78,15 +84,73 @@ if(transectslist[walk.transect]){
           navigator.geolocation.getCurrentPosition(function (position) {
              let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
               map.setCenter(initialLocation);
+              markerLivePos = new google.maps.Marker({
+                position: initialLocation,
+                map: map,
+              })
           });
       } 
-        poly = new google.maps.Polyline({
-            strokeColor: "#000000",
-            strokeOpacity: 1.0,
-            strokeWeight: 3,
-            editable:true
-          });
-          poly.setMap(map);
+      
+      let pathlist = [];
+      var iconBase = 'http://maps.google.com/mapfiles/kml/shapes/';
+      for(let i=0;i<selectedPath.length;i++){
+        let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });  
+        let marker = new google.maps.Marker({
+          position: selectedPath[i].first,
+          icon:{
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: 'white',
+            fillOpacity: 1,
+            scale: 3,
+            strokeColor: 'black',
+            strokeWeight: 1,
+            strokeOpacity: 1,
+            // anchor: new google.maps.Point(200, 200)
+          },
+          //title: "#" + sections.length,
+          map: map,
+        });
+        marker.addListener("click", () => {
+          infowindow.open(map, marker);
+        });
+        
+        pathlist.push(selectedPath[i].first);
+        pathlist.push(selectedPath[i].last)
+      }
+      //let pathlist = [selectedPath[0].first, selectedPath[0].last];
+      poly = new google.maps.Polyline({
+        path:pathlist,
+        strokeColor: "#000000",
+        strokeOpacity: 1.0,
+        strokeWeight: 3
+      });
+      let contentString = '<div id="dark-text"><p>Last Point on Transect</p></div>'
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });  
+      let lastMarker = new google.maps.Marker({
+        position: pathlist[pathlist.length-1],
+        icon:{
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'white',
+          fillOpacity: 1,
+          scale: 3,
+          strokeColor: 'black',
+          strokeWeight: 1,
+          strokeOpacity: 1,
+          // anchor: new google.maps.Point(200, 200)
+        },
+        //title: "#" + sections.length,
+        map: map,
+      });
+      lastMarker.addListener("click", () => {
+        infowindow.open(map, lastMarker);
+      });
+      poly.setMap(map);
+        
           
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
@@ -103,7 +167,7 @@ if(transectslist[walk.transect]){
 
     });
   });
-console.log(recordsEntered)
+//console.log(recordsEntered)
  
  
   
@@ -170,10 +234,9 @@ console.log(recordsEntered)
     }
     
    
-      console.log("here")
       let map: google.maps.Map;
-      let poly: google.maps.Polyline;
-      
+      let poly: google.maps.Polyline;      
+      let markerLivePos: google.maps.Marker;
 
     
     //add button to set up the sections
@@ -192,18 +255,12 @@ console.log(recordsEntered)
     const options ={
         enableHighAccuracy : true
     };
-    let markers: [] = [];
     //first add current location of user to the polyline then add the prograssive ones 
     const trackUser = (position)=>{
         //console.log(position.coords.latitude);
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
         //addLatLng(liveposition);
-        let marker = new google.maps.Marker({
-          position: liveposition,
-          //title: "#" + sections.length,
-          map: map,
-        });
-        markers.push(marker);
+        markerLivePos.setPosition(liveposition);
     };
 
     const catchErrors = (e)=>{
@@ -211,11 +268,7 @@ console.log(recordsEntered)
     };
     //get live location everytime
     const initLiveLocation = ()=>{
-      //remove any markers present in the ap showing the location
-        if(markers.length>=1){
-          markers[0].setMap(null);
-          markers = [];
-        }
+      //remove any markers present in the ap showing the location        
         liveLocation = navigator.geolocation.watchPosition(trackUser, catchErrors, options);
     }
     
