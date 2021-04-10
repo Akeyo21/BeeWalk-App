@@ -71,9 +71,7 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
       } 
   return (   
       
-    <><IonRouterOutlet>
-          <Route exact path="/start/walk/recordform" component={RecordForm} />
-  </IonRouterOutlet>
+    <>
         <><IonModal isOpen={showModal} cssClass='modal' showBackdrop backdrop-dismiss={false}>
 
                           <h1>{props.common}</h1>

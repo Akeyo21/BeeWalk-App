@@ -13,7 +13,24 @@ import bee_data from  '../beeInfo/bee_data.json';
 import CommonBees from '../components/CommonBees';
 /**/
 const Postlogin: React.FC = () => {
- 
+  //const reader = new FileReader();
+  //let data ={'image1': ('bumblebee.jpg', reader.readAsDataURL('bumblebee.jpg'))}
+  /*useEffect(()=>{
+    fetch('http://3.249.81.168/api/image', {
+    method: 'POST', // or 'PUT'
+    /*headers: {
+      'Content-Type': 'application/json',
+    },
+    //body: JSON.stringify(data)
+    })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  })*/
   
 
  console.log("Home");

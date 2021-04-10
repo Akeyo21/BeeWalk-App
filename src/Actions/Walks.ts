@@ -28,7 +28,7 @@ export const resetWalks = () => ({
 
   
 
-  export const deleteWalk=(index)=>({
+  export const deleteWalk=(index: number)=>({
     type:DELETE_WALK,
     payload:index
   })

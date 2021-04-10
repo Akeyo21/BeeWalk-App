@@ -18,7 +18,7 @@ export const initialState = {
     walks:[],
   }
   
-  function removeItemOnce(arr, index) {
+  function removeItemOnce(arr: any[], index: number) {
     //var index = arr.indexOf(value);
     if (index > -1) {
       arr.splice(index, 1);

@@ -24,7 +24,7 @@ const MySites: React.FC<ContainerProps> = (props) => {
  }
  const [showWarning, setShowWarning] = useState(false);
   //const [proceedDelete, setProceedDelete] = useState(false);
- const deleteTransect=(key)=>{
+ const deleteTransect=(key:any)=>{
    
  }
   return (

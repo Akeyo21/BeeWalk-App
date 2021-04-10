@@ -110,7 +110,7 @@ const Form: React.FC<ContainerProps> = (props) => {
             </IonItem>
 
             {props.species ?
-              props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>, index) => (
+              props.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>, index: React.Key | null | undefined) => (
                 <IonItem className="text-center" key={index}>
                   <IonLabel>
                     {Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}

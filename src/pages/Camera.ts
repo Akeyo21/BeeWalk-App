@@ -10,6 +10,7 @@ import { RootState } from "../Reducers";
 export interface Photo {
   filepath: string;
   webviewPath?: string;
+  filename: string;
 }
 const PHOTO_STORAGE = "photos";
 /*export function clearPhotos(){
@@ -65,11 +66,10 @@ export function usePhotoGallery() {
       });
     
       if (isPlatform('hybrid')) {
-        // Display the new image by rewriting the 'file://' path to HTTP
-        // Details: https://ionicframework.com/docs/building/webview#file-protocol
         return {
           filepath: savedFile.uri,
           webviewPath: Capacitor.convertFileSrc(savedFile.uri),
+          filename: fileName
         };
       }
       else {
@@ -77,7 +77,8 @@ export function usePhotoGallery() {
         // already loaded into memory
         return {
           filepath: fileName,
-          webviewPath: photo.webPath
+          webviewPath: photo.webPath,
+          filename: fileName
         };
       }
     };
@@ -103,8 +104,9 @@ export function usePhotoGallery() {
       loadSaved();
     }, [get, readFile]);
     const takePhoto = async () => {
-      console.log(Object.values(memoryFull)[0].memoryFull)
-      if(Object.values(memoryFull)[0].memoryFull==false){
+      let memory = Object.values(memoryFull)
+      let check = Boolean(memory[0])
+      if(check==false){
         console.log("here")
       const cameraPhoto = await getPhoto({
         resultType: CameraResultType.Uri,
@@ -117,8 +119,8 @@ export function usePhotoGallery() {
       const newPhotos = [...photos, savedFileImage, ];
       setPhotos(newPhotos);
       
-        console.log("trying")
-        let x:Promise<void>
+      console.log("trying")
+      let x:Promise<void>
       x = set(PHOTO_STORAGE, JSON.stringify(newPhotos));
 
       if(!x){

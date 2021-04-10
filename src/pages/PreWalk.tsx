@@ -24,7 +24,7 @@ interface ContainerProps {
 const PreWalk: React.FC<ContainerProps> = (props) => {
   const [addTransect, setAddTransect] = useState(false);
     const [loading, setLoading] = useState(true)
-    const[results, setResults] = useState<Object>()
+    const[results, setResults] = useState<Object|any>()
     const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const[newTransect, setUpTransect]= useState(false);

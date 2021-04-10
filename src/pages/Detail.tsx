@@ -16,8 +16,11 @@ const Detail: React.FC<ContainerProps>= (props) => {
     initialSlide: 1,
     speed: 400
   };
-  const { id } = useParams()
-  console.log(id)
+  /*let {id}:any
+  {id} = useParams();*/
+  const params= useParams()
+  let values = Object.values(params)
+  let id = Number(values[0])
   let walkslist: any[] =[]
   for(const property in props.walks){
    walkslist = props.walks[property]
@@ -47,7 +50,7 @@ const Detail: React.FC<ContainerProps>= (props) => {
           <h4>
           {walkslist[id].date}<br></br>{walkslist[id].startTime} - {walkslist[id].endTime}
           </h4>
-          {walkslist[id].records.map((record: Record)=>(
+          {walkslist[id].records.map((record: any)=>(
           <><IonCard className="card">
         {record.photos.length==1?  record.photos.map((photo: Photo) => (<IonImg src={photo.webviewPath} />)) :
         record.photos.length>1? 
@@ -65,7 +68,7 @@ const Detail: React.FC<ContainerProps>= (props) => {
 
     <IonCardContent>
       Bee Caste with number<br></br>
-      {record.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>, index) => (
+      {record.species.caste.map((casteobject: { [s: string]: unknown; } | ArrayLike<unknown>, index: React.Key | null | undefined) => (
         <IonText key={index}>{Object.keys(casteobject)[0]}: {Object.values(casteobject)[0]}</IonText>
       ))} 
       </IonCardContent>

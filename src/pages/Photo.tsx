@@ -21,14 +21,14 @@ const Photo: React.FC = () => {
       console.log(photos)
     }  
     if (photos){
-      let record = new Record(photos)
-      dispatch(addRecord(record))
+      /*let record = new Record(photos)
+      dispatch(addRecord(record))*/
     }
     console.log(photos)
   return(
     <><>
     <IonContent className="whitebackground">
-      <RecordingForm species=""/>
+      <RecordingForm species="" photos={photos}/>
     <IonGrid>
       <IonRow>
         {photos.map((photo, index) => (

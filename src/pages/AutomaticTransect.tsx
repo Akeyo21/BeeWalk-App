@@ -22,7 +22,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
     const[filled, setfilled] = useState(false);
     const[findLive, setFindLive] = useState(false);
 
-    const [sections, changeSections] = useState([]);
+    //const [sections, changeSections] = useState([]);
     const [emptySection, setEmptySections]= useState(false);
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
     const[redirectManualTransect, setManualTransect]= useState(false);
@@ -55,8 +55,8 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
         fillSectionButton.addEventListener("click", addSections)
         
     }
-    let polylines:[]=[];
-    let markers:[] = [];
+    let polylines:google.maps.Polyline[] = [];
+    let markers:google.maps.Marker[] = [];
     function removePoint(event: google.maps.MapMouseEvent){
       const path = poly.getPath();
       console.log(path)
@@ -111,6 +111,7 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
   }
   let map: google.maps.Map;
   let poly: google.maps.Polyline;
+  let sections:Section[];
   useEffect(() => {
     // Update the document title using the browser API
     const loader = new Loader({
@@ -159,15 +160,10 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
   });
     
     
-    function addLatLng(event) {
+    function addLatLng(event: google.maps.LatLng) {
         console.log("Adding latlng")
         const path = poly.getPath();
-        
-        // Because path is an MVCArray, we can simply append a new coordinate
-        // and it will automatically appear.
-        //path.push(event.latLng);
-        path.push(event)
-        
+        path.push(event)        
     }
 
     //add button to set up the sections
@@ -262,14 +258,14 @@ const   AutomaticTransect: React.FC<ContainerProps> = (props) => {
         enableHighAccuracy : true
     };
     //first add current location of user to the polyline then add the prograssive ones 
-    const trackUser = (position)=>{
+    const trackUser = (position: { coords: { latitude: any; longitude: any; }; })=>{
         //console.log(position.coords.latitude);
         console.log(position)
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
         //setTimeout( addLatLng, 60000, liveposition);
     };
 
-    const catchErrors = (e)=>{
+    const catchErrors = (e:any)=>{
         setFindLive(true);
     };
     //get live location everytime

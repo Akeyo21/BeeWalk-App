@@ -86,7 +86,9 @@ navigator.geolocation.getCurrentPosition(function(position) {
     console.log("Longitude is :", position.coords.longitude);*/
     try{
       inUK(lat, long)
-      commonBees = bee_data[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26)
+      console.log(typeof bee_data);
+      let beelist =  Object.values(bee_data);
+     commonBees = beelist[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26)
     }
     catch(error){
       setnotInUK(true)

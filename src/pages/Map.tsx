@@ -32,7 +32,7 @@ const   Map: React.FC<ContainerProps> = (props) => {
     walk = props.walk[property]
     console.log(walk)
  }
- let selectedPath = [];
+ let selectedPath: { last: any, first:any }[] = [];
 if(transectslist[walk.transect]){
   console.log("transect", transectslist[walk.transect])
  for (const section in transectslist[walk.transect].sections){
@@ -92,7 +92,6 @@ if(transectslist[walk.transect]){
       } 
       
       let pathlist = [];
-      var iconBase = 'http://maps.google.com/mapfiles/kml/shapes/';
       for(let i=0;i<selectedPath.length;i++){
         let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
           const infowindow = new google.maps.InfoWindow({
@@ -256,14 +255,14 @@ if(transectslist[walk.transect]){
         enableHighAccuracy : true
     };
     //first add current location of user to the polyline then add the prograssive ones 
-    const trackUser = (position)=>{
+    const trackUser = (position: { coords: { latitude: any; longitude: any; }; })=>{
         //console.log(position.coords.latitude);
         let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
         //addLatLng(liveposition);
         markerLivePos.setPosition(liveposition);
     };
 
-    const catchErrors = (e)=>{
+    const catchErrors = (e: any)=>{
         setFindLive(true);
     };
     //get live location everytime

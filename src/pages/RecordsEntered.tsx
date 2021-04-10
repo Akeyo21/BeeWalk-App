@@ -24,7 +24,7 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
   const [showAlert1, setShowAlert1] = useState(false);  
   const [redirectHome, setRedirectHome] = useState(false);
   const [emptyRecords, setEmptyRecords] = useState(false);
-  let recordslist: Record[] = []
+  let recordslist: [] =[]
     if (props.records){
       recordslist = Object.values(props.records)[0]
     }

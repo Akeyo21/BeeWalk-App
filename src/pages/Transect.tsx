@@ -13,7 +13,7 @@ interface ContainerProps {
 }
 
 const Transect: React.FC<ContainerProps> = () => {
-    const [sections, changeSections] = useState([]);
+    //const [sections, changeSections] = useState(Section[]);
     const [emptySection, setEmptySections]= useState(false);
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
     //prompts user to scroll to the position if navigation
@@ -51,16 +51,16 @@ const Transect: React.FC<ContainerProps> = () => {
       apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
     });
       console.log("here")
+    let sections:Section[] = []
     let map: google.maps.Map;
     let poly: google.maps.Polyline;
     let marker : google.maps.Marker
-    let polylines:[]=[];
-    let markers:[] = [];
+    let polylines:google.maps.Polyline[]=[];
+    let markers:google.maps.Marker[] = [];
     function removePoint(event: google.maps.MapMouseEvent){
       const path = poly.getPath();
       console.log(path)
       let pathlist = path.getArray();
-      let reduced = pathlist.filter(item=>item!==event.latLng)
       let found = false;
       console.log(markers);
       for (let i=0; i<path.getLength();i++){

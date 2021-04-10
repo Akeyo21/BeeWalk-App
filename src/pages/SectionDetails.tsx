@@ -30,9 +30,8 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
     for(const property in props.routeStart){
         route = props.routeStart[property]
     }
-    console.log(route.county);
 
-    let habitats:Object[] = []
+    let habitats:[{pos:any, list:any}] 
     //get data from the form
     //habitats
     const getHabitat=(habitatsChosen:[], pos:number)=>{
@@ -43,9 +42,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
             for(const value in habitatsChosen){
                 list.push(habitatTypes[value])
             }
-            let value = new Object()        
-            value.pos = pos;
-            value.list = list;
+            let value = {pos: pos, list:list}  
             habitats.push(value)
         }else{
             //remove duplicates
@@ -65,9 +62,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
             for(const value in habitatsChosen){
                 list.push(habitatTypes[value])
             }
-            let value = new Object()        
-            value.pos = pos;
-            value.list = list;
+            let value = {pos: pos, list:list}     
             habitats.push(value)
             }
         }
@@ -77,7 +72,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
        
     
     //land use
-    let landuses:Object[] = []
+    let landuses:[{pos:any, list:any}] 
     const getLandUse=(landuseChosen:[], pos:number)=>{
         if (landuseChosen.length!=0){
         let copy = false
@@ -86,9 +81,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
             for(const value in landuseChosen){
                 list.push(landuse[value])
             }
-            let value = new Object()
-            value.pos = pos;
-            value.list = list;
+            let value = {pos: pos, list:list}  
             landuses.push(value);
         }else{
             for (let i=0;i<landuses.length;i++){
@@ -106,9 +99,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
             for(const value in landuseChosen){
                 list.push(landuse[value])
             }
-            let value = new Object()        
-            value.pos = pos;
-            value.list = list;
+            let value = {pos: pos, list:list} 
             landuses.push(value)
         
             }

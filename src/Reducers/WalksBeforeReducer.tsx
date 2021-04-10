@@ -6,7 +6,7 @@ export class Walk{
     transect: number; //transect being walked
     date: string;
     startTime: string;
-    temp:number;
+    temp:number|any;
     sunshine:string;
     windSpeed: string;
     constructor(recorder: string, //name of recorder

@@ -25,7 +25,7 @@ import { usePhotoGallery, promiseState } from './Camera';
 import { addWalk, resetWalk } from '../Actions/Walks';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { setFalse } from '../Actions/MemoryFull';
-import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline} from 'google-maps-react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline, IMapProps} from 'google-maps-react';
 
 //import {GoogleApiWrapper} from 'google-maps-react';
 //import {GoogleMapReact} from "google-map-react";
@@ -142,11 +142,11 @@ console.log(path1)
     position:'absolute',
     height:'100%'
   }
-  const addPoints=(value, pos:Object)=>{
-    path1.push(pos)
+  const addPoints=(value: IMapProps | undefined, pos:Object)=>{
+    /*path1.push(pos)
     console.log(value.children[0].props.path)
     console.log(value)
-  console.log("points path: ", path1)
+  console.log("points path: ", path1)*/
   }
   const see=()=>{
     console.log(path1[0])
@@ -164,7 +164,7 @@ console.log(path1)
   
       
   {filled?
-  <Map google={props.google} initialCenter={{lat:latitude, lng:long}} style={style1} className="map"
+  <Map google={props.google} initialCenter={{lat:latitude, lng:long}} style={style1} 
   onClick={(value, other, next)=>{ 
     addPoints(value, {lat:next.latLng.lng(), lng:next.latLng.lat()} )}} 
       >
@@ -173,7 +173,7 @@ console.log(path1)
          path={path1}
          strokeColor="#0000FF"
          strokeOpacity={0.8}
-         strokeWeight={2}  visible = {true} editable className="poly" onClick={(value)=>{console.log(value)}}/>  : <div></div>}
+         strokeWeight={2}  visible = {true} editable className="poly" onClick={(value: any)=>{console.log(value)}}/>  : <div></div>}
         
         
         
