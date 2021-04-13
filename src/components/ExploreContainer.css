@@ -98,6 +98,10 @@ a{
   background-color:white;
   color: black;
 }
+.back{
+  position: absolute;
+  left: 0;
+}
 /*
 
 .container strong {
