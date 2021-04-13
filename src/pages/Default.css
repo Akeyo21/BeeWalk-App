@@ -223,3 +223,12 @@ position: fixed;
   z-index:10;
 }
 
+.site-button{
+    position:absolute;
+    left:70%;
+    background-color: black;
+    color:white;
+    padding: 0;
+    border-radius: 20px;
+}
+
