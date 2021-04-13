@@ -69,7 +69,6 @@ export function cSnapToRoute(this: any) {
         var r = this.distanceToLines(latlng);
        
         var proj = this._oMap.getProjection();
-        console.log(proj.fromPointToLatLng(new google.maps.Point(r.x, r.y)).toString())
         return proj.fromPointToLatLng(new google.maps.Point(r.x, r.y));
 
     }
