@@ -53,9 +53,6 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
               if (result) console.log(result.current)
               else console.log("where?")
             },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
             (error) => {
               setIsLoaded(false);
               setError(error);
