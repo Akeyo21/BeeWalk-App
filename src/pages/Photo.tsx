@@ -28,7 +28,7 @@ const Photo: React.FC = () => {
   return(
     <><>
     <IonContent className="whitebackground">
-      <RecordingForm species="" photos={photos}/>
+      <RecordingForm species="" photos={photos} section="0"/>
     <IonGrid>
       <IonRow>
         {photos.map((photo, index) => (

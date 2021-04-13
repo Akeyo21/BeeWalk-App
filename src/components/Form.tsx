@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 interface ContainerProps { 
   species: BeeSpecies|any
   photos: Photo[]|any
+  section:Number|any
 }
 
 const Form: React.FC<ContainerProps> = (props) => {
@@ -123,7 +124,7 @@ const Form: React.FC<ContainerProps> = (props) => {
               <></>}
 
                 <IonItem>
-              <IonInput className="placeholder" type="number" placeholder="Section(filled automatically)" onIonInput={(e: any) => getSectionValue(e.target.value)}required>
+              <IonInput className="placeholder" value={props.section}type="number" placeholder="Section(filled automatically)" onIonInput={(e: any) => getSectionValue(e.target.value)}required>
 
               </IonInput>
             </IonItem>

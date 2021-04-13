@@ -19,11 +19,16 @@ import { setFalse } from '../Actions/MemoryFull';
 interface ContainerProps { 
   species: BeeSpecies|any,
   photo:number|any,
-  memory:boolean
+  memory:boolean,
+  sectionNumber:number|any
 }
 const RecordForm: React.FC<ContainerProps> = (props) => {
-  
-  
+  let section:any;
+  //console.log(props.sectionNumber.getSectionNumber());
+  for (const property in (props.sectionNumber)){   
+    section = props.sectionNumber[property]
+  }
+  console.log(section)
     let {  newPhotosTaken,photos, takePhoto } = usePhotoGallery();
     
      
@@ -51,9 +56,7 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
       //dispatch(addPhoto()) 
     
   }
-    if (photos){
-      
-      
+    if (photos){      
       console.log("There are some")
       
     }
@@ -107,7 +110,7 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
                 ]} />
             
                    
-          <RecordingForm species = {speciesEntered} photos={photos.slice(photos.length-difference, photos.length)}/>
+          <RecordingForm species = {speciesEntered} photos={photos.slice(photos.length-difference, photos.length)} section={section}/>
           <IonGrid>
       <IonRow>
       { props.memory==true? <IonText></IonText>: photos.slice(photos.length-difference, photos.length).map((photo, index) => (
@@ -132,6 +135,7 @@ const mapStateToProps = function(state: any) {
     species: state.species,
     photo:state.photos,
     memory:state.memoryFull,
+    sectionNumber: state.temps,
   }
 }
 
