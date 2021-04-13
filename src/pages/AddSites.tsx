@@ -6,7 +6,8 @@ import {IonAlert, IonBackButton, IonButton, IonContent, IonDatetime, IonInput, I
     IonModal,
     IonGrid,
     IonRow,
-    IonCol} from '@ionic/react';
+    IonCol,
+    IonLoading} from '@ionic/react';
 import { RouteStart } from '../Reducers/TransectReducer';
 import { useDispatch } from 'react-redux';
 import { setRouteStart } from '../Actions/Transect';
@@ -28,7 +29,8 @@ const AddSites: React.FC<ContainerProps> = () => {
     //redirect to transect page
     const [ redirectMap, setRedirectMap] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
+    const[loading, setLoading]=useState(true);
+   const[results, setResults]=useState<Object|any>();
   const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
   
     //list of counties available on select option
@@ -54,12 +56,35 @@ const AddSites: React.FC<ContainerProps> = () => {
         
         const long = String(location.coords.longitude)
         const lat = String(location.coords.latitude)
-        fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=53.3&longitude=1.4&localityLanguage=en")
+        fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+lat+"&longitude="+long+"&localityLanguage=en")
         .then(res => res.json())
-        .then(results=>console.log(results))
+        .then(results=>{
+            console.log(results)
+            if(results){
+            setLoading(false);
+            //setResults(results);
+            
+            setResults(results)
+            }
+        })
     }
     getCounty()
-  })
+  }, [])
+  
+  let county:string = "null"
+  if(results){
+      for(let i=0;i< results.localityInfo.administrative.length;i++){
+          let info = results.localityInfo.administrative[i];
+          if(info.order==8 || info.adminLevel==6){
+            console.log(info.name)
+            if(counties.includes(info.name)){
+                county = info.name
+            }
+          }
+        //console.log(results.localityInfo.administrative[i])
+      }
+  
+  }
     //get data from the form
     //transect name
     let transect:string
@@ -74,7 +99,6 @@ const AddSites: React.FC<ContainerProps> = () => {
     }
 
     //county
-    let county:string = "null"
     const getCounty = (countyname:string)=>{
         county = countyname;
     }
@@ -177,11 +201,13 @@ const AddSites: React.FC<ContainerProps> = () => {
                     buttons={['OK']} />
 
                 <form id="siteform" action="/mysites">
+                <IonLoading isOpen={loading} backdrop-dismiss message="Getting Location info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
+            
                     <IonInput placeholder="Transect Name" type="text" required className="input" onIonInput={(e: any) => { getTransect(e.target.value); } }></IonInput>
                     <IonInput placeholder="Grid Reference" type="text" className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
 
                     <IonLabel>County</IonLabel>
-                    <IonSelect okText="Okay" cancelText="Dismiss" onIonChange={(e: any) => { getCounty(e.target.value); } }>
+                    <IonSelect okText="Okay" cancelText="Dismiss" value={county} onIonChange={(e: any) => { getCounty(e.target.value); } }>
                         {counties.map((name, index) => (
                             <IonSelectOption key={index} value={name}>{name}</IonSelectOption>
                         ))}
