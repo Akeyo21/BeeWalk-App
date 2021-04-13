@@ -76,7 +76,7 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
           setbees([]);
       }
 });*/
-let commonBees:[] = [];
+let commonBees:number[] = [];
 navigator.geolocation.getCurrentPosition(function(position) {
     
     let long = position.coords.longitude
@@ -86,13 +86,15 @@ navigator.geolocation.getCurrentPosition(function(position) {
     console.log("Longitude is :", position.coords.longitude);*/
     try{
       inUK(lat, long)
-      console.log(typeof bee_data);
+      console.log(typeof bee_data);     
       let beelist =  Object.values(bee_data);
-     commonBees = beelist[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()].filter((species: number)=>species>0&&species!=26)
+      let selected:number[] = beelist[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()]
+    
+     commonBees = selected.filter((species: any)=>species>0&&species!=26)
     }
-    catch(error){
+    catch(error){    
       setnotInUK(true)
-      //setbees([])
+      //setbees([]) 
     }
 });
 
