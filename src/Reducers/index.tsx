@@ -9,6 +9,7 @@ import walksReducer from './WalksReducer'
 import memoryFull from './MemoryReducer'
 import routeStartReducer, { transectReducer } from './TransectReducer'
 import sectionReducer from './SectionsReducer';
+import tempsReducer from './temps';
 export const rootReducer = combineReducers({
   species: speciesReducer,
   records: recordsReducer,
@@ -19,6 +20,7 @@ export const rootReducer = combineReducers({
   routeStart: routeStartReducer,
   sections: sectionReducer,
   transects: transectReducer,
+  temps: tempsReducer
 })
 
 export default rootReducer
