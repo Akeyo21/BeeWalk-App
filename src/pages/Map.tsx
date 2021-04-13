@@ -10,7 +10,8 @@ import {  resetRecords } from '../Actions/Records';
 import { photosPresent } from '../Actions/Photos';
 import { usePhotoGallery} from './Camera';
 import { setFalse } from '../Actions/MemoryFull';
-
+import {cSnapToRoute} from './Trial';
+import { changeSection } from '../Actions/temps';
 interface ContainerProps { 
     records:[]|any
     walk:any
@@ -36,15 +37,12 @@ const   Map: React.FC<ContainerProps> = (props) => {
 if(transectslist[walk.transect]){
   console.log("transect", transectslist[walk.transect])
  for (const section in transectslist[walk.transect].sections){
-     //console.log(transectslist[walk.transect].sections[section])
-     //console.log(transectslist[walk.transect].sections[section].length)
-    //for (const pos in transectslist[walk.transect].sections[section].positions){
     let last=transectslist[walk.transect].sections[section].positions.length-1
     let firstpos = transectslist[walk.transect].sections[section].positions[0]
     let lastpos = transectslist[walk.transect].sections[section].positions[last]
      //console.log()
         selectedPath.push({first: firstpos, last:lastpos})
-    //}
+    
  }}
  //console.log(selectedPath);
  let recordsEntered:[] = []
@@ -59,7 +57,6 @@ if(transectslist[walk.transect]){
 
     const [enterRecord, setEnterRecord] = useState(false);
     const [memoryAlert, setMemoryAlert] = useState(false)
-    const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
     const dispatch = useDispatch()
     //prompts user to scroll to the position if navigation
     //fails
@@ -82,16 +79,17 @@ if(transectslist[walk.transect]){
         })
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
-             let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              map.setCenter(initialLocation);
+            console.log(position.coords.latitude, position.coords.longitude)
+             liveposition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              map.setCenter(liveposition);
               markerLivePos = new google.maps.Marker({
-                position: initialLocation,
+                position: liveposition,
                 map: map,
               })
           });
       } 
       
-      let pathlist = [];
+      let pathlist: any[] = [];
       for(let i=0;i<selectedPath.length;i++){
         let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
           const infowindow = new google.maps.InfoWindow({
@@ -149,33 +147,43 @@ if(transectslist[walk.transect]){
         infowindow.open(map, lastMarker);
       });
       poly.setMap(map);
-        
+      console.log(pathlist)
           
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
         const buttonsDiv = document.createElement("div");
         buttonsDiv.id = "buttonsDiv";
         buttonsControl(buttonsDiv, map);
-
+        //let polylinetest = 
         map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
-          // Add a listener for the click event
-        //map.addListener("click", addLatLng);
+          // Add a listener for the click event //new (TestConstructorFunction as any)(1, 2);
+          oSnap.init(map, poly);
+          map.addListener("click", (event: { latLng: any; })=>{
+            console.log(event.latLng.lat())
+            console.log(typeof event.latLng);
+            //console.log(liveposition.latLng())
+            console.log(oSnap.getClosestLatLng(liveposition).toString())
+          })
         initLiveLocation();
           //remove an edge of the transect when setting up
           
 
     });
   });
+  
+  var oSnap = new (cSnapToRoute as any);
 //console.log(recordsEntered)
- 
  
   
     
     if (redirectRecords ==true){
       return <Redirect to='/start/records'/>
     }
+    
     if(enterRecord){
-      return <Redirect to='/start/recordform'/>
+      let route = '/start/recordform'
+      return <Redirect to={route}/>
+     
     }
   const record=()=>{
     dispatch(photosPresent(photos.length))
@@ -225,14 +233,59 @@ if(transectslist[walk.transect]){
         div.appendChild(recordsButton);
         //div.appendChild(saveButton);
         photoButton.addEventListener("click",take)
-
-        withoutButton.href = "/start/recordform"
+        withoutButton.addEventListener("click", sendSectionNumber)
+        //withoutButton.href = "/start/recordform"
         recordsButton.addEventListener("click", record)
         
         
     }
-    
-   
+    const sendSectionNumber=(e:any)=>{
+      //if (navigator.geolocation) {
+      //navigator.geolocation.watchPosition(trackUser, catchErrors, options);
+      console.log("Here")
+        //navigator.geolocation.watchPosition(function (position) {
+          //let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+          
+          //var oSnap = new (cSnapToRoute as any); //new (TestConstructorFunction as any)(1, 2);
+          
+          //console.log(oSnap.getClosestLatLng(selectedPath[0].first).toString())
+          
+          let sectionNumber:number|any 
+          console.log(liveposition)
+          let lastMarker = new google.maps.Marker({
+            position: oSnap.getClosestLatLng(liveposition),
+            
+            //title: "#" + sections.length,
+            map: map,
+          });
+          for(let i=0;i<selectedPath.length;i++){
+            let arr = []
+            arr.push(selectedPath[i].first)
+            arr.push(selectedPath[i].last)
+            let polytest = new google.maps.Polygon({
+              paths:arr
+            });
+            if(google.maps.geometry.poly.containsLocation(oSnap.getClosestLatLng(liveposition), polytest)){
+              console.log("In Section", i+1);
+              sectionNumber = i+1
+            }
+          }
+          console.log("Section number is", sectionNumber);
+          dispatch(changeSection(sectionNumber));
+          setEnterRecord(true)
+          
+          //check if near transect --not sure if necessary
+          /*
+          if (google.maps.geometry.poly.isLocationOnEdge(initialLocation, poly, 10e-3)) {
+            console.log(oSnap.getClosestLatLng(initialLocation))
+            console.log("Here");
+          }else{
+            console.log("Not here");
+          }*/
+        //});
+
+     // } 
+    }
       let map: google.maps.Map;
       let poly: google.maps.Polyline;      
       let markerLivePos: google.maps.Marker;
@@ -244,20 +297,19 @@ if(transectslist[walk.transect]){
     //to be updated
     //finish setting up transect
     
-    if(redirectToSectionDetails ==true){
-        return <Redirect to="/sectiondetails"/>
-    }
+    
 
 
     //get Live location of user
     let liveLocation = null;
+    let liveposition: google.maps.LatLng | google.maps.LatLngLiteral | null | any;
     const options ={
         enableHighAccuracy : true
     };
     //first add current location of user to the polyline then add the prograssive ones 
     const trackUser = (position: { coords: { latitude: any; longitude: any; }; })=>{
         //console.log(position.coords.latitude);
-        let liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
+        liveposition = new google.maps.LatLng({lat: position.coords.latitude, lng: position.coords.longitude});
         //addLatLng(liveposition);
         markerLivePos.setPosition(liveposition);
     };
