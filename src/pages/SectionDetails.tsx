@@ -31,7 +31,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
         route = props.routeStart[property]
     }
 
-    let habitats:[{pos:any, list:any}] 
+    let habitats:[{pos:any, list:any}]|any =[]
     //get data from the form
     //habitats
     const getHabitat=(habitatsChosen:[], pos:number)=>{
@@ -44,6 +44,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
             }
             let value = {pos: pos, list:list}  
             habitats.push(value)
+            console.log(habitats)
         }else{
             //remove duplicates
             for (let i=0;i<habitats.length;i++){
@@ -52,8 +53,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
                     x.list = []
                     copy = true
                     for(const value in habitatsChosen){
-                        
-                        x.list.push(habitatTypes[value])
+                       x.list.push(habitatTypes[value])
                     }
                 }
             }
@@ -72,7 +72,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
        
     
     //land use
-    let landuses:[{pos:any, list:any}] 
+    let landuses:[{pos:any, list:any}]|any =[]
     const getLandUse=(landuseChosen:[], pos:number)=>{
         if (landuseChosen.length!=0){
         let copy = false
@@ -111,6 +111,9 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
     const dispatch = useDispatch();
     const setUpTransect = ()=>{
         //set the sections first - make changes to the habitat and land types
+        if(habitats ==undefined){
+            console.log("UNDEFINED")
+        }
         if (habitats.length>0){
             for (let i=0;i<habitats.length;i++){
                 let x = habitats[i]
