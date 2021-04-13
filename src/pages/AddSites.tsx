@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setRouteStart } from '../Actions/Transect';
 import { Redirect, Route } from 'react-router';
 import TransectMap from './Transect';
+import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 interface ContainerProps { 
   
@@ -47,7 +48,18 @@ const AddSites: React.FC<ContainerProps> = () => {
 'Suffolk','Surrey','Sutherland','Swansea City','Swindon','Tayside','Tyne and Wear', 'Vale of Glamorgan','Wawickshire, West Berkshire',
 'West Dunbartonshire','West Glamorgan','West Lothian','West Midlands','West Sussex','West Yorshire','Western Isles','Wiltshire',
 'Windsor and Maidenhead','Wokingham','Worcester','Worcestershire','Wrexham','York City','Yorkshire']
-
+    useEffect(()=>{
+    const getCounty =async ()=>{
+        const location = await Geolocation.getCurrentPosition()
+        
+        const long = String(location.coords.longitude)
+        const lat = String(location.coords.latitude)
+        fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=53.3&longitude=1.4&localityLanguage=en")
+        .then(res => res.json())
+        .then(results=>console.log(results))
+    }
+    getCounty()
+  })
     //get data from the form
     //transect name
     let transect:string
@@ -107,10 +119,7 @@ const AddSites: React.FC<ContainerProps> = () => {
         
        
       }
-      const goToTransect=()=>{
-          setRedirectMap(true);
-       // return  <Redirect to='/transect'/>
-      }
+      
       if(redirectAutomaticTransect==true){
         return <Redirect to='/automatic'/>
       }
