@@ -14,6 +14,7 @@ import { setRouteStart } from '../Actions/Transect';
 import { Redirect, Route } from 'react-router';
 import TransectMap from './Transect';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import proj4 from 'proj4';
 
 interface ContainerProps { 
   
@@ -30,6 +31,7 @@ const AddSites: React.FC<ContainerProps> = () => {
     const [ redirectMap, setRedirectMap] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const[loading, setLoading]=useState(true);
+    const[grid, setGrid] = useState<string>();
    const[results, setResults]=useState<Object|any>();
   const[redirectAutomaticTransect, setAutomaticTransect] = useState(false);
   
@@ -50,23 +52,32 @@ const AddSites: React.FC<ContainerProps> = () => {
 'Suffolk','Surrey','Sutherland','Swansea City','Swindon','Tayside','Tyne and Wear', 'Vale of Glamorgan','Wawickshire, West Berkshire',
 'West Dunbartonshire','West Glamorgan','West Lothian','West Midlands','West Sussex','West Yorshire','Western Isles','Wiltshire',
 'Windsor and Maidenhead','Wokingham','Worcester','Worcestershire','Wrexham','York City','Yorkshire']
-    useEffect(()=>{
+let lat:string='';
+let long:string='';
+useEffect(()=>{
     const getCounty =async ()=>{
         const location = await Geolocation.getCurrentPosition()
         
-        const long = String(location.coords.longitude)
-        const lat = String(location.coords.latitude)
+        long = String(location.coords.longitude)
+        lat = String(location.coords.latitude)
         fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+lat+"&longitude="+long+"&localityLanguage=en")
         .then(res => res.json())
         .then(results=>{
             console.log(results)
             if(results){
-            setLoading(false);
-            //setResults(results);
-            
+            setLoading(false);            
             setResults(results)
             }
         })
+        .catch(e=>{
+            console.log(e)
+        })
+        //converting current location to grid ref using the geotools js file
+        let wgs84=new GT_WGS84();
+        wgs84.setDegrees(lat, long);
+        console.log(lat, long);
+        console.log(wgs84.getOSGB().getGridRef(3));
+        setGrid(wgs84.getOSGB().getGridRef(3));
     }
     getCounty()
   }, [])
@@ -85,6 +96,10 @@ const AddSites: React.FC<ContainerProps> = () => {
       }
   
   }
+  
+    //convert latlong to gridref using the geotools 
+    
+    
     //get data from the form
     //transect name
     let transect:string
@@ -93,11 +108,10 @@ const AddSites: React.FC<ContainerProps> = () => {
     }
 
     //grid reference
-    let gridref:string
+    let gridref:string|undefined =grid//= wgs84.getOSGB().getGridRef(3);
     const getGridRef = (ref:string)=>{
         gridref = ref;
     }
-
     //county
     const getCounty = (countyname:string)=>{
         county = countyname;
@@ -204,7 +218,7 @@ const AddSites: React.FC<ContainerProps> = () => {
                 <IonLoading isOpen={loading} backdrop-dismiss message="Getting Location info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
             
                     <IonInput placeholder="Transect Name" type="text" required className="input" onIonInput={(e: any) => { getTransect(e.target.value); } }></IonInput>
-                    <IonInput placeholder="Grid Reference" type="text" className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
+                    <IonInput placeholder="Grid Reference" type="text" value={grid}className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
 
                     <IonLabel>County</IonLabel>
                     <IonSelect okText="Okay" cancelText="Dismiss" value={county} onIonChange={(e: any) => { getCounty(e.target.value); } }>
