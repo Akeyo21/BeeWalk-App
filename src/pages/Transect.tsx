@@ -7,7 +7,6 @@ import { Section } from '../Reducers/SectionsReducer';
 import { Redirect, Route } from 'react-router';
 import SectionDetails from './SectionDetails';
 import { setSections } from '../Actions/Transect';
-
 interface ContainerProps { 
   
 }
@@ -19,7 +18,6 @@ const Transect: React.FC<ContainerProps> = () => {
     //prompts user to scroll to the position if navigation
     //fails
     const [showScrollToPos, setScrollToPos] = useState(false)
-   
     //button controls added on top of map
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
@@ -108,9 +106,7 @@ const Transect: React.FC<ContainerProps> = () => {
         }
       }
   }
-  useEffect(() => {
-    // Update the document title using the browser API
-  });
+  
       loader.load()
       .then(() => {
           console.log("map should be here")
@@ -147,7 +143,6 @@ const Transect: React.FC<ContainerProps> = () => {
           poly.addListener("dblclick", removePoint);
       });
         
-    
       
     function addLatLng(event: google.maps.MapMouseEvent) {
       console.log(polylines);
@@ -156,8 +151,6 @@ const Transect: React.FC<ContainerProps> = () => {
         // Because path is an MVCArray, we can simply append a new coordinate
         // and it will automatically appear.
         path.push(event.latLng);
-      
-       
         
         
     }
