@@ -55,7 +55,7 @@ const MySites: React.FC<ContainerProps> = (props) => {
             <div className="sites">
            
                 <IonList lines="full" className="list">
-                    <IonListHeader lines="full" color="light" id="header" >My Sites</IonListHeader>
+                    <IonListHeader lines="full" className="whitebackground" id="header" >My Sites</IonListHeader>
                     {transectslist.map((transect, index)=>(
                       <IonItemSliding key={index}>
                       <IonItem className="item" >  

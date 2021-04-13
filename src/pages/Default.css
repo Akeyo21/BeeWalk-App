@@ -7,6 +7,9 @@
 /*CSS for the walks list page*/
 #header{
     padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 } 
 .item {
     --background: white;
@@ -140,6 +143,8 @@
 /*MySites*/
 .sites{
 text-align:center;
+height:100%;
+overflow-y: scroll;
 }
 .top-margin{
     margin-top:20px;
