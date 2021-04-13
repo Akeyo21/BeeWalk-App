@@ -19,6 +19,5 @@
     "noEmit": true,
     "jsx": "react"
   },
-  "include": [
-    "src" ]
+  "include": [ "src", "public/geotools2.js", "src/pages/Trial.ts" ]
 }
