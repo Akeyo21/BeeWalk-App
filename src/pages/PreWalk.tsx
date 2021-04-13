@@ -35,7 +35,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
     
     useEffect(() => {
         const getLocation=async ()=>{
-            const location = await Geolocation.getCurrentPosition()
+        const location = await Geolocation.getCurrentPosition()
         
         const long = String(location.coords.longitude)
         const lat = String(location.coords.latitude)
@@ -211,7 +211,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             }
           ]}
         />
-            <IonBackButton defaultHref="/frontpage" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
+            <IonButton href="/"className="back" color="light">Back</IonButton>
             <IonLoading isOpen={loading} backdrop-dismiss message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
                 <form id="prewalkform" action="/start/map">
 
