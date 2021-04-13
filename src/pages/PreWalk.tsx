@@ -134,8 +134,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
           if(temp && sunshine &&windspeed){
           dispatch(setWalk(new Walk(recorder, (transect-1),
              date, hr, temp,sunshine, 
-             windspeed)))
-          
+             windspeed)))  
           
           }else{
             dispatch(setWalk(new Walk(recorder, (transect-1),
