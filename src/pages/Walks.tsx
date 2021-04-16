@@ -1,12 +1,11 @@
-import { IonContent, IonHeader, IonPage, IonRouterOutlet, IonList, IonItem, IonIcon, IonLabel, IonNote, IonListHeader, IonTabButton, IonTabBar, IonButton, IonItemOption, IonItemOptions, IonItemSliding } from '@ionic/react';
-import React from 'react';
+import { IonContent,  IonPage, IonRouterOutlet, IonList,  IonListHeader,  IonButton, IonItemOption, IonItemOptions, IonItemSliding, useIonAlert, IonAlert} from '@ionic/react';
+import React, { useState } from 'react';
 
 import './Default.css';
 import WalkItem from '../components/WalkItem';
 import Login from "../pages/Login";
 import Walkdetail from "./Detail";
 import {Route} from 'react-router-dom';
-import { chevronForward, ellipsisHorizontal, home, leaf, navigate, walk } from 'ionicons/icons';
 import { connect, useDispatch } from 'react-redux';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import { deleteWalk, resetWalks } from '../Actions/Walks';
@@ -35,7 +34,32 @@ const Walks: React.FC<ContainerProps>= (props) => {
      console.log(i)
    }
 }
+const [Alert, setAlert] = useState(false)
 const dispatch = useDispatch()
+const [present] = useIonAlert();
+const confirmDelete =(index:number|any, walk:UpdatedWalk)=>{
+  let site = transectslist[walk.transect].name
+  let time = walk.startTime + ' to ' +walk.endTime
+  let date = walk.date
+  let mess = 'Are you sure you want to delete the walk made on ' + site + ' on '+date +' from '+time
+  console.log(walk) 
+  console.log(index)
+  present({
+    cssClass: 'my-css',
+    header: 'Delete Walk',
+    message: mess,
+    buttons: [
+      { text: 'Ok', handler: () =>{
+        //dispatch(deleteWalk(index))
+        dispatch(deleteWalk(index))
+        setAlert(true)
+      }},
+      'Cancel',      
+    ],
+    onDidDismiss: (e) => console.log(e) ,
+  })
+}
+
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -45,17 +69,26 @@ const dispatch = useDispatch()
         <IonContent fullscreen className="content">
           
           <div className="page">
-           
+          <IonAlert
+          isOpen={Alert}
+          onDidDismiss={() => setAlert(false)}
+          cssClass='my-custom-class'
+          header={'Delete Walk'}
+          message={'The walk has been deleted'}
+          buttons={['OK']}
+        />
+
           <IonList lines="full" className="list">
-              <IonListHeader lines="full" className="whitebackground" id="header" >
-                <h1>My Walks</h1></IonListHeader>
+              <IonListHeader lines="full" className="whitebackground text-center" id="header" >
+                <h1 className="bold">My Walks</h1></IonListHeader>
                 
-            
-            {walkslist.map((walk:UpdatedWalk, index)=>(              
+           
+            {walkslist.length==0? <h1 className="dark text-center">No BeeWalk entered</h1>:
+            walkslist.map((walk:UpdatedWalk, index)=>(              
               
               <IonItemSliding key={index} ><WalkItem transect={transectslist[walk.transect].name} date={walk.date} startTime={walk.startTime} endTime={walk.endTime} link={`/walkdetail/${index}`} />
                 <IonItemOptions side="end">
-                  <IonItemOption onClick={() => dispatch(deleteWalk(index))}>Delete</IonItemOption>
+                  <IonItemOption onClick={() => confirmDelete(index, walk)}>Delete</IonItemOption>
                 </IonItemOptions>
                 </IonItemSliding>
             ))}
