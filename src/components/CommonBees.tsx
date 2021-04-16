@@ -85,14 +85,17 @@ navigator.geolocation.getCurrentPosition(function(position) {
     console.log("Latitude is :", typeof position.coords.latitude);
     console.log("Longitude is :", position.coords.longitude);*/
     try{
+      lat = 53.37
+      long=-1.419
       inUK(lat, long)
-      console.log(typeof bee_data);     
+      console.log(inUK(lat, long));     
       let beelist =  Object.values(bee_data);
       let selected:number[] = beelist[latLongIndex(lat, latStart, interval)][latLongIndex(long, longStart, interval)][today.getMonth()]
     
      commonBees = selected.filter((species: any)=>species>0&&species!=26)
     }
-    catch(error){    
+    catch(error){   
+      console.log(error) 
       setnotInUK(true)
       //setbees([]) 
     }
