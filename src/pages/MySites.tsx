@@ -59,7 +59,8 @@ const MySites: React.FC<ContainerProps> = (props) => {
                     
                 <IonButton className="site-button" href="/mysites/add">Add Site</IonButton>
                     </IonListHeader>
-                    {transectslist.map((transect, index)=>(
+                    {transectslist.length==0?<h1 className="dark">No Transects have been set up</h1>:
+                    transectslist.map((transect, index)=>(
                       <IonItemSliding key={index}>
                       <IonItem className="item" >  
                       <IonLabel> {transect.name}</IonLabel>
