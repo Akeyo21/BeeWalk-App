@@ -8,6 +8,8 @@ import { Redirect, Route } from 'react-router';
 import { Section } from '../Reducers/SectionsReducer';
 import { addTransect, resetRouteStart, resetSections } from '../Actions/Transect';
 import Sites from './MySites';
+import { Temps } from '../Reducers/temps';
+import { changeTemp } from '../Actions/temps';
 interface ContainerProps { 
   sections:[],
   routeStart: any
@@ -139,13 +141,16 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
         dispatch(addTransect(transect))
         dispatch(resetSections())
         dispatch(resetRouteStart())
+        let temporary= new Temps(0, true, false);
+        dispatch(changeTemp(temporary));
         setBackToSites(true)
         console.log(transect)
+        
         //set the transect up - dispatch
         //change page - add new Site
     }
     if(backToSites==true){      
-        return <Redirect to='/mysites'/>
+        return <Redirect to='/'/>
       }
     const habitatTypes = ['Marine saltmarshes/estuaries/saline reedbeds','Coastal dune grassland','Coastal dune and sand heath',
 'Coastal dune and sand scrub', 'Coastal dune and sand woods','Coastal dune slacks','Coastal machair','Coastal shingle','Coastal cliffs/undercliffs',

@@ -11,7 +11,8 @@ import { photosPresent } from '../Actions/Photos';
 import { usePhotoGallery} from './Camera';
 import { setFalse } from '../Actions/MemoryFull';
 import {cSnapToRoute} from './Trial';
-import { changeSection } from '../Actions/temps';
+import { changeTemp } from '../Actions/temps';
+import { Temps } from '../Reducers/temps';
 interface ContainerProps { 
     records:[]|any
     walk:any
@@ -271,7 +272,8 @@ if(transectslist[walk.transect]){
             }
           }
           console.log("Section number is", sectionNumber);
-          dispatch(changeSection(sectionNumber));
+          let temp = new Temps(sectionNumber, false, false);
+          dispatch(changeTemp(temp));
           setEnterRecord(true)
           
           //check if near transect --not sure if necessary
