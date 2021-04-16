@@ -23,12 +23,13 @@ interface ContainerProps {
   sectionNumber:number|any
 }
 const RecordForm: React.FC<ContainerProps> = (props) => {
-  let section:any;
+  let section:any =props.sectionNumber.temps.sectionNumber ;
   //console.log(props.sectionNumber.getSectionNumber());
-  for (const property in (props.sectionNumber)){   
+ /* for (const property in (props.sectionNumber)){   
     section = props.sectionNumber[property]
-  }
-  console.log(section)
+    console.log(section.sectionNumber)
+  }*/
+  console.log(props.sectionNumber.temps.sectionNumber)
     let {  newPhotosTaken,photos, takePhoto } = usePhotoGallery();
     
      
