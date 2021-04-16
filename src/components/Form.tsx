@@ -28,7 +28,7 @@ const Form: React.FC<ContainerProps> = (props) => {
   const [showSectionAlert, setShowSectionAlert] = useState(false);
 
   //console.log(props.photo)
-  let section:number
+  let section:number = props.section
   let flower:string
   const getSectionValue=(value:any)=>{
     section= value
@@ -124,6 +124,7 @@ const Form: React.FC<ContainerProps> = (props) => {
               <></>}
 
                 <IonItem>
+                  <IonLabel>Section</IonLabel>
               <IonInput className="placeholder" value={props.section}type="number" placeholder="Section(filled automatically)" onIonInput={(e: any) => getSectionValue(e.target.value)}required>
 
               </IonInput>
