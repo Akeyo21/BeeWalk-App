@@ -1,11 +1,12 @@
 //import { BeeSpecies } from "../Reducers/SpeciesReducer"
 
-// Create Redux action types
-export const CHANGE_SECTION = 'CHANGE_SECTION'
+import { Temps } from "../Reducers/temps"
 
+// Create Redux action types
+export const CHANGE_TEMP = 'CHANGE_TEMP'
 // Create Redux action creators that return an action
-export const changeSection = (sectionNumber:number) => ({
-    type: CHANGE_SECTION,
+export const changeTemp = (sectionNumber:Temps) => ({
+    type: CHANGE_TEMP,
     payload: sectionNumber,
   })
 
