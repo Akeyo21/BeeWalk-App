@@ -150,7 +150,7 @@ useEffect(()=>{
         }
     }
      
-    
+    console.log("Grid ",grid)
     
     if(redirectMap==true){     
         return <Redirect to='/transect'/>
@@ -218,7 +218,7 @@ useEffect(()=>{
                 <IonLoading isOpen={loading} backdrop-dismiss message="Getting Location info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
             
                     <IonInput placeholder="Transect Name" type="text" required className="input" onIonInput={(e: any) => { getTransect(e.target.value); } }></IonInput>
-                    <IonInput placeholder="Grid Reference" type="text" value={grid}className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
+                    <IonInput placeholder="Grid Reference" type="text" value={grid} className="input" onIonInput={(e: any) => { getGridRef(e.target.value); } }></IonInput>
 
                     <IonLabel>County</IonLabel>
                     <IonSelect okText="Okay" cancelText="Dismiss" value={county} onIonChange={(e: any) => { getCounty(e.target.value); } }>
