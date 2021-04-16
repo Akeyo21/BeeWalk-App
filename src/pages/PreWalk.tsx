@@ -1,14 +1,11 @@
 import React, {  useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
-import { IonAlert, IonBackButton, IonButton,  IonButtons,  IonCol,  IonContent, IonDatetime, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRouterOutlet, IonRow, IonSelect, IonSelectOption, IonText, IonToolbar } from '@ionic/react';
+import { IonAlert,  IonButton,  IonContent, IonDatetime,  IonHeader, IonInput, IonItem, IonLabel, IonList, IonLoading, IonPage, IonRouterOutlet,  IonSelect, IonSelectOption, IonText } from '@ionic/react';
 /*import '../components/LoginPage.css';*/
 import './PreWalk.css';
 import {Redirect, Route} from 'react-router-dom';
 import DuringWalk from './DuringWalk';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
-import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
-import { createSecureContext } from 'tls';
-import MapWalk from './MapWalk';
 import { Walk } from '../Reducers/WalksBeforeReducer';
 import { connect, useDispatch } from 'react-redux';
 import { setWalk } from '../Actions/Walks';
