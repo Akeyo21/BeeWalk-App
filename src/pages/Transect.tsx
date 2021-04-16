@@ -176,19 +176,20 @@ const Transect: React.FC<ContainerProps> = () => {
         const path = poly.getPath()
         const distance = google.maps.geometry.spherical.computeLength(path);
         if(sections.length==0){
-          let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
+          /*let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
           const infowindow = new google.maps.InfoWindow({
             content: contentString,
-          });  
+          });  */
           marker = new google.maps.Marker({
             draggable:true,
             position: path.getAt(0),
             title: "#" + sections.length,
             map: map,
           });
+          /*
           marker.addListener("click", () => {
             infowindow.open(map, marker);
-          });
+          });*/
           markers.push(marker);
         }
         polylines.push(poly);
@@ -202,19 +203,19 @@ const Transect: React.FC<ContainerProps> = () => {
         //append last position to new polyline to join them all
         let last = path.getArray()[path.getArray().length-1]
           // Add a new marker at the new plotted point on the polyline.
-          let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
+         /* let contentString = '<div id="dark-text"><p>Section '+(sections.length+1) +'</p></div>'
           const infowindow = new google.maps.InfoWindow({
             content: contentString,
-          });  
+          });  */
         marker = new google.maps.Marker({
           draggable:true,
           position: last,
           title: "#" + sections.length,
           map: map,
         });
-        marker.addListener("click", () => {
+        /*marker.addListener("click", () => {
           infowindow.open(map, marker);
-        });
+        });*/
         markers.push(marker);
         //generate different colors for the different poylines
         let colors = ['red', 'maroon', 'blue','silver', 'yellow','olive', 'lime', 'purple', 'orange', 'green',
@@ -233,7 +234,17 @@ const Transect: React.FC<ContainerProps> = () => {
         //remove an edge of the transect when setting up
         poly.addListener("dblclick", removePoint);
         console.log(sections) 
-        }    
+        } 
+        for(let i=0;i<markers.length;i++){
+          let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });  
+          markers[i].addListener("click", () => {
+            infowindow.open(map, markers[i]);
+          });
+        }
+    console.log(markers + 'MARKERS')   
     }
     console.log(polylines);
     if(redirectToSectionDetails ==true){
