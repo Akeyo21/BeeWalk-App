@@ -11,6 +11,8 @@ import SpeciesEntered from '../components/SpeciesEntered';
 import { addWalk, resetWalk } from '../Actions/Walks';
 import { UpdatedWalk } from '../Reducers/WalksReducer';
 import {  resetRecords } from '../Actions/Records';
+import { Temps } from '../Reducers/temps';
+import { changeTemp } from '../Actions/temps';
 interface ContainerProps { 
     records: [],
     walk: any
@@ -50,6 +52,8 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
     if(recordslist.length>0){
       console.log(recordslist.length);
      sendRecordsToStorage()
+     let temporary= new Temps(0, false, true);
+    dispatch(changeTemp(temporary));
      dispatch(resetWalk())
      dispatch(resetRecords())
      //clearPhotos()
