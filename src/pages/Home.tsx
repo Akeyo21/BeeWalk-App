@@ -1,20 +1,51 @@
 import { IonContent, IonHeader, IonPage, IonButton, IonRouterOutlet , IonTabs, IonTabBar,IonTabButton,
-IonIcon, IonLabel, IonBadge, IonSlides, IonSlide, IonText, IonFooter} from '@ionic/react';
+IonIcon, IonLabel, IonBadge, IonSlides, IonSlide, IonText, IonFooter, useIonAlert} from '@ionic/react';
 import { calendar, personCircle, map, informationCircle, ellipsisHorizontal, home, leaf, navigate, walk } from 'ionicons/icons';
 import React, { useEffect, useState } from 'react';
 /*import './Home.css';*/
 import '../components/ExploreContainer.css';
 import '../components/LoginPage.css';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { resetWalks } from '../Actions/Walks';
 import Tabs from '../components/Tabs';
-import data from '../beeInfo/species_set.json';
-import bee_data from  '../beeInfo/bee_data.json';
-import CommonBees from '../components/CommonBees';
+import { Temps } from '../Reducers/temps';
+import { changeTemp } from '../Actions/temps';
 
 /**/
-const Postlogin: React.FC = () => {
+interface ContainerProps {
+  temporary:number|any
+}
+const Postlogin: React.FC<ContainerProps> = (props) => {
+//const Postlogin: React.FC = () => {
   //const reader = new FileReader();
+  console.log(props.temporary.temps.newWalk)
+  let dispatch = useDispatch();
+const [present] = useIonAlert();
+const showInfo=(info:string)=>{
+  present({
+    cssClass: 'my-css',
+    header: 'New Walk',
+    message: info,
+    buttons: [        
+      'Ok',      
+    ],
+    onDidDismiss: (e) => console.log(e) ,
+  })
+}
+
+const resetTemps=()=>{
+  let temporary= new Temps(0, false, false);
+  dispatch(changeTemp(temporary));
+}
+  if(props.temporary.temps.newWalk){
+    showInfo('The completed walk has been added to My Walks Page')
+    resetTemps()
+  }
+ 
+  if(props.temporary.temps.newTransect){
+    showInfo('The entered transect has been added to My Sites Page')
+    resetTemps()
+  }
   let filepath:any = './bumblebee.jpg';
   let file = 'bumblebee.jpg';
   /*reader.addEventListener("load", function () {
@@ -93,8 +124,7 @@ const Postlogin: React.FC = () => {
           
           <div className="container">
             
-              <div className="wholepage" >      
-                <CommonBees/>
+              <div className="wholepage" >   
                 <div id="move">
                 
                     <IonButton href="/start/prewalk"
@@ -118,5 +148,11 @@ const Postlogin: React.FC = () => {
         </IonContent></>
   );
 };
+const mapStateToProps = function(state: any) {
+  return {
+    temporary: state.temps,
+  }
+}
 
-export default Postlogin;
+export default connect(mapStateToProps)(Postlogin);/*
+export default Postlogin;*/
