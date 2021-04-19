@@ -22,18 +22,19 @@ const Walks: React.FC<ContainerProps>= (props) => {
    
  }
  
+ console.log("WALKS",walkslist)
  let transectslist: any[] =[]
   for(const property in props.transects){
    transectslist = props.transects[property]
  }
- console.log(transectslist[0].name)
+ /*console.log(transectslist[0].name)
  for(let i=0; i<walkslist.length;i++){
    try{
   console.log(transectslist[walkslist[i].transect].name)
    }catch(e){
      console.log(i)
    }
-}
+}*/
 const [Alert, setAlert] = useState(false)
 const dispatch = useDispatch()
 const [present] = useIonAlert();
