@@ -213,8 +213,8 @@ if(transectslist[walk.transect]){
     //button controls added on top of map
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
-        const photoButton = document.createElement("button");
-        photoButton.innerHTML = "Record with photo/video";
+        const photoButton = document.createElement("a");
+        photoButton.innerHTML = "Home";
         photoButton.className = "map-buttons";         
         photoButton.style.margin = "0 2% 0 0";
         
@@ -229,34 +229,24 @@ if(transectslist[walk.transect]){
         recordsButton.className = "map-buttons";
         recordsButton.style.margin="12% 2% 0 0";
         
-        //div.appendChild(photoButton);
         div.appendChild(withoutButton);
         div.appendChild(recordsButton);
-        //div.appendChild(saveButton);
-        photoButton.addEventListener("click",take)
+        
+        //div.appendChild(photoButton);
+        //photoButton.href="/"
+        //photoButton.addEventListener("click",take)
         withoutButton.addEventListener("click", sendSectionNumber)
-        //withoutButton.href = "/start/recordform"
         recordsButton.addEventListener("click", record)
         
         
     }
     const sendSectionNumber=(e:any)=>{
-      //if (navigator.geolocation) {
-      //navigator.geolocation.watchPosition(trackUser, catchErrors, options);
       console.log("Here")
-        //navigator.geolocation.watchPosition(function (position) {
-          //let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-          
-          //var oSnap = new (cSnapToRoute as any); //new (TestConstructorFunction as any)(1, 2);
-          
-          //console.log(oSnap.getClosestLatLng(selectedPath[0].first).toString())
           
           let sectionNumber:number|any 
           console.log(liveposition)
           let lastMarker = new google.maps.Marker({
             position: oSnap.getClosestLatLng(liveposition),
-            
-            //title: "#" + sections.length,
             map: map,
           });
           for(let i=0;i<selectedPath.length;i++){
