@@ -10,7 +10,7 @@
     position: sticky;
     top: 0;
     z-index: 10;
-    
+    font-weight: bold ;
 } 
 .bold{
     font-weight: bold;
@@ -230,7 +230,7 @@ position: fixed;
 
 .site-button{
     position:absolute;
-    left:70%;
+    left:50%;
     background-color: black;
     color:white;
     padding: 0;
