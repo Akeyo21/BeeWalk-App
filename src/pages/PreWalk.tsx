@@ -10,6 +10,7 @@ import { Walk } from '../Reducers/WalksBeforeReducer';
 import { connect, useDispatch } from 'react-redux';
 import { setWalk } from '../Actions/Walks';
 import UpdatedMapWalk from './Map';
+import { startWalk } from '../Actions/Resume';
 /*
     PreWalk - opens the first page containing details 
     required prior to starting the beewalk
@@ -135,6 +136,7 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
               date, hr,results?.current.temp,getSunnyValue(results?.current.clouds), 
               getWindSpeed(results?.current.wind_speed))))
           }
+          dispatch(startWalk())
           setRedirectToMap(true)
         }else{
           setShowTransectAlert(true)
@@ -205,8 +207,8 @@ const PreWalk: React.FC<ContainerProps> = (props) => {
             }
           ]}
         />
-            <IonButton href="/"className="back" color="light">Back</IonButton>
-            <IonLoading isOpen={loading} backdrop-dismiss message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={8000}/>
+            <IonButton href="/"className="back whitebackground" >Back</IonButton>
+            <IonLoading isOpen={loading} backdrop-dismiss={true} message="Getting weather info" onDidDismiss={()=>{setLoading(false)}} duration={3000}/>
                 <form id="prewalkform" action="/start/map">
 
                     <IonList>
