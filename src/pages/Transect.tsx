@@ -1,17 +1,17 @@
 import React, {  useEffect, useState } from 'react';
 import '../components/ExploreContainer.css';
 import {IonAlert,IonContent, IonHeader,  IonPage, IonRouterOutlet} from '@ionic/react';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Section } from '../Reducers/SectionsReducer';
 import { Redirect, Route } from 'react-router';
 import SectionDetails from './SectionDetails';
 import { setSections } from '../Actions/Transect';
 interface ContainerProps { 
-  
+  sections:any[]
 }
 
-const Transect: React.FC<ContainerProps> = () => {
+const Transect: React.FC<ContainerProps> = (props) => {
     //const [sections, changeSections] = useState(Section[]);
     const [emptySection, setEmptySections]= useState(false);
     const [redirectToSectionDetails, setRedirectToDetails] = useState(false);
@@ -19,6 +19,29 @@ const Transect: React.FC<ContainerProps> = () => {
     //fails
     const [showScrollToPos, setScrollToPos] = useState(false)
     //button controls added on top of map
+    console.log("SECTIONS", props.sections)
+    let list:  any[] = []
+    let checkSections:any[] = []
+    
+    for(const prop in props.sections){
+      list = props.sections[prop]
+      checkSections = props.sections[prop]
+      //sections=props.sections[prop]
+    }
+    let v = list.length;
+    //sections = list
+    let sections:Section[]|any = list
+    /*if(list){
+      console.log("something")
+      sections = list
+    }
+    */
+    
+    console.log(list)
+    /*for(let i=0;i<list.length;i++){
+      //console.log(list[i].positions)
+    }*/
+   
     const buttonsControl =(div:Element, map: google.maps.Map)=>{
         //the buttons to be included on the map
         const addSectionButton = document.createElement("button");
@@ -26,6 +49,8 @@ const Transect: React.FC<ContainerProps> = () => {
         addSectionButton.style.padding="8% 10%";
         addSectionButton.style.backgroundColor = "white";
         addSectionButton.style.color = "black";
+
+        
         
         const fillSectionButton = document.createElement("button");
         fillSectionButton.innerHTML = "Submit Sections";
@@ -49,7 +74,6 @@ const Transect: React.FC<ContainerProps> = () => {
       apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
     });
       console.log("here")
-    let sections:Section[] = []
     let map: google.maps.Map;
     let poly: google.maps.Polyline;
     let marker : google.maps.Marker
@@ -65,6 +89,7 @@ const Transect: React.FC<ContainerProps> = () => {
           if( path.getAt(i) == event.latLng){
             found = true;
               path.removeAt(i)
+              
               if(i==0){
                 //check if the path has another point
                 if(path.getLength()>0){
@@ -78,6 +103,9 @@ const Transect: React.FC<ContainerProps> = () => {
                   markers[polylines.length].setMap(null)
                 }
                 //if not remove the marker
+              }else{
+                sections[polylines.length] = new Section(google.maps.geometry.spherical.computeLength(path), 
+                "0", [],[],path.getArray());
               }
           }
       }
@@ -85,8 +113,10 @@ const Transect: React.FC<ContainerProps> = () => {
         for(let i=0; i<polylines.length;i++){
           for (let j=0; j<polylines[i].getPath().getLength();j++){
             if( polylines[i].getPath().getAt(j) == event.latLng){
+              console.log("current polyline", polylines[i].getPath().getLength())
                 found=true;
                 polylines[i].getPath().removeAt(j)
+                
                 if(j==0){
                   //check if the path has another point
                   if(polylines[i].getPath().getLength()>0){
@@ -100,11 +130,15 @@ const Transect: React.FC<ContainerProps> = () => {
                     sections.splice(i, 1);
                     markers[i].setMap(null)
                   }
+                }else{
+                  sections[i] = new Section(google.maps.geometry.spherical.computeLength(polylines[i].getPath()), 
+                  "0", [],[],polylines[i].getPath().getArray());
                 }
             }
         }
         }
       }
+      console.log("AMENDED SECTIONS", sections)
   }
   
       loader.load()
@@ -121,6 +155,45 @@ const Transect: React.FC<ContainerProps> = () => {
                 map.setCenter(initialLocation);
             });
         } 
+        if(list){
+          if(list.length>0){
+            for(let i=0;i<list.length;i++){
+              let colors = ['red', 'maroon', 'blue','silver', 'yellow','olive', 'lime', 'purple', 'orange', 'green',
+          'pink', 'brown', 'coral', 'magenta', 'tan']
+          let randomColor =Math.floor(Math.random()*colors.length-1)
+            poly = new google.maps.Polyline({
+              path: list[i].positions,
+              strokeColor: colors[randomColor],
+              strokeOpacity: 1.0,
+              strokeWeight: 3,
+              editable:true
+            });
+            poly.setMap(map);
+            marker = new google.maps.Marker({
+              draggable:true,
+              position: poly.getPath().getAt(0),
+              title: "#" + sections.length,
+              map: map,
+            });
+            poly.addListener("dblclick", removePoint);
+            /*
+            marker.addListener("click", () => {
+              infowindow.open(map, marker);
+            });*/
+            polylines.push(poly)
+            markers.push(marker)
+            nameSections(markers)
+          }
+          }else{
+            poly = new google.maps.Polyline({
+              strokeColor: "#000000",
+              strokeOpacity: 1.0,
+              strokeWeight: 3,
+              editable:true
+            });
+            poly.setMap(map);
+          }
+        }else{
           poly = new google.maps.Polyline({
             strokeColor: "#000000",
             strokeOpacity: 1.0,
@@ -128,7 +201,8 @@ const Transect: React.FC<ContainerProps> = () => {
             editable:true
           });
           poly.setMap(map);
-          
+        }
+        
         // Create the DIV to hold the control and call the CenterControl()
         // constructor passing in this DIV.
         const buttonsDiv = document.createElement("div");
@@ -162,17 +236,42 @@ const Transect: React.FC<ContainerProps> = () => {
     //finish setting up transect
     const dispatch = useDispatch()
     const addSections =()=>{
-      saveSection()
+      //if(list){
+        console.log("Number of sections in the beginning", v)
+      //console.log("SECTIONS AT START", checkSections.length) 
+      //console.log("SECTIONS TUKIMALIZIA", sections.length)
+        if(v!=sections.length){
+          saveSection()
+          console.log("Adding extra sections")
+        }
+        console.log("SECTIONS AT THE END", sections)
+      //}
+      //saveSection()
         //check there is a section added
         if(sections.length==0){
             setEmptySections(true);
         }else{
-         
+            //let transect = new ResumeTransect(true, polylines, markers)
+            //dispatch(settingTransect(transect))
+            //dispatch(finishSettingTransect())
             dispatch(setSections(sections));
             setRedirectToDetails(true);
         }
     }
-    function saveSection(){   
+
+    const nameSections=(markers:google.maps.Marker[])=>{
+      for(let i=0;i<markers.length;i++){
+        let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
+        const infowindow = new google.maps.InfoWindow({
+          content: contentString,
+        });  
+        markers[i].addListener("click", () => {
+          infowindow.open(map, markers[i]);
+        });
+      }
+    }
+    function saveSection(){  
+      console.log("SECTIONS AT START", list.length) 
         const path = poly.getPath()
         const distance = google.maps.geometry.spherical.computeLength(path);
         if(sections.length==0){
@@ -196,10 +295,11 @@ const Transect: React.FC<ContainerProps> = () => {
         //ensure that an actual section has bee entered
         if(path.getArray().length>0){
         let section: Section;
-        section=new Section(distance, "0", [],[],path.getArray())        
-        console.log(path, ' ',google.maps.geometry.spherical.computeLength(path))
-        sections.push(section)
-
+        section=new Section(distance, "0", [],[],path.getArray())  
+        if(v!=sections.length||sections.length==0){
+          sections.push(section)
+        }      
+        console.log("SECTIONS", sections)
         //append last position to new polyline to join them all
         let last = path.getArray()[path.getArray().length-1]
           // Add a new marker at the new plotted point on the polyline.
@@ -235,15 +335,7 @@ const Transect: React.FC<ContainerProps> = () => {
         poly.addListener("dblclick", removePoint);
         console.log(sections) 
         } 
-        for(let i=0;i<markers.length;i++){
-          let contentString = '<div id="dark-text"><p>Section '+(i+1) +'</p></div>'
-          const infowindow = new google.maps.InfoWindow({
-            content: contentString,
-          });  
-          markers[i].addListener("click", () => {
-            infowindow.open(map, markers[i]);
-          });
-        }
+        nameSections(markers)
     console.log(markers + 'MARKERS')   
     }
     console.log(polylines);
@@ -293,5 +385,11 @@ const Transect: React.FC<ContainerProps> = () => {
     
   );
 };
+const mapStateToProps = function(state: any) {
+  return {
+    sections:state.sections,
+  }
+}
 
-export default Transect;
+export default connect(mapStateToProps)(Transect);/*
+export default Transect;*/

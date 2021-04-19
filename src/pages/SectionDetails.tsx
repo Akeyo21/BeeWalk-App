@@ -24,10 +24,12 @@ is selected
 const SectionDetails: React.FC<ContainerProps> = (props) => {
     const [ backToSites, setBackToSites] = useState(false)
     //extract both sections and route starts from the store 
+    
     let sectionslist: Section[] =[]
     for(const property in props.sections){
         sectionslist = props.sections[property]
     }
+    console.log(sectionslist)
     let route:RouteStart
     for(const property in props.routeStart){
         route = props.routeStart[property]
@@ -177,8 +179,8 @@ return (
 
         </IonRouterOutlet>
             <IonContent fullscreen force-overscroll className="content">
-                <IonBackButton defaultHref="/transect" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark" /><br />
-
+                <IonButton href="/transect"className="back whitebackground" color="light">Back</IonButton>
+            
                 <form id="manualform" >
                     
                         {sectionslist.map((section, pos)=>(
