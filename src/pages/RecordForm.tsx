@@ -92,8 +92,7 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
       <IonPage >
         <IonContent fullscreen className="content">
         <IonBackButton defaultHref="/mapwalk" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
-            
-          <IonAlert
+         <IonAlert
                 isOpen={memoryAlert}
                 onDidDismiss={() => setMemoryAlert(false)}
                 cssClass='submitalert'
@@ -110,7 +109,8 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
                   }
                 ]} />
             
-                   
+            
+            
           <RecordingForm species = {speciesEntered} photos={photos.slice(photos.length-difference, photos.length)} section={section}/>
           <IonGrid>
       <IonRow>
