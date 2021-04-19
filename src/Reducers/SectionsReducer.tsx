@@ -28,7 +28,7 @@ export class Section{
     }
 }
 export const initialState={
-    sections:null
+    sections:[]
 }
 
 export default function sectionReducer(state = initialState, action: AnyAction) {
@@ -36,7 +36,7 @@ export default function sectionReducer(state = initialState, action: AnyAction) 
         case actions.SET_SECTIONS:
             return {...state, sections: action.payload}
         case actions.RESET_ROUTESTART:
-            return {...state, sections: initialState}
+            return {...state, sections: []}
       default:
         return state
     }
