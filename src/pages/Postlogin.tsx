@@ -6,7 +6,7 @@ import HomePage from '../components/HomePage';
 import Login from "./Login";
 import Register from "./Register";
 import {Route} from 'react-router-dom';
-const Home: React.FC = () => {
+const Postlogin: React.FC = () => {
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -25,4 +25,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default Postlogin;

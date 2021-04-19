@@ -10,21 +10,24 @@ import { resetWalks } from '../Actions/Walks';
 import Tabs from '../components/Tabs';
 import { Temps } from '../Reducers/temps';
 import { changeTemp } from '../Actions/temps';
+import { Redirect } from 'react-router';
 
 /**/
 interface ContainerProps {
-  temporary:number|any
+  temporary:number|any,
+  walking:boolean|any
 }
-const Postlogin: React.FC<ContainerProps> = (props) => {
+const Home: React.FC<ContainerProps> = (props) => {
 //const Postlogin: React.FC = () => {
   //const reader = new FileReader();
-  console.log(props.temporary.temps.newWalk)
+  console.log(props.walking.walking)
   let dispatch = useDispatch();
 const [present] = useIonAlert();
-const showInfo=(info:string)=>{
+const [canWalk, setStartWalk] = useState(false)
+const showInfo=(info:string, heading:string)=>{
   present({
     cssClass: 'my-css',
-    header: 'New Walk',
+    header: heading,
     message: info,
     buttons: [        
       'Ok',      
@@ -37,15 +40,19 @@ const resetTemps=()=>{
   let temporary= new Temps(0, false, false);
   dispatch(changeTemp(temporary));
 }
+
+if(props.temporary.temps){
   if(props.temporary.temps.newWalk){
-    showInfo('The completed walk has been added to My Walks Page')
+    showInfo('The completed walk has been added to My Walks Page', 'New Walk')
     resetTemps()
   }
  
   if(props.temporary.temps.newTransect){
-    showInfo('The entered transect has been added to My Sites Page')
+    showInfo('The entered transect has been added to My Sites Page', 'New Transect')
     resetTemps()
   }
+}
+  
   let filepath:any = './bumblebee.jpg';
   let file = 'bumblebee.jpg';
   /*reader.addEventListener("load", function () {
@@ -115,6 +122,17 @@ const resetTemps=()=>{
   
 
  console.log("Home");
+ const finishWalkPrompt=()=>{
+   console.log(props.walking.walking)
+   if(props.walking.walking){
+    showInfo('Save records in current walk to start a new walk', 'Current Walk')
+   }else{
+     setStartWalk(true)
+   }
+ }
+ if(canWalk){
+  return <Redirect to="/start/prewalk"/>
+ }
   return (
     
     <><>
@@ -127,10 +145,16 @@ const resetTemps=()=>{
               <div className="wholepage" >   
                 <div id="move">
                 
-                    <IonButton href="/start/prewalk"
+                    <IonButton onClick={()=>finishWalkPrompt()}
                     color="warning" size="large" className="buttons" shape="round" expand="block">
                         Start Walk
                     </IonButton>
+
+                    {props.walking.walking? <IonButton href="/mapwalk"
+                    color="warning" size="large" className="buttons" shape="round" expand="block">
+                        Resume Walk
+                    </IonButton>:<IonText></IonText>}
+                    
 
                     <IonButton routerLink="/commonbees"
                     color="warning" size="large" className="buttons" shape="round" expand="block">
@@ -151,8 +175,9 @@ const resetTemps=()=>{
 const mapStateToProps = function(state: any) {
   return {
     temporary: state.temps,
+    walking: state.walking
   }
 }
 
-export default connect(mapStateToProps)(Postlogin);/*
+export default connect(mapStateToProps)(Home);/*
 export default Postlogin;*/
