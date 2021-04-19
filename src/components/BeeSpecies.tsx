@@ -34,9 +34,9 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
     function addBeeDataToList(){
        
         setShowModal(false)
-        var queenvalue = document.getElementsByClassName("number")[0].textContent
+        /*var queenvalue = document.getElementsByClassName("number")[0].textContent
         var workervalue = document.getElementsByClassName("number")[1].textContent
-        var unknownvalue = document.getElementsByClassName("number")[2].textContent
+        var unknownvalue = document.getElementsByClassName("number")[2].textContent*/
         let x =0
         
         var castelist = []
