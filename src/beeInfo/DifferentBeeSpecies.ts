@@ -35,6 +35,7 @@ export enum Caste{
 }
 export const allCastes = [Caste.Male, Caste.Queen,Caste.Unknown, Caste.Worker]
 const twoCastes = [Caste.Male, Caste.Female, Caste.Unknown]
+
 //whitetailed bumblebees
 ////social bumblebees
 const ws1 = new Bee("Buff-tailed bumblebee", "Bombus terrestris", allCastes, "https://www.bumblebeeconservation.org/wp-content/uploads/2019/01/Buff-tailed-bumblebee-1.png");
@@ -81,3 +82,8 @@ const gc1 = new Bee("Field cuckoo bumblebee","Bombus campestris",twoCastes, "htt
 const gingerSocial = [gs1, gs2, gs3, gs4, gs5]
 const gingerCuckoo = [gc1]
 export const gingerYellow = {gingerSocial, gingerCuckoo}
+
+const bumble = new Bee("", "", allCastes, "")
+const confusion = new Bee("", "", allCastes, "")
+const beelist :Bee[]= [bumble,confusion]
+export const allBees = beelist.concat(whiteCuckoo, whiteSocial, redSocial, redCuckoo, gingerSocial, gingerCuckoo)
