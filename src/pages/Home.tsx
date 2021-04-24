@@ -12,6 +12,7 @@ import { Temps } from '../Reducers/temps';
 import { changeTemp } from '../Actions/temps';
 import { Redirect } from 'react-router';
 import CommonBees from '../components/CommonBees';
+import { finishWalk } from '../Actions/Resume';
 //import '../images/bee.jpg'
 /**/
 interface ContainerProps {
@@ -204,7 +205,7 @@ if(props.temporary.temps){
     var dataURL = canvas.toDataURL("../images/bee.jpg");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
   }  
-  var canvas = document.createElement("canvas");
+  /*var canvas = document.createElement("canvas");
     //canvas.width = img.width;
     //canvas.height = img.height;
     //var ctx = canvas.getContext("2d");
