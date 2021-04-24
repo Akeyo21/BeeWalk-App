@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../components/ExploreContainer.css';
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonPage, IonRouterOutlet, IonRow, IonText, IonToolbar } from '@ionic/react';
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonPage, IonRouterOutlet, IonRow, IonText, IonToolbar, useIonAlert } from '@ionic/react';
 
 import './Default.css';
 import { Redirect, Route } from 'react-router-dom';
@@ -63,9 +63,30 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 		//setShowAlert1(true)
 		setRedirectHome(true)
 	}
+
+	const cancelWalk=()=>{
+		//let temporary = new Temps(null);
+		dispatch(finishWalk())
+		dispatch(resetWalk())
+		dispatch(resetRecords())
+		setRedirectHome(true)
+	}
 	console.log(props.records)
 	//obtaining records list
-
+	const [present] = useIonAlert();
+	const confirmCancel =()=>{
+		present({
+			cssClass: 'my-css',
+			header: 'Confirm ',
+			message: 'Are you sure you want to end the walk without submitting anything?',
+			buttons: [
+			  'Cancel',
+			  { text: 'Yes', handler: () => cancelWalk() },
+			],
+			onDidDismiss: (e) => console.log('did dismiss'),
+		  })
+	}
+	
 	//console.log(recordslist[0].species)
 	recordslist.map((record: Record) => (
 		console.log(typeof record)))
@@ -107,9 +128,9 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 								]} />
 							<div className="top">
 								<IonButton href="/mapwalk" className="light move-left" >Back</IonButton>
+								<IonButton   onClick={()=>{confirmCancel()}}className=" light move-button-right " >Cancel Walk</IonButton>
 
-								<IonButton onClick={() => setShowAlert1(true)} className="light move-button-right" >Save Records</IonButton>
-							</div>
+								</div>
 
 							{recordslist.length==0? <h2 className="dark">No Records Entered</h2>:
 							recordslist.map((record: Record) => (
@@ -117,6 +138,8 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 							))}
 
 						</div>
+						<IonButton onClick={() => setShowAlert1(true)}  className="light bottom" >Save Records</IonButton>
+							
 					</div>
 
 
