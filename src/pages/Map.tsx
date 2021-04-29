@@ -151,14 +151,11 @@ const Map: React.FC<ContainerProps> = (props) => {
 					//pathlist.push(selectedPath[i].last)
 				}
 				//let pathlist = [selectedPath[0].first, selectedPath[0].last];
+				let arr1:any[] = []
 				for(let i=0;i<pathlist.length;i++){
-					poly = new google.maps.Polyline({
-						path: pathlist[i],
-						strokeColor: "#000000",
-						strokeOpacity: 1.0,
-						strokeWeight: 3
-					});
-					for(let j=1;j<pathlist[i].length-1;j++){
+					for(let j=0;j<pathlist[i].length;j++){
+						arr1.push(pathlist[i][j])
+						if(j>=1 && j<pathlist[i].length-1){
 							let marker = new google.maps.Marker({
 								position: pathlist[i][j],
 								icon: {
@@ -174,12 +171,18 @@ const Map: React.FC<ContainerProps> = (props) => {
 								//title: "#" + sections.length,
 								map: map,
 							});
-						
+						}
+
 					}
-					poly.setMap(map);
-					
-					
+									
 				}
+				poly = new google.maps.Polyline({
+					path: arr1,
+					strokeColor: "#000000",
+					strokeOpacity: 1.0,
+					strokeWeight: 3
+				});
+				poly.setMap(map);
 				
 				//poly.setMap(map);
 				console.log(pathlist)
@@ -192,7 +195,7 @@ const Map: React.FC<ContainerProps> = (props) => {
 				if(values.length==0){
 					initLiveLocation();
 				}
-				//map.addListener("click", (e:any)=>sendSectionNumber(e))
+				map.addListener("click", (e:any)=>sendSectionNumber(e))
 				//remove an edge of the transect when setting up
 			});
 	});
@@ -279,9 +282,6 @@ const Map: React.FC<ContainerProps> = (props) => {
 			backButton.href="/mysites"
 			
 		}
-		
-
-
 	}
 	const sendSectionNumber = (e: any) => {
 		console.log("Here")
@@ -289,8 +289,8 @@ const Map: React.FC<ContainerProps> = (props) => {
 		let sectionNumber: number | any
 		//console.log(e.latLng.lat(), e.latLng.lng())
 		let lastMarker = new google.maps.Marker({
-			position: oSnap.getClosestLatLng(liveposition),
-			//position: oSnap.getClosestLatLng(e.latLng),
+			//position: oSnap.getClosestLatLng(liveposition),
+			position: oSnap.getClosestLatLng(e.latLng),
 			map: map
 		});
 		//console.log(oSnap.getClosestLatLng(e.latLng).lat(), oSnap.getClosestLatLng(e.latLng).lng())
@@ -300,15 +300,15 @@ const Map: React.FC<ContainerProps> = (props) => {
 			arr.push(selectedPath[i].first)
 			arr.push(selectedPath[i].last)
 			let polytest = new google.maps.Polygon({
-				paths: arr
+				paths: pathlist[i],
 			});
 			console.log(i, arr)
-			if (google.maps.geometry.poly.containsLocation(oSnap.getClosestLatLng(liveposition), polytest)) {
+			if (google.maps.geometry.poly.containsLocation(oSnap.getClosestLatLng(e.latLng), polytest)) {
 				console.log("adding to i")
 				//console.log(oSnap.getClosestLatLng(e.latLng));
 				console.log("In Section", i + 1);
 				sectionNumber = i + 1
-			}			
+			}
 		}
 		
 		console.log("Section number is", sectionNumber);
