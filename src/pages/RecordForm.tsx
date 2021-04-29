@@ -32,7 +32,7 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
   console.log(props.sectionNumber.temps.sectionNumber)
     let {  newPhotosTaken,photos, takePhoto } = usePhotoGallery();
     
-     
+     console.log(props.sectionNumber)
     /**Add photos to the store */
     const addPhotos=()=>{
       takePhoto();
@@ -77,12 +77,9 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
   }
   console.log(photos.length-photoinitial)
   let difference = photos.length-photoinitial
-  const ex=()=>{
-    let list = [1,2,3,4,5]
-    console.log(list.slice(list.length-2, list.length-1))
-  }
-  console.log( photos.slice(5,6))
-  ex()
+ const test =()=>{
+   console.log("TRYING")
+ }
   return (
     <><><IonRouterOutlet>
       
@@ -91,7 +88,6 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
     </IonRouterOutlet></>
       <IonPage >
         <IonContent fullscreen className="content">
-        <IonBackButton defaultHref="/mapwalk" icon="buttonIcon" text="BACK" className="ion-float-left" color="dark"/><br/>
          <IonAlert
                 isOpen={memoryAlert}
                 onDidDismiss={() => setMemoryAlert(false)}
