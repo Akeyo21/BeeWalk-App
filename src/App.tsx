@@ -25,6 +25,7 @@ import Transect from './pages/Transect'
 import SectionDetails from './pages/SectionDetails';
 import AutomaticTransect from './pages/AutomaticTransect';
 import MapWalkTrial from './pages/Map';
+import SiteMap from './pages/SiteMap';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -73,7 +74,8 @@ const App: React.FC = () => (
         <Route path="/sectiondetails" component={SectionDetails} />
         <Route path="/automatic" component={AutomaticTransect} />
         <Route path="/mapwalk" component={MapWalkTrial} />
-
+        <Route path="/site/:id" component={MapWalkTrial} />
+        <Route path="/view" component={SiteMap} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
