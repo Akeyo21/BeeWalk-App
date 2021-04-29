@@ -3,7 +3,7 @@ import '../components/ExploreContainer.css';
 import { IonAlert, IonContent, IonHeader, IonPage, IonRouterOutlet } from '@ionic/react';
 import { connect, useDispatch } from 'react-redux';
 import { Loader } from '@googlemaps/js-api-loader';
-import { Redirect, Route } from 'react-router';
+import { Redirect, Route, useParams } from 'react-router';
 import SectionDetails from './SectionDetails';
 
 import { resetRecords } from '../Actions/Records';
@@ -13,6 +13,7 @@ import { setFalse } from '../Actions/MemoryFull';
 import { cSnapToRoute } from './Trial';
 import { changeTemp } from '../Actions/temps';
 import { Temps } from '../Reducers/temps';
+import { resetWalk } from '../Actions/Walks';
 interface ContainerProps {
 	records: [] | any
 	walk: any
@@ -29,6 +30,14 @@ const Map: React.FC<ContainerProps> = (props) => {
 
 	//let selectedPath = new google.maps.MVCArray([]);
 	let walk;
+	const params = useParams()
+	let values = Object.values(params)
+	if(values.length>0){
+		console.log(values);
+	}else{
+		console.log("Not there")
+	}
+	
 	for (const property in props.walk) {
 		console.log(props.walk[property])
 		walk = props.walk[property]
@@ -53,6 +62,7 @@ const Map: React.FC<ContainerProps> = (props) => {
 	//get user current position
 	const [findLive, setFindLive] = useState(false);
 	const [redirectRecords, setRedirectRecords] = useState(false)
+	const [home, setHome] = useState(false)
 
 	const [enterRecord, setEnterRecord] = useState(false);
 	const [memoryAlert, setMemoryAlert] = useState(false)
@@ -80,7 +90,11 @@ const Map: React.FC<ContainerProps> = (props) => {
 					navigator.geolocation.getCurrentPosition(function (position) {
 						console.log(position.coords.latitude, position.coords.longitude)
 						liveposition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-						map.setCenter(liveposition);
+						if(values.length==0){
+							map.setCenter(liveposition);
+						}else{
+							map.setCenter(selectedPath[0].first);
+						}
 						markerLivePos = new google.maps.Marker({
 							position: liveposition,
 							map: map,
@@ -169,17 +183,16 @@ const Map: React.FC<ContainerProps> = (props) => {
 				
 				//poly.setMap(map);
 				console.log(pathlist)
-
-				// Create the DIV to hold the control and call the CenterControl()
-				// constructor passing in this DIV.
 				const buttonsDiv = document.createElement("div");
 				buttonsDiv.id = "buttonsDiv";
 				buttonsControl(buttonsDiv, map);
-				//let polylinetest = 
 				map.controls[google.maps.ControlPosition.TOP_CENTER].push(buttonsDiv);
 				// Add a listener for the click event //new (TestConstructorFunction as any)(1, 2);
 				oSnap.init(map, poly);
-				initLiveLocation();
+				if(values.length==0){
+					initLiveLocation();
+				}
+				//map.addListener("click", (e:any)=>sendSectionNumber(e))
 				//remove an edge of the transect when setting up
 			});
 	});
@@ -191,6 +204,9 @@ const Map: React.FC<ContainerProps> = (props) => {
 
 	if (redirectRecords == true) {
 		return <Redirect to='/start/records' />
+	}
+	if (home == true) {
+		return <Redirect to='/' />
 	}
 
 	if (enterRecord) {
@@ -241,14 +257,29 @@ const Map: React.FC<ContainerProps> = (props) => {
 		recordsButton.className = "map-buttons";
 		recordsButton.style.margin = "12% 2% 0 0";
 
-		div.appendChild(withoutButton);
-		div.appendChild(recordsButton);
+		const backButton = document.createElement("a");
+		backButton.innerHTML = "BACK ";
+		backButton.style.padding = "20% 20px";
+		backButton.style.margin = "10% 0";
+		backButton.style.backgroundColor = "white";
+		backButton.style.color = "black";
+		backButton.style.fontWeight = "bold";
+
 
 		//div.appendChild(photoButton);
 		//photoButton.href="/"
 		//photoButton.addEventListener("click",take)
-		withoutButton.addEventListener("click", sendSectionNumber)
-		recordsButton.addEventListener("click", record)
+		if(values.length==0){
+			div.appendChild(withoutButton);
+			div.appendChild(recordsButton);
+			withoutButton.addEventListener("click", sendSectionNumber)
+			recordsButton.addEventListener("click", record)
+		}else{
+			div.appendChild(backButton);
+			backButton.href="/mysites"
+			
+		}
+		
 
 
 	}
@@ -256,23 +287,30 @@ const Map: React.FC<ContainerProps> = (props) => {
 		console.log("Here")
 
 		let sectionNumber: number | any
-		console.log(liveposition)
+		//console.log(e.latLng.lat(), e.latLng.lng())
 		let lastMarker = new google.maps.Marker({
 			position: oSnap.getClosestLatLng(liveposition),
-			map: map,
+			//position: oSnap.getClosestLatLng(e.latLng),
+			map: map
 		});
-		for (let i = 0; i < selectedPath.length; i++) {
-			let arr = []
+		//console.log(oSnap.getClosestLatLng(e.latLng).lat(), oSnap.getClosestLatLng(e.latLng).lng())
+		
+		for (let i = 0; i < selectedPath.length; i++) {	
+			let arr = []		
 			arr.push(selectedPath[i].first)
 			arr.push(selectedPath[i].last)
 			let polytest = new google.maps.Polygon({
 				paths: arr
 			});
+			console.log(i, arr)
 			if (google.maps.geometry.poly.containsLocation(oSnap.getClosestLatLng(liveposition), polytest)) {
+				console.log("adding to i")
+				//console.log(oSnap.getClosestLatLng(e.latLng));
 				console.log("In Section", i + 1);
 				sectionNumber = i + 1
-			}
+			}			
 		}
+		
 		console.log("Section number is", sectionNumber);
 		let temp = new Temps(sectionNumber, false, false);
 		dispatch(changeTemp(temp));
@@ -306,7 +344,11 @@ const Map: React.FC<ContainerProps> = (props) => {
 		//console.log(position.coords.latitude);
 		liveposition = new google.maps.LatLng({ lat: position.coords.latitude, lng: position.coords.longitude });
 		//addLatLng(liveposition);
-		markerLivePos.setPosition(liveposition);
+		if(values.length==0){
+			markerLivePos.setPosition(liveposition);
+
+		}
+		
 	};
 
 	const catchErrors = (e: any) => {
@@ -324,8 +366,6 @@ const Map: React.FC<ContainerProps> = (props) => {
 
 		</IonRouterOutlet>
 			<IonPage >
-				<IonHeader>
-				</IonHeader>
 				<IonContent fullscreen className="content">
 					<div id="map" className="transectmap">
 
