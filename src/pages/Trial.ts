@@ -35,8 +35,6 @@ export function cSnapToRoute(this: any) {
     this.init = function (oMap: any, oPolyline: any) {
         this._oMap = oMap;
         this._oPolyline = oPolyline;
-        console.log(oMap);
-        console.log(oPolyline);
         this.loadRouteData();   // Load needed data for point calculations
     }
 
@@ -55,7 +53,6 @@ export function cSnapToRoute(this: any) {
                 this.routePixels.push(Px);
             }
             }, 2000);  
-        console.log(this._oMap.getProjection())
         
         //return ""
     }
