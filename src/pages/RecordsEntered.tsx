@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import '../components/ExploreContainer.css';
-import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonImg, IonPage, IonRouterOutlet, IonRow, IonText, IonToolbar, useIonAlert } from '@ionic/react';
+import { IonAlert, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonList, IonPage, IonRouterOutlet, IonRow, IonText, IonToolbar, useIonAlert, useIonPopover } from '@ionic/react';
 
 import './Default.css';
 import { Redirect, Route } from 'react-router-dom';
-import MapWalk from './MapWalk'
 import { connect, useDispatch } from 'react-redux';
 import { Record } from '../Reducers/RecordsReducer';
 import SpeciesEntered from '../components/SpeciesEntered';
@@ -14,6 +13,7 @@ import { resetRecords } from '../Actions/Records';
 import { Temps } from '../Reducers/temps';
 import { changeTemp } from '../Actions/temps';
 import { finishWalk } from '../Actions/Resume';
+import { ellipsisVertical, ellipsisVerticalOutline } from 'ionicons/icons';
 interface ContainerProps {
 	records: [],
 	walk: any
@@ -26,6 +26,22 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 
 	const [showAlert1, setShowAlert1] = useState(false);
 	const [redirectHome, setRedirectHome] = useState(false);
+	const PopoverList: React.FC<{
+		onHide: () => void;
+	  }> = ({ onHide }) => (
+		<IonList>
+		  <IonItem button onClick={() => {
+			  dismiss();
+			  setShowAlert1(true)}}>Save Records</IonItem>
+		  <IonItem button onClick={()=>{
+			  dismiss()
+			  confirmCancel()}}>Cancel Walk</IonItem>
+		  <IonItem lines="none" detail={false} button onClick={onHide}>
+			Close
+		  </IonItem>
+		</IonList>
+	  );
+	const [presentPopover, dismiss] = useIonPopover(PopoverList, { onHide: () => dismiss() });
 	const [emptyRecords, setEmptyRecords] = useState(false);
 	let recordslist: [] = []
 	if (props.records) {
@@ -79,9 +95,9 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 			cssClass: 'my-css',
 			header: 'Confirm ',
 			message: 'Are you sure you want to end the walk without submitting anything?',
-			buttons: [
+			buttons: [ { text: 'Yes', handler: () => cancelWalk() },
 			  'Cancel',
-			  { text: 'Yes', handler: () => cancelWalk() },
+			 
 			],
 			onDidDismiss: (e) => console.log('did dismiss'),
 		  })
@@ -93,9 +109,10 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 	if (redirectHome == true) {
 		return <Redirect to='/home' />
 	}
+	
+
 	return (
 		<><><IonRouterOutlet>
-			<Route path="/start/map" component={MapWalk} />
 		</IonRouterOutlet></>
 			<IonPage>
 				<IonHeader>
@@ -112,7 +129,7 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 								onDidDismiss={() => setShowAlert1(false)}
 								cssClass='submitalert'
 								header={'Submission'}
-								message={'Do you wish to submit your data?'}
+								message={'Do you wish to end the walk and save your records?'}
 								buttons={[
 									{
 										text: 'OK',
@@ -128,18 +145,21 @@ const RecordsEntered: React.FC<ContainerProps> = (props) => {
 								]} />
 							<div className="top">
 								<IonButton href="/mapwalk" className="light move-left" >Back</IonButton>
-								<IonButton   onClick={()=>{confirmCancel()}}className=" light move-button-right " >Cancel Walk</IonButton>
-
+								<IonIcon className=" top-icon " onClick={(e) =>
+									presentPopover({
+									event: e.nativeEvent,
+									})
+								}icon={ellipsisVertical}/>
+								
 								</div>
 
 							{recordslist.length==0? <h2 className="dark">No Records Entered</h2>:
-							recordslist.map((record: Record) => (
-								<SpeciesEntered species={record.species} photos={record.photos} flower={record.flower} section={record.section} />
+							recordslist.map((record: Record,index) => (
+								<SpeciesEntered key={index} list={recordslist} index={index}species={record.species} photos={record.photos} flower={record.flower} section={record.section} />
 							))}
 
 						</div>
-						<IonButton onClick={() => setShowAlert1(true)}  className="light bottom" >Save Records</IonButton>
-							
+						
 					</div>
 
 
