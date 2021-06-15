@@ -5,12 +5,11 @@ import './Default.css';
 import RecordingForm from '../components/Form';
 import Login from "../pages/Login";
 import Walkdetail from "./Detail";
-import {Route} from 'react-router-dom';
+import {Route, useParams} from 'react-router-dom';
 import { useSelector, connect, useDispatch } from 'react-redux';
 import { BeeSpecies } from '../Reducers/SpeciesReducer';
 import { usePhotoGallery, Photo } from './Camera';
 import { camera } from 'ionicons/icons';
-import MapWalk from './MapWalk';
 import SpeciesList from './DuringWalk';
 import { photosPresent } from '../Actions/Photos';
 import { ObjectFlags } from 'typescript';
@@ -77,13 +76,9 @@ const RecordForm: React.FC<ContainerProps> = (props) => {
   }
   console.log(photos.length-photoinitial)
   let difference = photos.length-photoinitial
- const test =()=>{
-   console.log("TRYING")
- }
   return (
     <><><IonRouterOutlet>
       
-      <Route exact path="/map" component={MapWalk} />
       <Route path="/start/duringwalk" component={SpeciesList}/>
     </IonRouterOutlet></>
       <IonPage >

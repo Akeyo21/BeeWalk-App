@@ -66,9 +66,6 @@ const Transect: React.FC<ContainerProps> = (props) => {
         
     }
     
-    useEffect(() => {
-      
-    }, []);
 
     const loader = new Loader({
       apiKey: "AIzaSyAmfNAhG-WbTTCN-7JmHApcvr9e1tYirGw"
@@ -144,11 +141,13 @@ const Transect: React.FC<ContainerProps> = (props) => {
       loader.load()
       .then(() => {
           console.log("map should be here")
+          if(document.getElementById("map") ){
+            map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+              //center: { lat: lat, lng: lng },
+              zoom: 15,
+            }); 
           
-          map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-            //center: { lat: lat, lng: lng },
-            zoom: 15,
-          }); 
+          
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                let  initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -215,7 +214,7 @@ const Transect: React.FC<ContainerProps> = (props) => {
     
           //remove an edge of the transect when setting up
           poly.addListener("dblclick", removePoint);
-      });
+      }});
         
       
     function addLatLng(event: google.maps.MapMouseEvent) {
@@ -238,8 +237,6 @@ const Transect: React.FC<ContainerProps> = (props) => {
     const addSections =()=>{
       //if(list){
         console.log("Number of sections in the beginning", v)
-      //console.log("SECTIONS AT START", checkSections.length) 
-      //console.log("SECTIONS TUKIMALIZIA", sections.length)
         if(v!=sections.length){
           saveSection()
           console.log("Adding extra sections")
@@ -251,9 +248,6 @@ const Transect: React.FC<ContainerProps> = (props) => {
         if(sections.length==0){
             setEmptySections(true);
         }else{
-            //let transect = new ResumeTransect(true, polylines, markers)
-            //dispatch(settingTransect(transect))
-            //dispatch(finishSettingTransect())
             dispatch(setSections(sections));
             setRedirectToDetails(true);
         }
@@ -333,10 +327,8 @@ const Transect: React.FC<ContainerProps> = (props) => {
         poly.setMap(map);
         //remove an edge of the transect when setting up
         poly.addListener("dblclick", removePoint);
-        console.log(sections) 
         } 
-        nameSections(markers)
-    console.log(markers + 'MARKERS')   
+        nameSections(markers) 
     }
     console.log(polylines);
     if(redirectToSectionDetails ==true){
