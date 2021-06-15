@@ -28,7 +28,7 @@ export function getBees (lat:number, long:number){
     console.log(inUK(lat, long));     
     let beelist =  Object.values(bee_data);
     console.log(beelist[Math.floor(latLongIndex(lat, latStart, interval))])
-    let selected:number[]|any= beelist[Math.floor(latLongIndex(lat, latStart, interval))][Math.floor(latLongIndex(long, longStart, interval))][today.getMonth()]
+    let selected:number[]|any= beelist[Math.floor(latLongIndex(lat, latStart, interval))][Math.floor(latLongIndex(long, longStart, interval))][1]
   
    return selected.filter((species: any)=>species>0&&species!=26)
 }
