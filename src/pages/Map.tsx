@@ -14,6 +14,7 @@ import { cSnapToRoute } from './Trial';
 import { changeTemp } from '../Actions/temps';
 import { Temps } from '../Reducers/temps';
 import { resetWalk } from '../Actions/Walks';
+import { selectBeeSpecies } from '../Actions/Species';
 interface ContainerProps {
 	records: [] | any
 	walk: any
@@ -32,11 +33,7 @@ const Map: React.FC<ContainerProps> = (props) => {
 	let walk;
 	const params = useParams()
 	let values = Object.values(params)
-	if(values.length>0){
-		console.log(values);
-	}else{
-		console.log("Not there")
-	}
+	
 	
 	for (const property in props.walk) {
 		console.log(props.walk[property])
@@ -53,9 +50,7 @@ const Map: React.FC<ContainerProps> = (props) => {
 			let last = transectslist[walk.transect].sections[section].positions.length - 1
 			let firstpos = transectslist[walk.transect].sections[section].positions[0]
 			let lastpos = transectslist[walk.transect].sections[section].positions[last]
-			//console.log()
 			selectedPath.push({ first: firstpos, last: lastpos })
-
 		}
 	}
 	
@@ -81,7 +76,8 @@ const Map: React.FC<ContainerProps> = (props) => {
 		});
 		loader.load()
 			.then(() => {
-
+				dispatch(selectBeeSpecies(null))
+				if(document.getElementById("map")){
 				map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
 
 					zoom: 14,
@@ -196,16 +192,13 @@ const Map: React.FC<ContainerProps> = (props) => {
 					initLiveLocation();
 				}
 				//remove an edge of the transect when setting up
-			});
+			}});
 	});
 
 	var oSnap = new (cSnapToRoute as any);
-	//console.log(recordsEntered)
-
-
 
 	if (redirectRecords == true) {
-		return <Redirect to='/start/records' />
+		return <Redirect to='/start/records'/>
 	}
 	if (home == true) {
 		return <Redirect to='/' />
@@ -219,7 +212,6 @@ const Map: React.FC<ContainerProps> = (props) => {
 	const record = () => {
 		dispatch(photosPresent(photos.length))
 		setRedirectRecords(true)
-
 	}
 	const picha = () => {
 		takePhoto()
@@ -337,7 +329,6 @@ const Map: React.FC<ContainerProps> = (props) => {
 		//addLatLng(liveposition);
 		if(values.length==0){
 			markerLivePos.setPosition(liveposition);
-
 		}
 		
 	};

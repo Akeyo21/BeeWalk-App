@@ -5,14 +5,6 @@ import { IonContent, IonHeader, IonPage, IonButton, IonRouterOutlet , IonTabs, I
   /*import './Home.css';*/
   import '../components/ExploreContainer.css';
   import '../components/LoginPage.css';
-  import {Redirect, Route} from 'react-router-dom';
-  
-  import Home from '../pages/Home';
-  import Terms from "../pages/Terms&Conditions";
-  import Walks from '../pages/Walks';
-  import Postlogin from '../pages/Home';
-  import MySites from '../pages/MySites';
-  import More from '../pages/More';
   /**/
   export const Tabs: React.FC = () => {
     return (
