@@ -6,8 +6,10 @@ import Login from "../pages/Login";
 import AddSite from "../pages/AddSites";
 import {Redirect, Route} from 'react-router-dom';
 import { home, walk, leaf, navigate, ellipsisHorizontal } from 'ionicons/icons';
-import { connect, useStore } from 'react-redux';
+import { connect, useDispatch, useStore } from 'react-redux';
 import Tabs from '../components/Tabs';
+import { Walk } from '../Reducers/WalksBeforeReducer';
+import { setWalk } from '../Actions/Walks';
 /*MySites - gives a page that shows a list of sites the user has
 entered*/
 interface ContainerProps { 
@@ -20,6 +22,7 @@ is selected*/
 const MySites: React.FC<ContainerProps> = (props) => {
   const[addSite, setAddSite] = useState(false)
   const[goToTransect, setGoToTransect] = useState(false)
+  const[map, setMap] = useState(false)
   let transectslist: any[] =[]
   for(const property in props.transects){
    transectslist = props.transects[property]
@@ -57,6 +60,21 @@ const MySites: React.FC<ContainerProps> = (props) => {
    }else{
      setAddSite(true)
    }
+
+ }
+ var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = new Date().getHours() + ":" + new Date().getMinutes()+":"+new Date().getSeconds();
+    var hr = new Date().getHours() + ":" + new Date().getMinutes()
+    var all = new Date(date + " "+time)
+const dispatch = useDispatch();
+ const tell =(index:number)=>{
+  dispatch(setWalk(new Walk("", index,
+  date, hr, 0,"", ""))) 
+  setMap(true) 
+ }
+ if(map){
+  return <Redirect to="/mapwalk/showsite"/>
  }
  if(addSite){
    return <Redirect to="/mysites/add"/>
@@ -64,6 +82,11 @@ const MySites: React.FC<ContainerProps> = (props) => {
  if(goToTransect){
   return <Redirect to="/transect"/>
  }
+ /*
+ <IonItemSliding key={index}><IonItemOptions side="end">
+                  <IonItemOption onClick={(index)=>(deleteTransect(index))}>Delete</IonItemOption>
+                </IonItemOptions> 
+                      </IonItemSliding>*/
   return (
     <><><IonRouterOutlet>
       <Route path="/login" component={Login} />
@@ -103,24 +126,12 @@ const MySites: React.FC<ContainerProps> = (props) => {
                     </IonListHeader>
                     {transectslist.length==0?<h1 className="dark">No Transects have been set up</h1>:
                     transectslist.map((transect, index)=>(
-                      <IonItemSliding key={index}>
-                      <IonItem className="item" >  
+                      
+                      <IonItem className="item" onClick={()=>{tell(index)}}>  
                       <IonLabel> {transect.name}</IonLabel>
-                          <IonGrid>
-                              <IonRow>
-                                  <IonCol size="8">
-                                      <IonNote className="note">0 Records submitted<br/>0 Species submitted</IonNote>
-                                  </IonCol>
-  
-                                  
-                              </IonRow>
-                          </IonGrid>  
                                    
                       </IonItem>
-                      <IonItemOptions side="end">
-                  <IonItemOption onClick={(index)=>(deleteTransect(index))}>Delete</IonItemOption>
-                </IonItemOptions> 
-                      </IonItemSliding>
+                      
                     ))}
                    
                 </IonList>
