@@ -5,7 +5,6 @@ import '../pages/Default.css';
 import {  IonList, IonItem,  IonInput, IonButton, IonText, IonLabel, IonRouterOutlet, IonAlert } from '@ionic/react';
 import { BeeSpecies } from '../Reducers/SpeciesReducer';
 import { Redirect, Route } from 'react-router';
-import MapWalk from '../pages/MapWalk'
 import SpeciesList from '../pages/DuringWalk';
 import { Photo } from '../pages/Camera';
 import { Record } from '../Reducers/RecordsReducer';
@@ -63,8 +62,10 @@ const Form: React.FC<ContainerProps> = (props) => {
       setShowAlert1(true)
   }
 }
-
+/*<IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Automatic ID</IonButton>
+          */
   if(redirectMap==true){
+    
     return <Redirect to="/mapwalk"/>
   }
   if(choosingSpecies==true){
@@ -72,11 +73,12 @@ const Form: React.FC<ContainerProps> = (props) => {
   }
   return (   
     <><><IonRouterOutlet>
-      <Route exact path="/map" component={MapWalk} />
       <Route path="/start/duringwalk" component={SpeciesList}/>
       
     </IonRouterOutlet></>
       <div className="page">
+        
+      <IonButton href="/mapwalk" className="light move-left" >Back</IonButton>
         <h1 className="division margin-bottom">Add Record</h1>
         <IonAlert
           isOpen={showAlert1}
@@ -136,7 +138,6 @@ const Form: React.FC<ContainerProps> = (props) => {
 
           </IonList>
 
-          <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top">Automatic ID</IonButton>
           <IonButton color="warning" size="large" shape="round" expand="block" className="margin-top" onClick={() => sendRecord()} >Add Record</IonButton>
 
 
