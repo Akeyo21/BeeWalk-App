@@ -151,6 +151,7 @@ const SectionDetails: React.FC<ContainerProps> = (props) => {
         //set the transect up - dispatch
         //change page - add new Site
     }
+    //<IonButton href="/transect"className="back whitebackground" color="light">Back</IonButton>
     if(backToSites==true){      
         return <Redirect to='/'/>
       }
@@ -179,12 +180,10 @@ return (
 
         </IonRouterOutlet>
             <IonContent fullscreen force-overscroll className="content">
-                <IonButton href="/transect"className="back whitebackground" color="light">Back</IonButton>
             
                 <form id="manualform" >
                     
                         {sectionslist.map((section, pos)=>(
-
                             <>
                                 <IonItem>
                                     <IonLabel>
