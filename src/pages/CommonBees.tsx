@@ -23,6 +23,10 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
       let lat = position.coords.latitude
       try{
       
+        lat = 53.37
+        long=-1.419
+        console.log(lat, long)
+      
       setbees(getBees(lat, long))
       }
       catch(error){   

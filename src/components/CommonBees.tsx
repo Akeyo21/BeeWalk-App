@@ -29,8 +29,8 @@ const CommonBees: React.FC<ContainerProps> = (props) => {
       try{
         lat = 53.37
         long=-1.419
-      
-      setbees(getBees(lat, long))
+        console.log(lat, long)
+        setbees(getBees(lat, long))
       }
       catch(error){   
         console.log(error) 
