@@ -17,7 +17,6 @@ import ManualData from './pages/ManualData';
 import MySites from './pages/MySites';
 import AddSites from './pages/AddSites';
 import More from './pages/More';
-import MapWalk from './pages/MapWalk';
 import RecordForm from './pages/RecordForm';
 import Photo from './pages/Photo';
 import Records from './pages/RecordsEntered';
@@ -25,7 +24,6 @@ import Transect from './pages/Transect'
 import SectionDetails from './pages/SectionDetails';
 import AutomaticTransect from './pages/AutomaticTransect';
 import MapWalkTrial from './pages/Map';
-import SiteMap from './pages/SiteMap';
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -64,18 +62,18 @@ const App: React.FC = () => (
         <Route path="/mysites/add" component={AddSites} />
         <Route path="/start/prewalk" component={PreWalk} />
         <Route path="/start/duringwalk" component={DuringWalk} />
+        <Route path="/start/duringwalk/:page" component={DuringWalk} />
         <Route path="/start/duringwalk/manual" component={ManualData} />
-        <Route path="/map" component={MapWalk} />
         <Route path="/start/recordform" component={RecordForm} />
         <Route path="/start/photo" component={Photo} />
         <Route path="/start/records" component={Records} />
+        <Route path="/start/records/:id/:id" component={Records} />
         <Route path="/transect" component={Transect} />
         <Route path="/more" component={More} />
         <Route path="/sectiondetails" component={SectionDetails} />
         <Route path="/automatic" component={AutomaticTransect} />
         <Route path="/mapwalk" component={MapWalkTrial} />
-        <Route path="/site/:id" component={MapWalkTrial} />
-        <Route path="/view" component={SiteMap} />
+        <Route path="/mapwalk/:id" component={MapWalkTrial} />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

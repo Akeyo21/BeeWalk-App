@@ -30,7 +30,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 }*/
 defineCustomElements(window);
 //const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
-const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
+export const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
 const persistor = persistStore(store)
 ReactDOM.render(
 <Provider store={store}>
