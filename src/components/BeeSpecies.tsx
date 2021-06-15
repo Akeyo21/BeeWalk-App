@@ -3,7 +3,7 @@ import {IonButton, IonCard, IonCardContent, IonCol, IonGrid, IonRow,  IonModal, 
 
 import "../pages/Default.css";
 import BeeCastCount from "./BeeCastCount"
-import { Redirect } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import { useDispatch } from 'react-redux'
 import { selectBeeSpecies } from '../Actions/Species';
 import { BrowserRouter as Route} from 'react-router-dom';
@@ -28,7 +28,16 @@ let duplicate = null;
 const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
     const dispatch = useDispatch()
     const [showModal, setShowModal] = useState(false);
-    
+    const [records, setBackToRecords] = useState(false)
+    const [redirectHome, setRedirectHome] = useState(false)
+    const params = useParams()
+	let values = Object.values(params)
+    console.log(params)
+	if(values.length>0){
+		console.log(values);
+	}else{
+		console.log("Not there")
+	}
     const [beespecies, setBeeSpecies] = useState<BeeSpecies>();
     
     function addBeeDataToList(){
@@ -54,18 +63,21 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
         if(castelist.length>0){
         let beeEntered = new BeeSpecies(props.common, castelist)
         setBeeSpecies(beeEntered)
-        //dispatch({ type: 'selectBeeSpecies', payload: beeEntered })
         dispatch(selectBeeSpecies(beeEntered))
-        /*props.selectBeeSpecies(beeEntered)
-        /*console.log(HoldingData.getBeeSpecies())*/
-        setRedirectHome(true)
+        if(values.length==0){
+            setRedirectHome(true)
+        }else{
+            setBackToRecords(true)
+        }
     }
         
         
 
     }
-
-    const [redirectHome, setRedirectHome] = useState(false)
+    if(records==true){
+        let route = `/start/records/editrecord/${values[0]}` 
+        return <Redirect to={route}/>
+    }
     if (redirectHome==true){
         return <Redirect to='/start/walk/recordform' />
       } 
@@ -87,7 +99,9 @@ const BeeSpeciesFile: React.FC<ContainerProps> = (props) => {
                               <IonRow>
                                   <IonCol size="6">
                                       
-                                      <IonButton  onClick={() => addBeeDataToList()}  color="dark" className="left-margin">Add species</IonButton>
+                                  {values.length==0? <IonButton  onClick={() => addBeeDataToList()}  color="dark" className="left-margin">
+                                           Add species </IonButton>: <IonButton  onClick={() => addBeeDataToList()}  color="dark" className="left-margin">
+                                           Change species </IonButton>}
                                    
                                   </IonCol>
 
