@@ -32,6 +32,9 @@
 .note{
     --color: black;
 }
+.dark{
+    color:black;
+}
 
 /*CSS for Detail file*/
 .division{
@@ -61,7 +64,7 @@
 .beelist{
     margin-top:25%;
 }
-.modal{
+.modal, .modal2{
     position: absolute;
     height:60%;
     width:80%;
@@ -72,6 +75,9 @@
 .modal h1{
     text-align: center;
   
+}
+.modal2{
+    text-align: center;
 }
 .choose-transect{
     position: absolute;
@@ -209,9 +215,11 @@ padding: 18px;
     position:absolute;
     left:0;
 }
-.move-button-right{
-    margin-left:65%;
-
+.top-icon{
+    margin-left: 85%;
+    font-size: 150%;
+    margin-top: 3%;
+    color: black;
 }
 .light{
     --background: #f4f5f8;
